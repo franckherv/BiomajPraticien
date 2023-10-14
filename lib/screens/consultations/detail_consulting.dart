@@ -39,7 +39,6 @@ class _DetailConsultationScreenState extends State<DetailConsultationScreen>
 
   @override
   Widget build(BuildContext context) {
-    print("=====================${widget.consultatingData!.id}=============================");
     return 
     DefaultTabController(
       initialIndex: widget.selectedPage!,

@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:io' as Io;
 import 'package:biomaj/constants/common_variable.dart';
 import 'package:biomaj/models/consultation.dart';
 import 'package:biomaj/models/hopital_model.dart';
@@ -326,10 +326,41 @@ class HttpGlobalDatasource {
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
     }
   }
+// TODO SAVE FULL IMAGE
+  Future saveAnalyse({
+    var id,
+    var statut,
+    //File? fichier,
+    required List<Io.File> fichier,
+  }) async {
+    try {
+      final formData = FormData.fromMap({"id": id, "statut": statut});
 
+      int index = 0;
+
+      fichier.forEach((element) {
+        if (index == 0) {
+          formData.files.add(
+              MapEntry("fichier", MultipartFile.fromFileSync(element.path)));
+        } else {
+          formData.files.add(MapEntry(
+              "fichier${index}", MultipartFile.fromFileSync(element.path)));
+        }
+
+        index++;
+      });
+
+      Response response = await dio.post('save-examen-fil', data: formData);
+      print("======> $response <=======");
+      return response.data;
+    } catch (error, stacktrace) {
+      print("###error send-single-sms####${error}###");
+      throw Exception("Exception occured: $error stackTrace: $stacktrace");
+    }
+  }
  
-
-    Future saveAnalyse({
+//TODO SAVE ONLY IMAGE
+ /*  Future saveAnalyse({
     var id,
     var statut,
    File? fichier,
@@ -352,6 +383,7 @@ class HttpGlobalDatasource {
     }
   }
 
+*/
   Future createExam({
     var name,
     var codeconsultation,

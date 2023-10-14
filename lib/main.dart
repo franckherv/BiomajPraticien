@@ -21,6 +21,10 @@ void main() async {
 // ts12345
 // MATRICULE: 63a38e613f668
 
+// 0101010101
+// 1234567890
+// patient
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -50,11 +54,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: AppColors.appMaterialColor,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              // localizationsDelegates: const [
-              //   // GlobalMaterialLocalizations.delegate,
-              //   // GlobalWidgetsLocalizations.delegate,
-              //   // GlobalCupertinoLocalizations.delegate,
-              // ],
+              
               supportedLocales: const [
                 Locale('en', 'US'),
                 Locale('fr', 'FR'), 
@@ -66,7 +66,8 @@ class MyApp extends StatelessWidget {
                   SharedPrefs.init(),
                   //Firebase.initializeApp()
                 ],
-              )),
+              )
+              ),
         );
       },
     );
