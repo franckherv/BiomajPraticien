@@ -23,6 +23,7 @@ class _CreationExamenState extends State<CreationExamen> {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController nameExamCobtroller = TextEditingController();
 
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
   
@@ -211,19 +212,38 @@ class _CreationExamenState extends State<CreationExamen> {
                                           )),
                                         ],
                                       ),
-                                        Padding(
+                                      /*  Padding(
                                         padding: EdgeInsets.only(
                                           top: ScreenUtil().setHeight(10),
                                         ),
                                         child: const Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            "Description du type examen",
+                                            "Examen démandé",
                                             style: AppDesign.messervice,
                                           ),
                                         ),
                                       ),
-                                      Padding(
+                                         Padding(
+                                        padding: EdgeInsets.only(
+                                          top: ScreenUtil().setHeight(5),
+
+                                          //  top: 50.0,
+                                        ),
+                                        child:
+                                            RoundedTextInputFieldWithBorder(
+                                          label: "Cliquez pour saisir",
+                                          imputCtrl: nameExamCobtroller,
+                                          maxLines: 1,
+                                          inputType: TextInputType.text,
+                                          inputAction: TextInputAction.done,
+                                          textColor: Colors.black54,
+                                          inputColor: Colors.black54,
+                                          tailText: 15,
+                                          obscure: false,
+                                        ),
+                                      ), */
+                                     /* Padding(
                                         padding: EdgeInsets.only(
                                           bottom: ScreenUtil().setHeight(5),
                                           top: ScreenUtil().setHeight(10),
@@ -319,6 +339,7 @@ class _CreationExamenState extends State<CreationExamen> {
                                           ],
                                         ),
                                       ),
+                                       */
                                       Padding(
                                         padding: EdgeInsets.only(
                                           bottom: ScreenUtil().setHeight(5),
@@ -327,7 +348,7 @@ class _CreationExamenState extends State<CreationExamen> {
                                         child: const Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            "Autre description ",
+                                            "Renseignement clinique",
                                             style: AppDesign.messervice,
                                           ),
                                         ),
@@ -365,7 +386,10 @@ class _CreationExamenState extends State<CreationExamen> {
                                     child: SmallRaisedBtn(
                                       width: double.infinity,
                                       onPressed: () {
+                                        if(descriptionController.text.isNotEmpty) {
                                         createNewExam();
+
+                                        }
                                       },
                                       borderRadius: BorderRadius.circular(10),
                                       child: const Text(
@@ -400,7 +424,8 @@ class _CreationExamenState extends State<CreationExamen> {
         .createExam(
             name: descriptionController.text,
             codeconsultation: widget.cnsulID!,
-            examenId: serviceID)
+           // examenId: nameExamCobtroller
+            )
         .then((datas) {
       Navigator.of(context).pop();
       if (datas["code"] == 1) {

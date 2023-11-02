@@ -91,11 +91,8 @@ class _ListExamensScreenState extends State<ListExamensScreen> {
 
   getExammenList() async {
     LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
-
     await httpGlobalDatasource.examenList(
-      code: widget.examData
-       // code: "63cfe14da6a69"
-            )
+      code: widget.examData)
         .then((data) {
       Navigator.of(context).pop();
       setState(() {

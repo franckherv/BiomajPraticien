@@ -14,7 +14,7 @@ import 'dart:io' as Io;
 import 'package:image/image.dart' as Image2;
 import 'package:path_provider/path_provider.dart';
 
-import '../../utils/simple_loader.dart';
+import '../../models/uploadFile.dart';
 
 class DetailExamenencoursScreen extends StatefulWidget {
   Examencours examencours;
@@ -34,18 +34,25 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
 
   bool _isLoading = false;
 
+  UploadFile uploadFile = UploadFile(data: []);
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(milliseconds: 0), () {
+      getPictures();
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: buttonColor
-          ? const SizedBox()
-          : FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
                 saveExamens();
-                setState(() {
-                  buttonColor = true;
-                });
+               
               },
               icon: const Icon(Icons.save),
               label: const Text("Sauvegarder"),
@@ -124,86 +131,96 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 8,
+              SizedBox(
+                height: 10.h,
               ),
+              uploadFile.data.isNotEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                        bottom: 10.0.h,
+                      ),
+                      child: Column(
+                        children: [
+                          const Text("Images déjà téléchargée"),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          SizedBox(
+                              height: 150.0,
+                              child: GridView.builder(
+                                itemCount: uploadFile.data.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 1,
+                                        mainAxisSpacing: 20,
+                                        crossAxisSpacing: 20),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (_, index) {
+                                  return Image.network(
+                                    "${CommonVariable.imageBaseUrl}${uploadFile.data[index].image}",
+                                    fit: BoxFit.fill,
+                                  );
+                                },
+                              )),
+                        ],
+                      ))
+                  : Container(),
               Padding(
-                padding: const EdgeInsets.only(
-                    top: 50.0, bottom: 10.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(
+                    top: 10.0.h, bottom: 10.0, left: 20.0, right: 20.0),
                 child: SizedBox(
-                    height: 150.0,
-                    child: _imageFiles.isNotEmpty
-                        ? GridView.builder(
-                            itemCount: _imageFiles.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 1,
-                                    mainAxisSpacing: 20,
-                                    crossAxisSpacing: 20),
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (_, index) {
-                              if (_isLoading) {
-                                return SimpleLoaderWidget(
-                                  isLoading: _isLoading,
-                                  message: "Chargement en cours ...",
-                                );
-                              } else {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(
-                                          width: 1, color: Colors.grey)),
-                                  child: Image.file(
-                                    _imageFiles[index],
-                                    fit: BoxFit.cover,
-                                  ),
-                                );
-                              }
-                            },
+                    height: _imageFile != null ? 50 :150.0.h,
+                    child: _imageFile != null
+                        ? Container(
+                           alignment: Alignment.center,
+                           width: 60.r,
+                          height: 70.h,
+                            child: Image.file(
+                              _imageFile!,
+                              fit: BoxFit.cover,
+                            ),
                           )
-                        : _imageFiles.isEmpty && _isLoading == true
-                            ? SimpleLoaderWidget(
-                                isLoading: _isLoading,
-                                message: "Chargement en cours ...",
-                              )
-                            : Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                 // Text(
-                                //   "Aucune image sélectionnée !",
-                                // )
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 110.w,
-                                      height: 110.h,
-                                      decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(
-                                            width: 5, color: Colors.grey.shade300),
-                                      ),
-                                      child: const Icon(
-                                        Icons.add_a_photo,
-                                      ),
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Text(
+                              //   "Aucune image sélectionnée !",
+                              // )
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 110.w,
+                                    height: 110.h,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                          width: 5,
+                                          color: Colors.grey.shade300),
                                     ),
-                                    SizedBox(width: 5.w,),
+                                    child: const Icon(
+                                      Icons.add_a_photo,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
                                   const Text(
-                                  "Aucune image sélectionnée !",
-                                )
-                                  ],
-                                )
-                                // Icon(
-                                //   Icons.image,
-                                //   size: 50.0,
-                                //   color: Colors.black54,
-                                // ),
-                                // Text(
-                                //   "Aucune image sélectionnée !",
-                                // )
-                              ],
-                            )),
+                                    "Aucune image sélectionnée !",
+                                  )
+                                ],
+                              )
+                              // Icon(
+                              //   Icons.image,
+                              //   size: 50.0,
+                              //   color: Colors.black54,
+                              // ),
+                              // Text(
+                              //   "Aucune image sélectionnée !",
+                              // )
+                            ],
+                          )),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -211,11 +228,12 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (_imageFiles.length == 0)
+                    if (_imageFile != null)
                       const Padding(
                         padding: EdgeInsets.only(bottom: 20.0),
                         child: Text(
-                          "Choisir ou tirer une photo en \nappuyant sur l'icon ci-dessous",
+                          "Choisir ou tirer une photo en appuyant \nsur l'une des icons ci-dessous.",
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     Row(
@@ -257,45 +275,56 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
   }
 
   //! DECLARE IMAGE LENGHT VARIABLE
-  List<Io.File> _imageFiles = [];
+  // Io.File? _imageFiles;
 
-  _buildImage() {
-    if (_imageFiles.length > 0) {
-      print('###_imageFiles#####$_imageFiles###');
+  // _buildImage() {
+  //   if (_imageFiles != null) {
+  //     print('###_imageFiles#####$_imageFiles###');
 
-      for (var i = 0; i < _imageFiles.length; i++) {
-        return Image.file(
-          _imageFiles[i],
-          fit: BoxFit.fill,
-        );
-      }
-    } else {
-      return const Text(
-        "choisir une photo de profil",
-      );
-    }
-  }
+  //     return Image.file(
+  //       _imageFiles!,
+  //       fit: BoxFit.fill,
+  //     );
+  //   } else {
+  //     return const Text(
+  //       "choisir une photo de profil",
+  //     );
+  //   }
+  // }
 
   //! DECLARE CAPTURE IMAGE FUNTION
+  // Future<void> captureImage(ImageSource imageSource) async {
+  //   try {
+  //     final imageFile =
+  //         await ImagePicker.platform.getImageFromSource(source: imageSource);
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     Io.File _imageFile = await redimentionImageEtCopie(imageFile);
+
+  //     setState(() {
+  //       _imageFile = _imageFile;
+  //       //cest ici que je dois gerer le parametrage de limage
+  //     });
+  //   } catch (e) {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
+
+  Io.File? _imageFile;
   Future<void> captureImage(ImageSource imageSource) async {
     try {
+      await Future.delayed(const Duration(milliseconds: 0));
       final imageFile =
           await ImagePicker.platform.getImageFromSource(source: imageSource);
+      _imageFile = await redimentionImageEtCopie(imageFile);
       setState(() {
-        _isLoading = true;
-      });
-      Io.File _imageFile = await redimentionImageEtCopie(imageFile);
-
-      setState(() {
-        _imageFiles.add(_imageFile);
-        _isLoading = false;
-        //_imageFile = _imageFile;
-        //cest ici que je dois gerer le parametrage de limage
+        _imageFile = _imageFile;
       });
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      print(e);
     }
   }
 
@@ -316,81 +345,20 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
       ..writeAsBytesSync(Image2.encodePng(bonneImage));
   }
 
-  //Io.File? _imageFile;
-  /* Future<void> captureImage(ImageSource imageSource) async {
-    try {
-      await Future.delayed(const Duration(milliseconds: 0));
-      final imageFile = await ImagePicker.platform.getImageFromSource(source: imageSource);
-      _imageFile = await redimentionImageEtCopie(imageFile);
-      setState(() {
-        _imageFile = _imageFile;
-      });
-    } catch (e) {
-      print(e);
-    }
-  } */
 
-  /* Widget imagePicker() {
-    return Row(
-      children: [
-        Expanded(
-          child: InkWell(
-            onTap: () {
-              if (_imageFile != null) {
-                captureImage(ImageSource.gallery);
-              }
-            },
-            child: Container(
-              alignment: Alignment.center,
-              // margin: const EdgeInsets.only(top: 8, right: 10),
-              height: ScreenUtil().setHeight(80),
-              // width: ScreenUtil().setWidth(200),
-              decoration: BoxDecoration(
-                  color: _imageFile == null ? Colors.grey[200] : null,
-                  border: Border.all(
-                      width: 1, //
-                      color: Colors.grey.shade200),
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    colorFilter: ColorFilter.mode(
-                      Colors.white.withOpacity(0.1),
-                      BlendMode.luminosity,
-                    ),
-                    image: FileImage(File(_imageFile?.path ?? "")),
-                    fit: BoxFit.cover,
-                  )),
-              child: Text(
-                "fichier.pdf",
-                style: TextStyle(
-                    color:
-                        _imageFiles.isNotEmpty  ? Colors.transparent : Colors.grey,
-                    fontSize: 12,
-                    fontStyle: FontStyle.italic),
-              ),
-            ),
-          ),
-        ),
-        _imageFiles.isNotEmpty
-            ? const SizedBox()
-            : Expanded(
-                // flex: 2,
-                child: TextButton(
-                child: const Text(
-                  "Télécharger un fichier PDF",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.red,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-                onPressed: () async {
-                  captureImage(ImageSource.gallery);
-                },
-              ))
-      ],
-    );
+//? get all picture
+  getPictures() async {
+    LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
+    await httpGlobalDatasource.getImage(id: widget.examencours.id).then((data) {
+      Navigator.of(context).pop();
+      setState(() {
+        uploadFile = data;
+      });
+    }).catchError((err) {
+      Navigator.of(context).pop();
+      displayToastmessage("Oupps! une erreur s'est produite", context);
+    });
   }
- */
 
   saveExamens() async {
     setState(() {
@@ -400,19 +368,23 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
     LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
     await httpGlobalDatasource
         .saveAnalyse(
-            id: widget.examencours.id, statut: "3", fichier: _imageFiles)
+            id: widget.examencours.id, statut: "3", fichier: _imageFile)
         .then((datas) {
       Navigator.of(context).pop();
-      if (datas["code"] == 1) {
-        displayToastmessage("Enrégistrement éffectué avec succeès !", context);
+      // if (datas == 1) {
 
-        // Navigator.of(context).pushNamedAndRemoveUntil(
-        //   '/succes-appointement',
-        //   (Route<dynamic> route) => false,
-        // );
-      } else {
-        displayToastmessage("${datas["message"]}", context);
-      }
+      setState(() {
+        uploadFile = datas;
+      });
+      displayToastmessage("Enrégistrement éffectué avec succeès !", context);
+
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //   '/succes-appointement',
+      //   (Route<dynamic> route) => false,
+      // );
+      // } else {
+      //  // displayToastmessage("${datas["message"]}", context);
+      // }
     }).catchError((err, error) {
       Navigator.of(context).pop();
 

@@ -2,11 +2,9 @@ import 'package:biomaj/constants/app_colors.dart';
 import 'package:biomaj/models/preferences.dart';
 import 'package:biomaj/router/route_generator.dart';
 import 'package:biomaj/screens/common/splash/splash_screen.dart';
-import 'package:biomaj/state_manager/global_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 //import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 
@@ -38,13 +36,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, child) {
-        return MultiProvider(
-          providers: [
-          ChangeNotifierProvider(
-            create: (__) => GlobalStateManager(),
-          ),
-        ],
-          child: MaterialApp(
+        return  MaterialApp(
               //locale: DevicePreview.locale(context), // Add the locale here
               //builder: DevicePreview.appBuilder, // Add the builder here
               title: 'biomaj',
@@ -54,11 +46,6 @@ class MyApp extends StatelessWidget {
                 primarySwatch: AppColors.appMaterialColor,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              
-              supportedLocales: const [
-                Locale('en', 'US'),
-                Locale('fr', 'FR'), 
-              ],
               //initialRoute: '/',
               onGenerateRoute: RouteGenerator.generateRoute,
               home: SplashScreen(
@@ -67,7 +54,7 @@ class MyApp extends StatelessWidget {
                   //Firebase.initializeApp()
                 ],
               )
-              ),
+              
         );
       },
     );

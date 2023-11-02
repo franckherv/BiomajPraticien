@@ -4,7 +4,6 @@
 import 'package:biomaj/constants/appBar.dart';
 import 'package:biomaj/constants/app_colors.dart';
 import 'package:biomaj/constants/app_images.dart';
-import 'package:biomaj/models/user_model.dart';
 import 'package:biomaj/widgets/profil_userInfo_widget/profil_user_info_widget.dart';
 import 'package:biomaj/widgets/profil_userInfo_widget/profil_user_qrcode_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,21 +19,7 @@ class ProfilScreen extends StatefulWidget {
 
 class _ProfilScreenState extends State<ProfilScreen>
     with SingleTickerProviderStateMixin {
- final UserModel _userModel = UserModel(
-  name: "John Doe",
-  email: "johnDoe@gmail.com",
-  contact: "0101010101",
-  profession: "Mobile developper",
-  groupSan: "O+",
-  maladiChroniq: "N.A",
-  alergie: "N.A",
-  antecedent: Antecedent(
-    name: "Pierre Giroud",
-    email: "giraud@gmail.com",
-    contact: "0202020202",
-    profession: "Policier"
-    )
-  );
+
   TabController? _tabController;
 
   @override

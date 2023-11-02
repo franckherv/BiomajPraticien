@@ -23,6 +23,8 @@ import 'package:biomaj/screens/rendezvous/vue_des_rdv/detail_de_mesrdv.dart';
 import 'package:biomaj/screens/rendezvous/vue_des_rdv/mes_rendez_vous.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/examens/createNewExamen/new_exam.dart';
+
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -67,7 +69,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ListConsultation());
 
       case '/uer-account':
-        return MaterialPageRoute(builder: (_) => UserAccount());
+        return MaterialPageRoute(builder: (_) => UserAccount());    
+
+      //? route for new exam create   
+      case '/new-exam-create':
+        return MaterialPageRoute(builder: (_) => NewExam());
 
       case '/creation-examen-enregistrement':
         CreationExamen argument = args as CreationExamen;

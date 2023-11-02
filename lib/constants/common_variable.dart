@@ -6,11 +6,11 @@ class CommonVariable {
   //static final apiBaseUrl = "http://192.168.1.10:240/api/"; //dev
   //static final baseUrl = "http://192.168.1.10:240/"; //dev
 
-  static const apiBaseUrl = "http://biomaj.net/api/"; //prod
-  static const baseUrl = "http://biomaj.net/"; //prod
+  static const apiBaseUrl = "https://biomaj.net/api/"; //prod
+  static const baseUrl = "https://biomaj.net/"; //prod
 
   //static final sckApiBaseUrl = "https://dev.sycapay.net/api/"; //test
-  static const sckApiBaseUrl = "https://dev.sycapay.com/"; //prod
+  static const imageBaseUrl = "https://biomaj.net/public/"; 
 
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();

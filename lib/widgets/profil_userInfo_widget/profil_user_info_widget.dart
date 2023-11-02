@@ -35,7 +35,6 @@ class _ConsultationUserInfoWidgetState extends State<ConsultationUserInfoWidget>
   }
   @override
   Widget build(BuildContext context) {
-    print("=========Date============${widget.consultatingData!.dateconsultation}=============================");
  
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -66,6 +65,13 @@ class _ConsultationUserInfoWidgetState extends State<ConsultationUserInfoWidget>
                       const VisualDensity(horizontal: 0, vertical: -4),
                   title: const Text("Nom"),
                   trailing:Text("${box1?.get('name')}"),  
+                ),    ListTile(
+                  contentPadding: 
+                      const EdgeInsets.only(left: 18.0, right: 18, top: 5, bottom: 0),
+                  visualDensity:
+                      const VisualDensity(horizontal: 0, vertical: -4),
+                  title: const Text("Prenom"),
+                  trailing:Text("${box1?.get('prenom')}"),  
                 ),
                     ListTile(
                   contentPadding: 
@@ -105,7 +111,7 @@ class _ConsultationUserInfoWidgetState extends State<ConsultationUserInfoWidget>
                   visualDensity:
                       const VisualDensity(horizontal: 0, vertical: -4),
                   title: const Text("Rythme cardique"),
-                  trailing: Text("${widget.consultatingData!.rythmecardiaque} TG"),
+                  trailing: Text("${widget.consultatingData!.rythmecardiaque} Bts/min"),
                 ),
               
                
