@@ -1,4 +1,3 @@
-import 'dart:io' as Io;
 import 'dart:io';
 import 'package:biomaj/constants/common_variable.dart';
 import 'package:biomaj/models/consultation.dart';
