@@ -242,7 +242,8 @@ class _ListConsultationState extends State<ListConsultation> {
     await httpGlobalDatasource.getConsultingList().then((data) {
       Navigator.of(context).pop();
       setState(() {
-        _listconsultation = data;     
+        _listconsultation = data;  
+
       });
     }).catchError((err) {
       Navigator.of(context).pop();

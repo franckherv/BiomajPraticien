@@ -151,6 +151,7 @@ List<Map> categoryList() {
   return [
     {"id": 1, "title": "Consultation", "image": AppImages.consultation},
     {"id": 2, "title": "Examen", "image": AppImages.examen},
+    {"id": 2, "title": "Information patient", "image": AppImages.validation},
   ];
 }
 

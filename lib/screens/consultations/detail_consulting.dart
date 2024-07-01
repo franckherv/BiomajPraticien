@@ -47,7 +47,7 @@ class _DetailConsultationScreenState extends State<DetailConsultationScreen>
           appBar: appBarmenu(
               context: context,
               title: _selectedIndex == 0
-                  ? "Information"
+                  ? "Détail consultation"
                   : _selectedIndex == 1
                       ? "Observation" : _selectedIndex == 2 ? "Ordonnance"
                       : "Examen",

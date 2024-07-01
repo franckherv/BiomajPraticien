@@ -99,6 +99,36 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
                               Center(
                                 child: Column(
                                   children: [
+                                       Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text("Matricule"),
+                                        IconButton(
+                                            color: Colors.green,
+                                            onPressed: () {
+                                              scan();
+                                            },
+                                            icon: const Icon(Icons.qr_code))
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top: ScreenUtil().setHeight(5),
+
+                                        //  top: 50.0,
+                                      ),
+                                      child: RoundedTextInputFieldWithBorder(
+                                        label: "Cliquez pour saisir",
+                                        imputCtrl: matriculeController,
+                                        inputType: TextInputType.multiline,
+                                        inputAction: TextInputAction.newline,
+                                        textColor: Colors.black54,
+                                        inputColor: Colors.black54,
+                                        tailText: 15,
+                                        obscure: false,
+                                      ),
+                                    ),
                                     Padding(
                                       padding: EdgeInsets.only(
                                         bottom: ScreenUtil().setHeight(10),
@@ -118,8 +148,8 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
                                       child: RoundedTextInputFieldWithBorder(
                                         label: "Cliquez pour saisir",
                                         imputCtrl: tensioncontroller,
-                                        inputType: TextInputType.number,
-                                        inputAction: TextInputAction.done,
+                                        inputType: TextInputType.text,
+                                        inputAction: TextInputAction.next,
                                         textColor: Colors.black54,
                                         inputColor: Colors.black54,
                                         tailText: 15,
@@ -146,7 +176,7 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
                                         label: "Cliquez pour saisir",
                                         imputCtrl: tempController,
                                         inputType: TextInputType.number,
-                                        inputAction: TextInputAction.done,
+                                        inputAction: TextInputAction.next,
                                         textColor: Colors.black54,
                                         inputColor: Colors.black54,
                                         tailText: 15,
@@ -173,7 +203,7 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
                                         label: "Cliquez pour saisir",
                                         imputCtrl: poidController,
                                         inputType: TextInputType.number,
-                                        inputAction: TextInputAction.done,
+                                        inputAction: TextInputAction.next,
                                         textColor: Colors.black54,
                                         inputColor: Colors.black54,
                                         tailText: 15,
@@ -207,36 +237,7 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
                                         obscure: false,
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                       const Text("Matricule"),
-                                        IconButton(
-                                            color: Colors.green,
-                                            onPressed: () {
-                                              scan();
-                                            },
-                                            icon: const Icon(Icons.qr_code))
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        top: ScreenUtil().setHeight(5),
-
-                                        //  top: 50.0,
-                                      ),
-                                      child: RoundedTextInputFieldWithBorder(
-                                        label: "Cliquez pour saisir",
-                                        imputCtrl: matriculeController,
-                                        inputType: TextInputType.text,
-                                        inputAction: TextInputAction.done,
-                                        textColor: Colors.black54,
-                                        inputColor: Colors.black54,
-                                        tailText: 15,
-                                        obscure: false,
-                                      ),
-                                    ),
+                                 
                                   ],
                                 ),
                               ),
@@ -256,8 +257,10 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
                                             tensioncontroller.text.isNotEmpty &&
                                             poidController.text.isNotEmpty &&
                                             rythmCarController
-                                                .text.isNotEmpty && matriculeController.text.isNotEmpty) {
-                                         createNewConsultation();
+                                                .text.isNotEmpty &&
+                                            matriculeController
+                                                .text.isNotEmpty) {
+                                          createNewConsultation();
                                         } else {
                                           displayToastmessage(
                                               "Veuillez remplir correctement tous les champs",
@@ -311,7 +314,12 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
           (Route<dynamic> route) => false,
         );
       }
+      if (datas["code"] == 0) {
+        displayToastmessage("Oupps! ${datas["message"]}", context);
+      }
     }).catchError((err, error) {
+      Navigator.of(context).pop();
+
       displayToastmessage("Oupps! Une erreur s'est produite", context);
     });
   }
@@ -331,10 +339,6 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
           matriculeController.text = barcode;
         }
       });
-      //  setState(() => barcode = value.rawContent.toString());
-      // if (barcode != "") {
-
-      // }
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         setState(() {

@@ -5,25 +5,36 @@ import 'package:biomaj/models/category_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../appKey/app_key.dart';
+import '../main.dart';
+
 class CategoryWidget extends StatelessWidget {
   Category cat;
   CategoryWidget({Key? key, required this.cat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final userJson = box1?.get(AppKeys.patient);
+
+
     return InkWell(
       onTap: () {
         if (cat.title == "Examen") {
           Navigator.pushNamed(context, '/examen-screen');
-        } else {
+        } else if (cat.title == 'Information patient' /*&& userJson != null */) {
+          
+          Navigator.pushNamed(context, '/info-patient');
+        } else if(cat.title == 'Consultation') { 
           Navigator.pushNamed(context, '/consulting-screen');
-        } 
+        } else {
+          return;
+        }
       },
       child: Container(
           height: ScreenUtil().setHeight(250),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: cat.title == "Rendez-vous"
+              color: cat.title == "Information patient"
                   ? AppColors.blur
                   : cat.title == "Examen"
                       ? AppColors.violet

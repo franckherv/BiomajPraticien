@@ -1,4 +1,3 @@
-import 'package:biomaj/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 
@@ -38,7 +37,7 @@ class SmallRaisedBtn extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: AppColors.appThemeColor,
+         // primary: AppColors.appThemeColor,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(borderRadius: borderRadius),
         ),

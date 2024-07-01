@@ -1,6 +1,4 @@
 // ignore_for_file: camel_case_types, must_be_immutable
-
-import 'package:biomaj/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class smallTextBtn extends StatelessWidget {
@@ -14,7 +12,7 @@ class smallTextBtn extends StatelessWidget {
     return TextButton(
       child: Text(label!),
       style: TextButton.styleFrom(
-        primary: AppColors.appThemeColor,
+       // primary: AppColors.appThemeColor,
         textStyle: const TextStyle(
           
             color: Colors.black, fontSize: 20, decoration: TextDecoration.underline),

@@ -1,6 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unused_field, depend_on_referenced_packages
-import 'dart:async';
-
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
 import 'package:biomaj/models/consultation.dart';
@@ -33,8 +31,7 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
   final GlobalKey<State> _keyLoader = GlobalKey<State>();
   String loadingMessage = "Patientez svp";
-int? iD;
-  List<ModelAnalyse> _analyseData = [];
+  int? iD;
 
   final List<ExmprMdl> _examenList = [];
   final List<Prescription> _prescriptionList = [];
@@ -42,20 +39,19 @@ int? iD;
   List<ListConsultingHospital> _listconsultation = [];
 
   // ignore: prefer_typing_uninitialized_variables
-  var value1;
-  var value2;
+ 
   String? examId;
   String? serviceID;
 
   @override
   void initState() {
-    if (mounted) {
-      setState(() {
-        Future.delayed(const Duration(milliseconds: 0), () {
-          getConsultationData();
-        });
-      });
-    }
+    // if (mounted) {
+    //   setState(() {
+    //     Future.delayed(const Duration(milliseconds: 0), () {
+    //       getConsultationData();
+    //     });
+    //   });
+    // }
 
     super.initState();
   }
@@ -67,9 +63,7 @@ final findid = _listconsultation.firstWhere((element) => element.id == widget.co
     return Scaffold(
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pushNamed('/creation-examen-enregistrement',
-                arguments: CreationExamen(
-                    cnsulID: widget.consultatingData!.codeconsultation));
+            Navigator.of(context).pushNamed('/creation-examen-enregistrement',arguments: CreationExamen(cnsulID: widget.consultatingData!.codeconsultation));
           },
           child: const Icon(Icons.add)),
       body: Container(
@@ -149,10 +143,7 @@ final findid = _listconsultation.firstWhere((element) => element.id == widget.co
                                         TextButton(
                                           onPressed: () {
                                             Navigator.of(context).pop(true);
-                                            suprimerExam(
-                                                analyseId:findid.analise[i].id);
-                                            // suprimerExam(
-                                            //     analyseId:widget.consultatingData!.analise![i].id);
+                                            suprimerExam(analyseId:findid.analise[i].id);
                                           },
                                           child: const Text('Oui'),
                                         ),

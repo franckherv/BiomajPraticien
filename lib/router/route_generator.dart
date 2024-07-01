@@ -24,6 +24,7 @@ import 'package:biomaj/screens/rendezvous/vue_des_rdv/mes_rendez_vous.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/examens/createNewExamen/new_exam.dart';
+import '../screens/infopratient/info_patient.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -60,20 +61,23 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => AnalyseTermineScreen());
 
       case '/consulting-screen':
-        return MaterialPageRoute(builder: (_) => ConsultingScreen());
+        return MaterialPageRoute(builder: (_) => const ConsultingScreen());
 
       case '/mes-rendez-vous-vue':
-        return MaterialPageRoute(builder: (_) => MesRendezvousvue());
+        return MaterialPageRoute(builder: (_) => const MesRendezvousvue());
 
       case '/list-consultation':
-        return MaterialPageRoute(builder: (_) => ListConsultation());
+        return MaterialPageRoute(builder: (_) => const ListConsultation());
 
       case '/uer-account':
         return MaterialPageRoute(builder: (_) => UserAccount());    
 
       //? route for new exam create   
       case '/new-exam-create':
-        return MaterialPageRoute(builder: (_) => NewExam());
+        return MaterialPageRoute(builder: (_) => NewExam());   
+        
+    case '/info-patient':
+          return MaterialPageRoute(builder: (_) => const InfoPatient());
 
       case '/creation-examen-enregistrement':
         CreationExamen argument = args as CreationExamen;

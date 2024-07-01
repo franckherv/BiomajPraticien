@@ -1,6 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, library_private_types_in_public_api
 import 'package:biomaj/constants/appBar.dart';
-import 'package:biomaj/constants/app_colors.dart';
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/screens/consultations/create_consulting/new_consulting_screen.dart';
 import 'package:flutter/material.dart';
@@ -92,44 +91,15 @@ class _CreateConsultingScreenState extends State<CreateConsultingScreen>
                         children: [
                           Container(
                             height: 35,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(
-                                12.0,
-                              ),
-                              image: const DecorationImage(
+                            decoration: const BoxDecoration(
+                              image:  DecorationImage(
                                 fit: BoxFit.cover,
                                 image: AssetImage(
                                   AppImages.fontdecran,
                                 ),
                               ),
                             ),
-                            child: TabBar(
-                              isScrollable: true,
-                              controller: _tabController,
-                              onTap: (index) {
-                                setState(() {
-                                });
-                              },
-                              // give the indicator a decoration (color and border radius)
-                              indicator: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  10.0,
-                                ),
-                                color: AppColors.appThemeColor,
-                              ),
-                              labelColor: Colors.white,
-                              unselectedLabelColor: Colors.black,
-                              labelStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 12),
-                              tabs: const [
-                                Tab(
-                                  child: Text(
-                                    'Constante',
-                                  ),
-                                ),
-                              ],
-                            ),
+                            child: const Text('Veuillez renseigner les informations ci-dessous', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),)
                           ),
                           // tab bar view here
                           Expanded(

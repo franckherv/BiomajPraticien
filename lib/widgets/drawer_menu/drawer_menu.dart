@@ -1,10 +1,18 @@
+import 'dart:convert';
+import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:biomaj/constants/app_colors.dart';
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
+import 'package:biomaj/models/user_model.dart';
 import 'package:biomaj/screens/common/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import '../../appKey/app_key.dart';
+import '../loading/loading_spinner.dart';
 
 class Drawermenu extends StatefulWidget {
   @override
@@ -13,10 +21,12 @@ class Drawermenu extends StatefulWidget {
 
 class _DrawermenuState extends State<Drawermenu> {
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
-  // final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   String loadingMessage = "Connexion en cours";
 
-  Box? box1;
+  String barcode = "";
+
+  late Box box;
 
   @override
   void initState() {
@@ -25,7 +35,7 @@ class _DrawermenuState extends State<Drawermenu> {
   }
 
   void openBox() async {
-    box1 = await Hive.openBox('logindata');
+    box = await Hive.openBox('logindata');
     setState(() {});
   }
 
@@ -37,24 +47,7 @@ class _DrawermenuState extends State<Drawermenu> {
       child: Drawer(
         child: Column(
           children: [
-            //  const  UserAccountsDrawerHeader(
-            //   accountName: Text("bbb",style: TextStyle(
-            //       fontSize: 16.0,
-            //       fontWeight: FontWeight.w600,
-            //       color: Colors.black,
-            //     ),),
-            //   accountEmail: Text("lll",style: TextStyle(
-            //       fontSize: 16.0,
-            //       fontWeight: FontWeight.w600,
-            //       color: Colors.black,
-            //     ),),
-            //   decoration: BoxDecoration(color: Colors.white),
-            //   currentAccountPicture:  CircleAvatar(
-            //     radius: 100.0,
-            //    // backgroundColor: const Color(0xFF778899),
-            //     backgroundImage: AssetImage(AppImages.appLogoPng)
-            //   ),
-            // ),
+           
             Container(
               color: Colors.white,
               padding: const EdgeInsets.only(right: 10),
@@ -110,7 +103,8 @@ class _DrawermenuState extends State<Drawermenu> {
                 ),
               ),
               onTap: () {
-              Navigator.of(context).pushNamed('/consulting-screen');
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed('/consulting-screen');
               },
             ),
             ListTile(
@@ -128,17 +122,15 @@ class _DrawermenuState extends State<Drawermenu> {
                 ),
               ),
               onTap: () {
-              Navigator.of(context).pushNamed('/examen-screen'); 
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed('/examen-screen');
               },
             ),
-          /*  ListTile(
+            ListTile(
               visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              leading: Image.asset(
-                AppImages.rdv,
-                width: 20,
-              ),
+              leading: const Icon(Icons.qr_code_2, color: AppColors.appMaterialColor,),
               title: const Text(
-                "Résultat d'analyse",
+                "Scan QRCODE",
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w600,
@@ -146,10 +138,11 @@ class _DrawermenuState extends State<Drawermenu> {
                 ),
               ),
               onTap: () {
+                // Navigator.of(context).pop();
+                scanPatientQR();
               },
-            ),*/
+            ),
 
-        
             ListTile(
               visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
               leading: Image.asset(
@@ -165,13 +158,12 @@ class _DrawermenuState extends State<Drawermenu> {
                 ),
               ),
               onTap: () {
-             Navigator.of(context).pushNamed('/uer-account');
-                
+                Navigator.of(context).pushNamed('/uer-account');
               },
             ),
             const Spacer(
-              //flex: 3,
-            ),
+                //flex: 3,
+                ),
             ListTile(
               leading: const Icon(
                 Icons.logout,
@@ -186,14 +178,14 @@ class _DrawermenuState extends State<Drawermenu> {
                 ),
               ),
               onTap: () {
-                box1?.put('isLogged', false);
-                box1?.delete('contact');
-                box1?.delete('password');
-                box1?.delete('name');
-                box1?.delete('prenom');
-                box1?.delete('lienimageuser');
-                box1?.delete('token');
-                 displayToastmessage("Compte déconnecté avec succès", context);
+                box.put('isLogged', false);
+                box.delete('contact');
+                box.delete('password');
+                box.delete('name');
+                box.delete('prenom');
+                box.delete('lienimageuser');
+                box.delete('token');
+                displayToastmessage("Compte déconnecté avec succès", context);
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -224,10 +216,10 @@ class _DrawermenuState extends State<Drawermenu> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(20)),
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.centerLeft,
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.phone_rounded,
                               size: 15, color: Colors.black54),
                           Text(
@@ -244,10 +236,10 @@ class _DrawermenuState extends State<Drawermenu> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(35)),
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.centerLeft,
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.email_outlined,
                               size: 15, color: Colors.black54),
                           Text(
@@ -274,7 +266,51 @@ class _DrawermenuState extends State<Drawermenu> {
     );
   }
 
- displayToastmessage(String message, BuildContext context) {
+  displayToastmessage(String message, BuildContext context) {
     Fluttertoast.showToast(msg: message);
+  }
+
+  Future scanPatientQR() async {
+    try {
+      await BarcodeScanner.scan().then((value) {
+        setState(() {
+          barcode = value.rawContent.toString();
+        });
+        if (barcode.isNotEmpty) {
+          Future.delayed(const Duration(milliseconds: 0), () {
+            fetchPatientData(barcode);
+          });
+        }
+      });
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.cameraAccessDenied) {
+        setState(() {
+          barcode = 'The user did not grant the camera permission!';
+        });
+      } else {
+        setState(() => barcode = 'Unknown error: $e');
+      }
+    } on FormatException {
+      setState(() => barcode =
+          'null (User returned using the "back"-button before scanning anything. Result)');
+    } catch (e) {
+      setState(() => barcode = 'Unknown error: $e');
+    }
+  }
+
+  fetchPatientData(String scanResult) async {
+    LoadingSpinner.showLoadingDialog(
+        context, _keyLoader, 'Chargement en cours');
+    await httpGlobalDatasource
+        .getPatientInfo(matricule: scanResult)
+        .then((data) {
+      Navigator.of(context).pop();
+      User userData = User.fromJson(data.toJson());
+      box.put(AppKeys.patient, json.encode(userData));
+      Navigator.of(context).pushNamed('/info-patient');
+    }).catchError((err) {
+      Navigator.of(context).pop();
+      displayToastmessage("Oupps! une erreur s'est produite", context);
+    });
   }
 }

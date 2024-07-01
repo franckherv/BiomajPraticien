@@ -32,9 +32,10 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
   String loadingMessage = "Patientez svp";
   bool buttonColor = false;
 
-  bool _isLoading = false;
 
   UploadFile uploadFile = UploadFile(data: []);
+
+  
 
   @override
   void initState() {

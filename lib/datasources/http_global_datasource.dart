@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:biomaj/constants/common_variable.dart';
 import 'package:biomaj/models/consultation.dart';
@@ -11,6 +12,7 @@ import 'package:biomaj/models/service_list.dart';
 import 'package:dio/dio.dart';
 
 import '../models/uploadFile.dart';
+import '../models/user_model.dart';
 
 class HttpGlobalDatasource {
   Dio dio = Dio(
@@ -35,7 +37,6 @@ class HttpGlobalDatasource {
       print("Connexion ===========$response==========");
       return response.data;
     } catch (error, stacktrace) {
-      print("========error=====$error=================");
       print("========stacktrace=====$stacktrace===============");
     }
   }
@@ -79,13 +80,12 @@ class HttpGlobalDatasource {
   Future<List<ListConsultingHospital>> getConsultingList() async {
     try {
       Response response = await dio.get("liste-consultation-hopital");
-      print("###response####${response.data['donne']}###");
+      log("###response####${response.data['donne']}###");
 
       return (response.data['donne']['data'] as List)
           .map((x) => ListConsultingHospital.fromJson(x))
           .toList();
     } catch (error, stacktrace) {
-      print("========> ${error} ==========> ${stacktrace}");
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
     }
   }
@@ -255,6 +255,8 @@ class HttpGlobalDatasource {
         "rythmecardiaque": rythmecardiaque,
         "matriculeuser": matriculeuser
       });
+
+      print("RESPONSE ${response.data}");
 
       return response.data;
     } catch (error, stacktrace) {
@@ -434,6 +436,18 @@ class HttpGlobalDatasource {
       print("=================${response.data}===============");
 
       return response.data;
+    } catch (error, stacktrace) {
+      throw Exception("Exception occured: $error stackTrace: $stacktrace");
+    }
+  }
+
+  // get patient info
+  Future<User> getPatientInfo({required String matricule}) async {
+    try {
+      Response response = await dio.post("patient-infos", data: {
+        "matriculeuser": matricule,
+      });
+      return User.fromJson(response.data['donne']);
     } catch (error, stacktrace) {
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
     }

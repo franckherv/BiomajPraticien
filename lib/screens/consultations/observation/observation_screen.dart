@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+
 class ObservationScreen extends StatefulWidget {
   ListConsultingHospital? consultatingData;
 
@@ -25,12 +26,12 @@ class _ObservationScreenState extends State<ObservationScreen> {
 
   final TextEditingController descontroller = TextEditingController();
   final TextEditingController codeCsltController = TextEditingController();
-
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
   final GlobalKey<State> _keyLoader = GlobalKey<State>();
   String loadingMessage = "Patientez svp";
+  List<ListConsultingHospital> _listconsultation = [];
 
-    List<ListConsultingHospital> _listconsultation = [];
+  bool isVisible = false;
 
   @override
   void initState() {
@@ -42,8 +43,10 @@ class _ObservationScreenState extends State<ObservationScreen> {
 
   @override
   Widget build(BuildContext context) {
-final findObservationById = _listconsultation.firstWhere((element) => element.id == widget.consultatingData!.id, 
-      orElse: () => ListConsultingHospital(affichageconsultation: "", analise: [], odornance: []));
+    final findObservationById = _listconsultation.firstWhere(
+        (element) => element.id == widget.consultatingData!.id,
+        orElse: () => ListConsultingHospital(
+            affichageconsultation: "", analise: [], odornance: []));
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -52,9 +55,9 @@ final findObservationById = _listconsultation.firstWhere((element) => element.id
               isScrollControlled: true,
               builder: (context) {
                 return StatefulBuilder(builder: (BuildContext context,
-                    StateSetter setState /*You can rename this!*/) {
+                    StateSetter setState) {
                   return Container(
-                    height: MediaQuery.of(context).size.height * 0.45,
+                    height: MediaQuery.of(context).size.height * 0.80,
                     color: const Color(0xFF737373),
                     child: Container(
                       decoration: const BoxDecoration(
@@ -95,8 +98,8 @@ final findObservationById = _listconsultation.firstWhere((element) => element.id
                                   label: "Cliquez pour saisir",
                                   imputCtrl: descontroller,
                                   maxLines: 3,
-                                  inputType: TextInputType.text,
-                                  inputAction: TextInputAction.done,
+                                  inputType: TextInputType.multiline,
+                                  inputAction: TextInputAction.newline,
                                   textColor: Colors.black54,
                                   inputColor: Colors.black54,
                                   tailText: 15,
@@ -117,6 +120,8 @@ final findObservationById = _listconsultation.firstWhere((element) => element.id
                                       setState(() {
                                         if (descontroller.text.isNotEmpty) {
                                           createNewObservation();
+
+                                          // controller.addObservation(widget.consultatingData!.codeconsultation.toString());
                                         } else {
                                           displayToastmessage(
                                               "Veuillez renseigner correctement tous les champs",
@@ -157,38 +162,36 @@ final findObservationById = _listconsultation.firstWhere((element) => element.id
             ),
           ),
         ),
-        child: RefreshIndicator(
-          onRefresh: () async{
-            getConsultationData();
-          },
-          child: findObservationById.description != null  ? Column(
-              children: [
-                   SizedBox(
-                height: ScreenUtil().setHeight(20),
-              ),
-              Card(
-                color: Colors.grey[200],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+        child: findObservationById.description != null
+            ? Column(
+                children: [
+                  SizedBox(
+                    height: ScreenUtil().setHeight(20),
+                  ),
+                  Card(
+                    color: Colors.grey[200],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // margin: EdgeInsets.all(20.0),
+                    child: ListTile(
+                        title: const Text('Observation'),
+                        subtitle:
+                            Text(findObservationById.description.toString())),
+                  ),
+                ],
+              )
+            : Center(
+                child: Padding(
+                  padding: EdgeInsets.all(15.h),
+                  child: const Text(
+                    "Aucune observation trouvée.",
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
-                // margin: EdgeInsets.all(20.0),
-                child: ListTile(
-                  title: const Text('Observation'),
-                  subtitle:  Text(findObservationById.description.toString())
-                      
-                ),
               ),
-           
-              ],
-             ):   Center(
-               child: Padding(
-                 padding:  EdgeInsets.all(15.h),
-                 child: const  Text("Aucune observation trouvée.", style: TextStyle(
-                              color: Colors.grey,
-                            ),),
-               ),
-             ),
-        ),
       ),
     );
   }
@@ -206,6 +209,9 @@ final findObservationById = _listconsultation.firstWhere((element) => element.id
         .then((datas) {
       Navigator.of(context).pop();
       if (datas["code"] == 1) {
+        Future.delayed(const Duration(milliseconds: 0), () {
+          getConsultationData();
+        });
         displayToastmessage("Enrégistrement éffectué avec succeès !", context);
 
         Navigator.of(context).pop();
@@ -219,13 +225,13 @@ final findObservationById = _listconsultation.firstWhere((element) => element.id
     Fluttertoast.showToast(msg: message);
   }
 
-    getConsultationData() async {
+  getConsultationData() async {
     LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
 
     await httpGlobalDatasource.getConsultingList().then((data) {
       Navigator.of(context).pop();
       setState(() {
-        _listconsultation = data;     
+        _listconsultation = data;
       });
     }).catchError((err) {
       Navigator.of(context).pop();
@@ -233,6 +239,4 @@ final findObservationById = _listconsultation.firstWhere((element) => element.id
       displayToastmessage("Oupps! une erreur s'est produite", context);
     });
   }
-
-
 }

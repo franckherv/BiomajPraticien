@@ -42,7 +42,7 @@ class _ExamenScreenState extends State<ExamenScreen> {
           centerTitle: true,
           actions: [
             Padding(
-              padding: EdgeInsets.all(2.0.h),
+              padding: EdgeInsets.only(right: 10.0.w, top: 5.h, bottom: 2.h),
               child: RawMaterialButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed('/new-exam-create');

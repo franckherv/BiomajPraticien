@@ -43,15 +43,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawermenu(),
-     appBar: AppBar(
+      appBar: AppBar(
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         actions: [
           InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed('/uer-account',
-                  );  
+              Navigator.of(context).pushNamed(
+                '/uer-account',
+              );
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -174,8 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: _category.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       mainAxisSpacing: 2,
-                      // mainAxisExtent: 2,
-                      childAspectRatio: 0.7,
+                      childAspectRatio: 1,
                       crossAxisSpacing: 10,
                       crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) {

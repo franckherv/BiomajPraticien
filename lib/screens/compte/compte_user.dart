@@ -70,11 +70,11 @@ class _UserAccountState extends State<UserAccount> {
                           )),
                     ],
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 80.0, left: 40.0),
+                  const Padding(
+                      padding:  EdgeInsets.only(top: 80.0, left: 40.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children:  [
                           CircleAvatar(
                             backgroundColor: Colors.white,
                             radius: 15.0,
@@ -98,7 +98,6 @@ class _UserAccountState extends State<UserAccount> {
               ),
               Expanded(child: Container()),
               Expanded(
-                flex: 3,
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.grey[100],
@@ -115,46 +114,43 @@ class _UserAccountState extends State<UserAccount> {
                     boxShadow: const [
                       BoxShadow(
                         color: Colors.black,
-                        spreadRadius: 0.8,
+                        spreadRadius: 0.1,
                         blurRadius: 2,
-                        offset: Offset(0.7, 0.7),
+                        offset: Offset(0.9, 0.9),
                       ),
                     ],
                   ),
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(20)),
-                        child: Column(
-                          children: [
-                            ListTile(
-                              contentPadding: const EdgeInsets.only(
-                                  left: 18.0, right: 18, top: 5, bottom: 0),
-                              visualDensity: const VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              title: const Text("Nom"),
-                              trailing: Text("${box1?.get('name')}"),
-                            ),
-                            ListTile(
-                              contentPadding: const EdgeInsets.only(
-                                  left: 18.0, right: 18, top: 5, bottom: 0),
-                              visualDensity: const VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              title: const Text("Prenom"),
-                              trailing: Text("${box1?.get('prenom')}"),
-                            ),
-                            ListTile(
-                              contentPadding: const EdgeInsets.only(
-                                  left: 18.0, right: 18, top: 5, bottom: 20),
-                              visualDensity: const VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              title: const Text("Contact"),
-                              trailing: Text("${box1?.get('contact')}"),
-                            ),
-                           
-        
-                          ],
-                        ),
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(20)),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            contentPadding: const EdgeInsets.only(
+                                left: 18.0, right: 18, top: 5, bottom: 0),
+                            visualDensity: const VisualDensity(
+                                horizontal: 0, vertical: -4),
+                            title: const Text("Nom"),
+                            trailing: Text("${box1?.get('name')}"),
+                          ),
+                          ListTile(
+                            contentPadding: const EdgeInsets.only(
+                                left: 18.0, right: 18, top: 5, bottom: 0),
+                            visualDensity: const VisualDensity(
+                                horizontal: 0, vertical: -4),
+                            title: const Text("Prenom"),
+                            trailing: Text("${box1?.get('prenom')}"),
+                          ),
+                          ListTile(
+                            contentPadding: const EdgeInsets.only(
+                                left: 18.0, right: 18, top: 5, bottom: 20),
+                            visualDensity: const VisualDensity(
+                                horizontal: 0, vertical: -4),
+                            title: const Text("Contact"),
+                            trailing: Text("${box1?.get('contact')}"),
+                          ),
+                         
+                        ],
                       ),
                     ),
                   ),

@@ -1,4 +1,3 @@
-import 'package:biomaj/models/user_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -19,7 +18,6 @@ class CommonVariable {
 
   static String? userTken;
   static String? setglobalOneSignalPlayerId;
-  static UserModels? localUserDatas;
 
   static final ddMMYYFormat = DateFormat('dd-MM-yyyy');
   static final formattedDate = DateFormat('kk:mm:ss EEE d MMM');

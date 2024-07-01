@@ -40,9 +40,6 @@ class _AnalysePrescriteScreenState extends State<AnalysePrescriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    print("barcode============ $barcode==========");
-    print("text field============ ${controller.text}==========");
     return Scaffold(
       drawer: Drawermenu(),
       backgroundColor: Colors.white,

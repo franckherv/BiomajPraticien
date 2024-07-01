@@ -1,4 +1,3 @@
-import 'package:biomaj/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 
@@ -16,7 +15,7 @@ class LoadingSpinner {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return  Dialog(
-      backgroundColor: AppColors.appThemeColor,
+      //backgroundColor: AppColors.appThemeColor,
       child: Container(
         margin: EdgeInsets.all(15),
         width: double.infinity,

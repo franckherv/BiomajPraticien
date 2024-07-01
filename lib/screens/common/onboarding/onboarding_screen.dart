@@ -82,7 +82,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                        
                           borderRadius: BorderRadius.circular(20),
                         
-                          child: index == 2 ? const Text("Démarrer") : const Text("Suivant"),
+                          child: index == 2 ? const Text("Démarrer", style: TextStyle(color: Colors.white),) : const Text("Suivant", style: TextStyle(color: Colors.white)),
 
                           onPressed: () {
                             if (index == 0) {
