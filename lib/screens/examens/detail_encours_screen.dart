@@ -98,7 +98,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                       children: [
                         ListTile(
                           title: const Text(
-                            'Date',
+                            'Date de \nprescription',
                           ),
                           trailing: Text(CommonVariable.ddMMYYFormat.format(
                               DateTime.parse(widget.examencours.updatedAt))),
@@ -107,9 +107,9 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                           title: const Text(
                             'Statut de l\'analyse',
                           ),
-                          trailing: widget.examencours.etatId == 2
-                              ? const Chip(label: Text("encours"))
-                              : const Chip(label: Text("Terminé")),
+                          trailing: widget.examencours.etatId != 2
+                              ? const Chip(label: Text("encours"),backgroundColor : Colors.blue)
+                              : const Chip(label: Text("Terminé"),backgroundColor : Colors.green),
                         ),
                         ListTile(
                           contentPadding: const EdgeInsets.symmetric(
@@ -212,14 +212,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                   )
                                 ],
                               )
-                              // Icon(
-                              //   Icons.image,
-                              //   size: 50.0,
-                              //   color: Colors.black54,
-                              // ),
-                              // Text(
-                              //   "Aucune image sélectionnée !",
-                              // )
+                           
                             ],
                           )),
               ),

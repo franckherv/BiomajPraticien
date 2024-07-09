@@ -4,12 +4,14 @@ import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/constants/app_style.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
 import 'package:biomaj/models/consultation.dart';
+import 'package:biomaj/screens/consultations/detail_consulting.dart';
 import 'package:biomaj/utils/rounded_text_input_field_with_border.dart';
 import 'package:biomaj/utils/small_raised_btn.dart';
 import 'package:biomaj/widgets/loading/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class CreationOrdonnance extends StatefulWidget {
   String? cnsulID;
@@ -195,14 +197,18 @@ class _CreationOrdonnanceState extends State<CreationOrdonnance> {
             codeconsultation: widget.cnsulID)
         .then((datas) {
       if (datas["code"] == 1) {
+         Navigator.of(context).pop();
         setState(() {
           isVisible = true;
         });
-        Navigator.of(context).pop();
+        Future.delayed(const Duration(milliseconds: 0), () {
+          getConsultationData();
+        });
+        Get.to(() => DetailConsultationScreen(selectedPage: 2));
 
         displayToastmessage("Enrégistrement éffectué avec succeès !", context);
 
-        Navigator.of(context).pop();
+       
       }
     }).catchError((err, error) {
       displayToastmessage("Oupps! Une erreur s'est produite", context);

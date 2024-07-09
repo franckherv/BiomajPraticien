@@ -229,7 +229,7 @@ class HttpGlobalDatasource {
   Future<List<Examencours>> getexamenEncour() async {
     try {
       Response response = await dio.get("list-examens-encours");
-      print("###response####${response.data['data']['data']}###");
+      log("###response####${response.data['data']['data']}###");
 
       return (response.data['data']['data'] as List)
           .map((x) => Examencours.fromJson(x))

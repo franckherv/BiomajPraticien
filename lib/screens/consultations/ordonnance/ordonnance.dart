@@ -44,9 +44,8 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 0), () {
-      setState(() {
         getConsultationData();
-      });
+      
     });
     super.initState();
   }
@@ -58,7 +57,7 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
 
   @override
   Widget build(BuildContext context) {
-final findOrdonnanceById = _listconsultation.firstWhere((element) => element.id == widget.consultatingData!.id, 
+final findOrdonnanceById = _listconsultation.firstWhere((element) => element.id == widget.consultatingData?.id, 
       orElse: () => ListConsultingHospital(affichageconsultation: "", analise: [], odornance: []));
 
     return Scaffold(
@@ -147,8 +146,7 @@ final findOrdonnanceById = _listconsultation.firstWhere((element) => element.id 
                                               onPressed: () {
                                                 Navigator.of(context).pop(true);
                                                setState(() {
-                                                  suprimerOrdonnance(
-                                                    ordId: findOrdonnanceById.odornance[i].id);
+                                                  suprimerOrdonnance(ordId: findOrdonnanceById.odornance[i].id);
                                                });
                                               },
                                               child: const Text('Oui'),
