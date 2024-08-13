@@ -29,6 +29,7 @@ class _NewExamState extends State<NewExam> {
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
 
   String loadingMessage = "Patientez svp";
+  var data ;
   final GlobalKey<State> _keyLoader = GlobalKey<State>();
  
 
@@ -140,7 +141,6 @@ class _NewExamState extends State<NewExam> {
                                       Padding(
                                         padding: EdgeInsets.only(
                                           top: ScreenUtil().setHeight(5),
-
                                           //  top: 50.0,
                                         ),
                                         child:RoundedTextInputFieldWithBorder(
@@ -239,14 +239,22 @@ class _NewExamState extends State<NewExam> {
             contact: numberCobtroller.text,
             )
         .then((datas) {
+        Navigator.of(context).pop();
+      if (datas["code"] == 0) {
+        displayToastmessage("${datas["message"]}", context);
+       Navigator.of(context).pop();
+      }
+
       Navigator.of(context).pop();
       if (datas["code"] == 1) {
         displayToastmessage("Enrégistrement éffectué avec succeès !", context);
        Navigator.of(context).pop();
       }
+
+ 
     }).catchError((err, error) {
       Navigator.of(context).pop();
-
+   
       displayToastmessage("Oupps! Une erreur s'est produite", context);
     });
   }

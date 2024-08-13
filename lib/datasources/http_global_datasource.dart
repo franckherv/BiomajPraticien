@@ -80,7 +80,7 @@ class HttpGlobalDatasource {
   Future<List<ListConsultingHospital>> getConsultingList() async {
     try {
       Response response = await dio.get("liste-consultation-hopital");
-      log("###response####${response.data['donne']}###");
+      log("LISTE CONS ${response.data['donne']}");
 
       return (response.data['donne']['data'] as List)
           .map((x) => ListConsultingHospital.fromJson(x))
@@ -294,38 +294,7 @@ class HttpGlobalDatasource {
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
     }
   }
-// TODO SAVE FULL IMAGE
-/*  Future saveAnalyse({
-    var id,
-    var statut,
-    //File? fichier,
-    required List<Io.File> fichier,
-  }) async {
-    try {
-      final formData = FormData.fromMap({"id": id, "statut": statut, "fichier": fichier});
 
-      int index = 0;
-
-      fichier.forEach((element) {
-        if (index == 0) {
-          formData.files.add(
-              MapEntry("fichier", MultipartFile.fromFileSync(element.path)));
-        } else {
-          formData.files.add(MapEntry(
-              "${index}", MultipartFile.fromFileSync(element.path)));
-        }
-     print(">>>>>>>> $fichier");
-        index++;
-      });
-
-      Response response = await dio.post('save-examen-fil', data: formData);
-      print("======> $response <=======");
-      return response.data;
-    } catch (error, stacktrace) {
-      print("###error send-single-sms####${error}###");
-      throw Exception("Exception occured: $error stackTrace: $stacktrace");
-    }
-  } */
 
 //TODO SAVE ONLY IMAGE
   Future<UploadFile> saveAnalyse({
@@ -367,13 +336,16 @@ class HttpGlobalDatasource {
   Future createExam({
     var name,
     var codeconsultation,
-    // var examenId
+     var typeExamen
   }) async {
     try {
+      print("name $name");
+      print("typeExamen $typeExamen");
+      print("codeconsultation $codeconsultation");
       Response response = await dio.post("examen-prescription", data: {
         "name": name,
         "codeconsultation": codeconsultation,
-        // "examen_id": examenId
+       // "type_examen": typeExamen
       });
       print("======> $response <=======");
 
@@ -405,7 +377,6 @@ class HttpGlobalDatasource {
       Response response = await dio.post("delete-examen", data: {
         "id_analyse": analyseId,
       });
-      print("ooooooooooooooooooo $response oooooooooooooooooooo");
       return response.data;
     } catch (error, stacktrace) {
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
@@ -417,7 +388,6 @@ class HttpGlobalDatasource {
       Response response = await dio.post("delete-ordornance", data: {
         "id_ordornance": ordonnanceId,
       });
-      print("ooooooooooooooooooo $response oooooooooooooooooooo");
       return response.data;
     } catch (error, stacktrace) {
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
@@ -433,7 +403,6 @@ class HttpGlobalDatasource {
         "description": description,
         "codeconsultation": codeconsultation,
       });
-      print("=================${response.data}===============");
 
       return response.data;
     } catch (error, stacktrace) {

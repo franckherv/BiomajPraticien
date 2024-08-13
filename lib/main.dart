@@ -10,7 +10,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 
-
 Box? box1;
 void main() async {
    await Hive.initFlutter();

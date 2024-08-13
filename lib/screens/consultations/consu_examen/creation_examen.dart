@@ -24,6 +24,7 @@ class _CreationExamenState extends State<CreationExamen> {
 
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController nameExamCobtroller = TextEditingController();
+  final TextEditingController typeexamenController = TextEditingController();
 
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
 
@@ -215,6 +216,35 @@ class _CreationExamenState extends State<CreationExamen> {
                                       child: const Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
+                                          "Type examens",
+                                          style: AppDesign.messervice,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top: ScreenUtil().setHeight(5),
+                                        //  top: 50.0,
+                                      ),
+                                      child: RoundedTextInputFieldWithBorder(
+                                        label: "Cliquez pour saisir",
+                                        imputCtrl: typeexamenController,
+                                        inputType: TextInputType.multiline,
+                                        inputAction: TextInputAction.newline,
+                                        textColor: Colors.black54,
+                                        inputColor: Colors.black54,
+                                        tailText: 15,
+                                        obscure: false,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: ScreenUtil().setHeight(5),
+                                        top: ScreenUtil().setHeight(10),
+                                      ),
+                                      child: const Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
                                           "Renseignement clinique",
                                           style: AppDesign.messervice,
                                         ),
@@ -223,7 +253,6 @@ class _CreationExamenState extends State<CreationExamen> {
                                     Padding(
                                       padding: EdgeInsets.only(
                                         top: ScreenUtil().setHeight(5),
-
                                         //  top: 50.0,
                                       ),
                                       child: RoundedTextInputFieldWithBorder(
@@ -286,10 +315,10 @@ class _CreationExamenState extends State<CreationExamen> {
     LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
     await httpGlobalDatasource
         .createExam(
-      name: descriptionController.text,
-      codeconsultation: widget.cnsulID!,
-      // examenId: nameExamCobtroller
-    )
+            name: descriptionController.text,
+            codeconsultation: widget.cnsulID!,
+           // typeExamen: typeexamenController
+            )
         .then((datas) {
       Navigator.of(context).pop();
       if (datas["code"] == 1) {

@@ -1,10 +1,13 @@
 // ignore_for_file: must_be_immutable, invalid_use_of_visible_for_testing_member, dead_code
+import 'dart:io';
+
 import 'package:biomaj/constants/appBar.dart';
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/constants/common_variable.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
 import 'package:biomaj/models/list_exam.dart';
 import 'package:biomaj/widgets/loading/loading_spinner.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -32,7 +35,25 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
   String loadingMessage = "Patientez svp";
   bool buttonColor = false;
 
+    PlatformFile? _file;
+  File? _imageFiles;
+    String? _fileName;
 
+
+Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+    );
+
+    if (result != null) {
+      setState(() {
+        _file = result.files.first;
+        _fileName = _file!.name;
+          _imageFile = File(_file!.path!);
+      
+      });
+    }
+  }
   UploadFile uploadFile = UploadFile(data: []);
 
   
@@ -56,7 +77,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                
               },
               icon: const Icon(Icons.save),
-              label: const Text("Sauvegarder"),
+              label: const Text("Enregistrer"),
             ),
       appBar: appBarmenu(
           context: context,
@@ -142,7 +163,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                       ),
                       child: Column(
                         children: [
-                          const Text("Images déjà téléchargée"),
+                          const Text("Document déjà téléchargée"),
                           SizedBox(
                             height: 8.h,
                           ),
@@ -166,6 +187,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                         ],
                       ))
                   : Container(),
+
               Padding(
                 padding: EdgeInsets.only(
                     top: 10.0.h, bottom: 10.0, left: 20.0, right: 20.0),
@@ -201,14 +223,14 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                           color: Colors.grey.shade300),
                                     ),
                                     child: const Icon(
-                                      Icons.add_a_photo,
+                                      Icons.description,
                                     ),
                                   ),
                                   SizedBox(
                                     width: 5.w,
                                   ),
                                   const Text(
-                                    "Aucune image sélectionnée !",
+                                    "Aucun document sélectionné !",
                                   )
                                 ],
                               )
@@ -216,6 +238,14 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                             ],
                           )),
               ),
+            const SizedBox(height: 20),
+            _imageFiles != null
+                ? Image.file(
+                    _imageFiles!,
+                    width: 200,
+                    height: 200,
+                  )
+                : const SizedBox.shrink(),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
@@ -249,10 +279,11 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                         Flexible(
                             child: TextButton(
                                 onPressed: () {
-                                  captureImage(ImageSource.gallery);
+                                 // captureImage(ImageSource.gallery);
+                                 _pickFile();
                                 },
                                 child: const Icon(
-                                  Icons.add_photo_alternate,
+                                  Icons.description,
                                   size: 50,
                                   color: Colors.black54,
                                 ))),
@@ -268,44 +299,9 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
     );
   }
 
-  //! DECLARE IMAGE LENGHT VARIABLE
-  // Io.File? _imageFiles;
 
-  // _buildImage() {
-  //   if (_imageFiles != null) {
-  //     print('###_imageFiles#####$_imageFiles###');
 
-  //     return Image.file(
-  //       _imageFiles!,
-  //       fit: BoxFit.fill,
-  //     );
-  //   } else {
-  //     return const Text(
-  //       "choisir une photo de profil",
-  //     );
-  //   }
-  // }
 
-  //! DECLARE CAPTURE IMAGE FUNTION
-  // Future<void> captureImage(ImageSource imageSource) async {
-  //   try {
-  //     final imageFile =
-  //         await ImagePicker.platform.getImageFromSource(source: imageSource);
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     Io.File _imageFile = await redimentionImageEtCopie(imageFile);
-
-  //     setState(() {
-  //       _imageFile = _imageFile;
-  //       //cest ici que je dois gerer le parametrage de limage
-  //     });
-  //   } catch (e) {
-  //     setState(() {
-  //       _isLoading = false;
-  //     });
-  //   }
-  // }
 
   Io.File? _imageFile;
   Future<void> captureImage(ImageSource imageSource) async {
@@ -318,9 +314,10 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
         _imageFile = _imageFile;
       });
     } catch (e) {
-      print(e);
     }
   }
+
+
 
   //! DECLARE RESIZE IMAGE FUNTION
   Future<Io.File> redimentionImageEtCopie(imagefile) async {
@@ -362,10 +359,9 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
     LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
     await httpGlobalDatasource
         .saveAnalyse(
-            id: widget.examencours.id, statut: "3", fichier: _imageFile)
+            id: widget.examencours.id, statut: "3", fichier: _imageFile ?? _imageFiles)
         .then((datas) {
       Navigator.of(context).pop();
-      // if (datas == 1) {
 
       setState(() {
         uploadFile = datas;

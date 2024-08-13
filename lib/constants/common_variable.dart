@@ -11,10 +11,8 @@ class CommonVariable {
   //static final sckApiBaseUrl = "https://dev.sycapay.net/api/"; //test
   static const imageBaseUrl = "https://biomaj.net/public/"; 
 
-  static final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
-  static BuildContext get globalContext =>
-      navigatorKey.currentState!.overlay!.context;
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static BuildContext get globalContext => navigatorKey.currentState!.overlay!.context;
 
   static String? userTken;
   static String? setglobalOneSignalPlayerId;
@@ -22,4 +20,5 @@ class CommonVariable {
   static final ddMMYYFormat = DateFormat('dd-MM-yyyy');
   static final formattedDate = DateFormat('kk:mm:ss EEE d MMM');
   static final hhMMFormat = DateFormat('h:m');
+  
 }

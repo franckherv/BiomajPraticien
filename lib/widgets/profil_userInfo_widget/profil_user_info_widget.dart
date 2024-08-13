@@ -64,14 +64,14 @@ class _ConsultationUserInfoWidgetState extends State<ConsultationUserInfoWidget>
                   visualDensity:
                       const VisualDensity(horizontal: 0, vertical: -4),
                   title: const Text("Nom"),
-                  trailing:Text("${box1?.get('name')}"),  
+                  trailing:Text("${widget.consultatingData!.patient!.nomuser}"),  
                 ),    ListTile(
                   contentPadding: 
                       const EdgeInsets.only(left: 18.0, right: 18, top: 5, bottom: 0),
                   visualDensity:
                       const VisualDensity(horizontal: 0, vertical: -4),
                   title: const Text("Prenom"),
-                  trailing:Text("${box1?.get('prenom')}"),  
+                  trailing:Text("${widget.consultatingData!.patient!.prenomuser}"),  
                 ),
                     ListTile(
                   contentPadding: 
@@ -79,7 +79,7 @@ class _ConsultationUserInfoWidgetState extends State<ConsultationUserInfoWidget>
                   visualDensity:
                       const VisualDensity(horizontal: 0, vertical: -4),
                   title: const Text("Matricule"),
-                  trailing:Text("${box1?.get('matricule')}"),  
+                  trailing:Text("${widget.consultatingData!.patient!.matriculeuser}"),  
                 ),
                 ListTile(
                   contentPadding:

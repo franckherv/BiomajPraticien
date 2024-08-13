@@ -24,13 +24,13 @@ class _ListConsultationState extends State<ListConsultation> {
   TextEditingController controller = TextEditingController();
   final ApiServiceSimulation _api = ApiServiceSimulation();
 
-    HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
-    final GlobalKey<State> _keyLoader = GlobalKey<State>();
-    String loadingMessage = "Patientez svp";
+  HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
+  String loadingMessage = "Patientez svp";
 
-    List<ListConsultingHospital> _searchResult = [];
+  List<ListConsultingHospital> _searchResult = [];
 
-    List<ListConsultingHospital> _listconsultation = [];
+  List<ListConsultingHospital> _listconsultation = [];
 
   @override
   void initState() {
@@ -112,7 +112,7 @@ class _ListConsultationState extends State<ListConsultation> {
                             child: SizedBox(
                               height: ScreenUtil().setHeight(40),
                               child: const Row(
-                                children:  [
+                                children: [
                                   Icon(Icons.filter),
                                   SizedBox(width: 5),
                                   Text("Filtre")
@@ -124,6 +124,10 @@ class _ListConsultationState extends State<ListConsultation> {
                   ],
                 ),
               ),
+              /* 
+              
+              
+              */
               SizedBox(
                 height: ScreenUtil().setHeight(10),
               ),
@@ -160,15 +164,19 @@ class _ListConsultationState extends State<ListConsultation> {
                                           AppImages.consultation,
                                           width: 25,
                                         ),
-                                        title:  Text(
-                                                "Consultation ${i + 1}", 
+                                        title: _searchResult[i].patient != null
+                                            ? Text(
+                                                "${_searchResult[i].patient!.nomuser} ${_searchResult[i].patient!.prenomuser}",
                                                 overflow: TextOverflow.ellipsis,
-                                              ),
-                                           
-                                              
-                                        trailing: Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(_searchResult[i].createdAt.toString())),
-                                          
-                                      ),), 
+                                              )
+                                            : const SizedBox.shrink(),
+                                        trailing: Text(
+                                          CommonVariable.ddMMYYFormat.format(
+                                              DateTime.parse(_searchResult[i]
+                                                  .createdAt
+                                                  .toString())),
+                                        ),
+                                      ),
                                       margin: const EdgeInsets.all(0.0),
                                     ),
                                   ),
@@ -182,7 +190,12 @@ class _ListConsultationState extends State<ListConsultation> {
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed('/detail-consultation-creen',arguments: DetailConsultationScreen(consultatingData:_listconsultation[index],selectedPage: 0));
+                                  Navigator.of(context).pushNamed(
+                                      '/detail-consultation-creen',
+                                      arguments: DetailConsultationScreen(
+                                          consultatingData:
+                                              _listconsultation[index],
+                                          selectedPage: 0));
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -197,12 +210,22 @@ class _ListConsultationState extends State<ListConsultation> {
                                           AppImages.consultation,
                                           width: 25,
                                         ),
-                                        title:  Text(
-                                                "Consultation ${index + 01}", 
+                                        title: _listconsultation[index]
+                                                    .patient !=
+                                                null
+                                            ? Text(
+                                                "${_listconsultation[index].patient!.nomuser} ${_listconsultation[index].patient!.prenomuser}",
                                                 overflow: TextOverflow.ellipsis,
-                                              ),
-                                        trailing: Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(_listconsultation[index].createdAt.toString())),
-                                      ),), 
+                                              )
+                                            : const SizedBox.shrink(),
+                                        trailing: Text(
+                                          CommonVariable.ddMMYYFormat.format(
+                                              DateTime.parse(
+                                                  _listconsultation[index]
+                                                      .createdAt
+                                                      .toString())),
+                                        ),
+                                      ),
                                       margin: const EdgeInsets.all(0.0),
                                     ),
                                   ),
@@ -226,9 +249,8 @@ class _ListConsultationState extends State<ListConsultation> {
     }
 
     for (var q in _listconsultation) {
-      if (q.createdAt!.toLowerCase().contains(text) ||
-          q.createdAt!.toUpperCase().contains(text) ||
-          q.createdAt!.contains(text)) {
+      if (q.patient!.nomuser!.toLowerCase().contains(text) ||
+          q.patient!.prenomuser!.contains(text)) {
         _searchResult.add(q);
       }
     }
@@ -242,8 +264,7 @@ class _ListConsultationState extends State<ListConsultation> {
     await httpGlobalDatasource.getConsultingList().then((data) {
       Navigator.of(context).pop();
       setState(() {
-        _listconsultation = data;  
-
+        _listconsultation = data;
       });
     }).catchError((err) {
       Navigator.of(context).pop();
