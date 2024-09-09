@@ -138,8 +138,7 @@ class _ExamenScreenState extends State<ExamenScreen> {
                                 child: SmallRaisedBtn(
                                   width: double.infinity,
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .pushNamed('/analyse-prescrite-screen');
+                                    Navigator.of(context).pushNamed('/analyse-prescrite-screen');
                                   },
                                   borderRadius: BorderRadius.circular(10),
                                   child: const Text(
@@ -157,8 +156,7 @@ class _ExamenScreenState extends State<ExamenScreen> {
                                 child: SmallRaisedBtn(
                                   width: double.infinity,
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .pushNamed('/analyse-termine-screen');
+                                    Navigator.of(context).pushNamed('/analyse-termine-screen');
                                   },
                                   borderRadius: BorderRadius.circular(10),
                                   child: const Text(

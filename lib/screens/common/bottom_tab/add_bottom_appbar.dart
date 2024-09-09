@@ -62,15 +62,13 @@ class _SharedBottomAppBarState extends State<SharedBottomAppBar> {
                 ),
                 label: ''),
             BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage(AppImages.examen),
-                  // color: Colors.grey,
+               icon: ImageIcon(
+                  AssetImage(AppImages.analyseIcon),
                 ),
                 label: ''),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.notifications,
-                //  color: Colors.grey,
                 ),
                 label: '')
           ],

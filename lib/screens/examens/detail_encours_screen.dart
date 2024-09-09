@@ -35,12 +35,12 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
   String loadingMessage = "Patientez svp";
   bool buttonColor = false;
 
-    PlatformFile? _file;
+  PlatformFile? _file;
   File? _imageFiles;
-    String? _fileName;
+  // ignore: unused_field
+  String? _fileName;
 
-
-Future<void> _pickFile() async {
+  Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.any,
     );
@@ -49,14 +49,12 @@ Future<void> _pickFile() async {
       setState(() {
         _file = result.files.first;
         _fileName = _file!.name;
-          _imageFile = File(_file!.path!);
-      
+        _imageFile = File(_file!.path!);
       });
     }
   }
-  UploadFile uploadFile = UploadFile(data: []);
 
-  
+  UploadFile uploadFile = UploadFile(data: []);
 
   @override
   void initState() {
@@ -72,13 +70,12 @@ Future<void> _pickFile() async {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {
-                saveExamens();
-               
-              },
-              icon: const Icon(Icons.save),
-              label: const Text("Enregistrer"),
-            ),
+        onPressed: () {
+          saveExamens();
+        },
+        icon: const Icon(Icons.save),
+        label: const Text("Enregistrer"),
+      ),
       appBar: appBarmenu(
           context: context,
           title: "Détail examens en cours",
@@ -121,17 +118,21 @@ Future<void> _pickFile() async {
                           title: const Text(
                             'Date de \nprescription',
                           ),
-                          trailing: Text(CommonVariable.ddMMYYFormat.format(
-                              DateTime.parse(widget.examencours.updatedAt))),
+                          trailing:
+              Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(widget.examencours.createdAt.toString()))),
                         ),
                         ListTile(
-                          title: const Text(
-                            'Statut de l\'analyse',
-                          ),
-                          trailing: widget.examencours.etatId != 2
-                              ? const Chip(label: Text("encours"),backgroundColor : Colors.blue)
-                              : const Chip(label: Text("Terminé"),backgroundColor : Colors.green),
-                        ),
+                            title: const Text(
+                              'Statut de l\'analyse',
+                            ),
+                            trailing: Chip(
+                                label: Text(
+                                  widget.examencours.stat!.getStatus(),
+                                ),
+                                backgroundColor:
+                                    widget.examencours.stat!.color(),
+                                labelStyle:
+                                    const TextStyle(color: Colors.white))),
                         ListTile(
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 0),
@@ -187,17 +188,16 @@ Future<void> _pickFile() async {
                         ],
                       ))
                   : Container(),
-
               Padding(
                 padding: EdgeInsets.only(
                     top: 10.0.h, bottom: 10.0, left: 20.0, right: 20.0),
                 child: SizedBox(
-                    height: _imageFile != null ? 50 :150.0.h,
+                    height: _imageFile != null ? 50 : 150.0.h,
                     child: _imageFile != null
                         ? Container(
-                           alignment: Alignment.center,
-                           width: 60.r,
-                          height: 70.h,
+                            alignment: Alignment.center,
+                            width: 60.r,
+                            height: 70.h,
                             child: Image.file(
                               _imageFile!,
                               fit: BoxFit.cover,
@@ -234,18 +234,17 @@ Future<void> _pickFile() async {
                                   )
                                 ],
                               )
-                           
                             ],
                           )),
               ),
-            const SizedBox(height: 20),
-            _imageFiles != null
-                ? Image.file(
-                    _imageFiles!,
-                    width: 200,
-                    height: 200,
-                  )
-                : const SizedBox.shrink(),
+              const SizedBox(height: 20),
+              _imageFiles != null
+                  ? Image.file(
+                      _imageFiles!,
+                      width: 200,
+                      height: 200,
+                    )
+                  : const SizedBox.shrink(),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
@@ -279,8 +278,8 @@ Future<void> _pickFile() async {
                         Flexible(
                             child: TextButton(
                                 onPressed: () {
-                                 // captureImage(ImageSource.gallery);
-                                 _pickFile();
+                                  // captureImage(ImageSource.gallery);
+                                  _pickFile();
                                 },
                                 child: const Icon(
                                   Icons.description,
@@ -299,10 +298,6 @@ Future<void> _pickFile() async {
     );
   }
 
-
-
-
-
   Io.File? _imageFile;
   Future<void> captureImage(ImageSource imageSource) async {
     try {
@@ -313,11 +308,8 @@ Future<void> _pickFile() async {
       setState(() {
         _imageFile = _imageFile;
       });
-    } catch (e) {
-    }
+    } catch (e) {}
   }
-
-
 
   //! DECLARE RESIZE IMAGE FUNTION
   Future<Io.File> redimentionImageEtCopie(imagefile) async {
@@ -335,7 +327,6 @@ Future<void> _pickFile() async {
     return Io.File('$dir/$filename')
       ..writeAsBytesSync(Image2.encodePng(bonneImage));
   }
-
 
 //? get all picture
   getPictures() async {
@@ -359,7 +350,9 @@ Future<void> _pickFile() async {
     LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
     await httpGlobalDatasource
         .saveAnalyse(
-            id: widget.examencours.id, statut: "3", fichier: _imageFile ?? _imageFiles)
+            id: widget.examencours.id,
+            statut: "3",
+            fichier: _imageFile ?? _imageFiles)
         .then((datas) {
       Navigator.of(context).pop();
 

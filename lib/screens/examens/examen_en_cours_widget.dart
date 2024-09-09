@@ -28,7 +28,7 @@ class ExamenEncoursWidget extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   // fit: BoxFit.cover,
-                  image: AssetImage(AppImages.rdv),
+                  image: AssetImage(AppImages.analyseIcon),
                 )),
           ),
           title: Text(
@@ -36,10 +36,18 @@ class ExamenEncoursWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
 
           ),
-          // subtitle: Text(
-          //   rendevouslist.service?.name ?? "Vide",
-          // ),
-          trailing: Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(examEncours.createdAt))),
+          subtitle:  examEncours.patient != null?  Text(
+                examEncours.patient!.nomuser.toString(),
+                  overflow: TextOverflow.ellipsis,
+              ) : const SizedBox.shrink(),
+        
+          trailing: Column(
+            children: [
+              Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(examEncours.createdAt.toString()))),
+             
+              Text(examEncours.stat!.getStatus(), style: TextStyle(color: examEncours.stat!.color()),),
+            ],
+          ),
           onTap: () {
             Navigator.of(context).pushNamed('/Detail-examen-encours-screen',
                 arguments: DetailExamenencoursScreen( 

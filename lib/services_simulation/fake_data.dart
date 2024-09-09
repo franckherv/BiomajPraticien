@@ -1,65 +1,16 @@
-/*===================Do never remove these datas============================================*/
 
-// List<Map> operateursList() {
-//   return [
-//     {
-//       "name": "Orange Money",
-//       "image": AppImages.orangeMoney,
-//       "desc": "Composer #144*8*2# pour générer un code de paiement.",
-//     },
-//     {
-//       "name": "MTN Money",
-//       "image": AppImages.mtnMoney,
-//       "desc": "Composer votre numéro pour éffectuer votre paiement.",
-//     },
-//     {
-//       "name": "Moov Money",
-//       "image": AppImages.moovMoney,
-//       "desc": "Composer votre numéro pour éffectuer votre paiement.",
-//     },
-
-//   ];
-// }
-/*===================Do never remove these datas============================================*/
 
 import 'package:biomaj/constants/app_images.dart';
 
-List<Map> services() {
-  return [
-    {
-      "id": 1,
-      "title": "Recharger du crédit",
-      "subtitle": "Transfert sur un compte",
-      "image": AppImages.recharge,
-    },
-    {
-      "id": 2,
-      "title": "Transférer de l'argent",
-      "subtitle": "Envoyé à quelqu'un",
-      "image": AppImages.transfert,
-    },
-    {
-      "id": 3,
-      "title": "Acheter un pass",
-      "subtitle": "Appel ou Internet",
-      "image": AppImages.achatpass,
-    },
-    {
-      "id": 4,
-      "title": "Recevoir de l'argent",
-      "subtitle": "Soumettre une demande",
-      "image": AppImages.receive,
-    }
-  ];
-}
+
 
 List<Map> pubList() {
   return [
-    {"id": 1, "name": "IDE", "image": AppImages.caroussel1},
-    {"id": 2, "name": "Biologiste", "image": AppImages.caroussel2},
-    {"id": 3, "name": "Sage Femme", "image": AppImages.caroussel3}
+    {"id": 1, "name": "Consultation", "image": AppImages.caroussel1},
+    {"id": 2, "name": "Examens médicaux", "image": AppImages.caroussel2},
+    {"id": 3, "name": "Spécialité", "image": AppImages.caroussel3},
   ];
-} 
+}  
 
 List<Map> dayList() {
   return [
@@ -150,8 +101,9 @@ List<Map> consultList() {
 List<Map> categoryList() {
   return [
     {"id": 1, "title": "Consultation", "image": AppImages.consultation},
-    {"id": 2, "title": "Examen", "image": AppImages.examen},
+    {"id": 2, "title": "Examen", "image": AppImages.analyseIcon},
     {"id": 2, "title": "Information patient", "image": AppImages.validation},
+    {"id": 2, "title": "Rendez-vous", "image": AppImages.ordonnanance},
   ];
 }
 

@@ -45,13 +45,13 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
 
   @override
   void initState() {
-    // if (mounted) {
-    //   setState(() {
-    //     Future.delayed(const Duration(milliseconds: 0), () {
-    //       getConsultationData();
-    //     });
-    //   });
-    // }
+    if (mounted) {
+      setState(() {
+        Future.delayed(const Duration(milliseconds: 0), () {
+          getConsultationData();
+        });
+      });
+    }
 
     super.initState();
   }
@@ -241,9 +241,7 @@ final findid = _listconsultation.firstWhere((element) => element.id == widget.co
   }
 
   getConsultationData() async {
-    
     LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
-
     await httpGlobalDatasource.getConsultingList().then((data) {
       Navigator.of(context).pop();
       setState(() {

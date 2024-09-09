@@ -219,7 +219,6 @@ class _AnalysePrescriteScreenState extends State<AnalysePrescriteScreen> {
                                             examData: barcode)); 
                                   } else if (barcode.isEmpty && controller.text.isNotEmpty ) {
                                     postExammenList(); 
-                        print("text field============ ${controller.text}==========");
                                     
                                   } else { 
                                     displayToastmessage(

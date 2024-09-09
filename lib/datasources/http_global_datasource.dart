@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:biomaj/constants/common_variable.dart';
 import 'package:biomaj/models/consultation.dart';
-import 'package:biomaj/models/hopital_model.dart';
 import 'package:biomaj/models/list_exam.dart';
 import 'package:biomaj/models/medecin_model.dart';
 import 'package:biomaj/models/rendez_vous_model.dart';
@@ -11,6 +10,8 @@ import 'package:biomaj/models/resultat_termine.dart';
 import 'package:biomaj/models/service_list.dart';
 import 'package:dio/dio.dart';
 
+import '../models/all_rdv.dart';
+import '../models/hopital_model.dart';
 import '../models/uploadFile.dart';
 import '../models/user_model.dart';
 
@@ -80,10 +81,20 @@ class HttpGlobalDatasource {
   Future<List<ListConsultingHospital>> getConsultingList() async {
     try {
       Response response = await dio.get("liste-consultation-hopital");
-      log("LISTE CONS ${response.data['donne']}");
-
+      log(response.toString());
       return (response.data['donne']['data'] as List)
           .map((x) => ListConsultingHospital.fromJson(x))
+          .toList();
+    } catch (error, stacktrace) {
+      throw Exception("Exception occured: $error stackTrace: $stacktrace");
+    }
+  }
+
+  Future<List<AllRdv>> getRdvList() async {
+    try {
+      Response response = await dio.get("liste-rdv-medecin");
+      return (response.data['data']['data'] as List)
+          .map((x) => AllRdv.fromJson(x))
           .toList();
     } catch (error, stacktrace) {
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
@@ -93,7 +104,7 @@ class HttpGlobalDatasource {
   Future<List<ExmprMdl>> getexamenprescription() async {
     try {
       Response response = await dio.get("liste-type-examen-pour-prescription");
-
+      log("=====> $response");
       return (response.data['donne'] as List)
           .map((x) => ExmprMdl.fromJson(x))
           .toList();
@@ -229,7 +240,6 @@ class HttpGlobalDatasource {
   Future<List<Examencours>> getexamenEncour() async {
     try {
       Response response = await dio.get("list-examens-encours");
-      log("###response####${response.data['data']['data']}###");
 
       return (response.data['data']['data'] as List)
           .map((x) => Examencours.fromJson(x))
@@ -246,6 +256,7 @@ class HttpGlobalDatasource {
     String? temperature,
     String? rythmecardiaque,
     String? matriculeuser,
+    String? medecinId,
   }) async {
     try {
       Response response = await dio.post("nouvelle-consultation", data: {
@@ -253,10 +264,9 @@ class HttpGlobalDatasource {
         "poids": poids,
         "temperature": temperature,
         "rythmecardiaque": rythmecardiaque,
-        "matriculeuser": matriculeuser
+        "matriculeuser": matriculeuser,
+        "medecin_id": medecinId
       });
-
-      print("RESPONSE ${response.data}");
 
       return response.data;
     } catch (error, stacktrace) {
@@ -294,7 +304,6 @@ class HttpGlobalDatasource {
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
     }
   }
-
 
 //TODO SAVE ONLY IMAGE
   Future<UploadFile> saveAnalyse({
@@ -334,20 +343,21 @@ class HttpGlobalDatasource {
   }
 
   Future createExam({
-    var name,
+    var examendemande,
     var codeconsultation,
-     var typeExamen
+    var typeExamen,
+    var description,
+    var renseignementClt,
   }) async {
     try {
-      print("name $name");
-      print("typeExamen $typeExamen");
-      print("codeconsultation $codeconsultation");
       Response response = await dio.post("examen-prescription", data: {
-        "name": name,
         "codeconsultation": codeconsultation,
-       // "type_examen": typeExamen
+        "examendemande": examendemande,
+        "type_examen": typeExamen,
+        "description": description,
+        "renseignement_clt": renseignementClt,
       });
-      print("======> $response <=======");
+      log("======> $response <=======");
 
       return response.data;
     } catch (error, stacktrace) {
@@ -356,12 +366,21 @@ class HttpGlobalDatasource {
   }
 
   Future createNewExam({
-    var name,
+    var examendemande,
+    // var codeconsultation,
+    var typeExamen,
+    var description,
+    var renseignementClt,
     var contact,
   }) async {
     try {
       Response response = await dio.post("nouveau-examen", data: {
-        "name": name,
+        //  "codeconsultation": codeconsultation,
+
+        "examendemande": examendemande,
+        "type_examen": typeExamen,
+        "description": description,
+        "renseignement_clt": renseignementClt,
         "contact": contact,
       });
       print("======> $response <=======");

@@ -23,19 +23,17 @@ class _CreationExamenState extends State<CreationExamen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController nameExamCobtroller = TextEditingController();
-  final TextEditingController typeexamenController = TextEditingController();
+  final TextEditingController rensengnementClinCtl = TextEditingController();
+  final TextEditingController examenDmdController = TextEditingController();
 
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
 
   List<ExmprMdl> _examenList = [];
-  List<Prescription> _prescriptionList = [];
   String loadingMessage = "Patientez svp";
   final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   // ignore: prefer_typing_uninitialized_variables
   var value1;
-  var value2;
   String? examId;
   String? serviceID;
 
@@ -83,8 +81,8 @@ class _CreationExamenState extends State<CreationExamen> {
           ),
           child: Column(
             children: [
-              const SizedBox(
-                height: 250,
+              SizedBox(
+                height: 50.h,
               ),
               Expanded(
                 child: Container(
@@ -176,14 +174,12 @@ class _CreationExamenState extends State<CreationExamen> {
                                                           'MontserratRegular'),
                                                   hint: const Text(
                                                       'Cliquez pour sélectionner'),
-                                                  onChanged: (ggvalue) {
+                                                  onChanged: (value) {
                                                     setState(() {
-                                                      value1 = ggvalue;
-                                                      examId = ggvalue!.id
-                                                          .toString();
-                                                      value2 = null;
+                                                      value1 = value;
+                                                      examId =
+                                                          value!.id.toString();
                                                     });
-                                                    getprescription();
                                                   },
                                                   items: _examenList.isEmpty
                                                       ? []
@@ -216,7 +212,7 @@ class _CreationExamenState extends State<CreationExamen> {
                                       child: const Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "Type examens",
+                                          "Examens demandés",
                                           style: AppDesign.messervice,
                                         ),
                                       ),
@@ -228,7 +224,38 @@ class _CreationExamenState extends State<CreationExamen> {
                                       ),
                                       child: RoundedTextInputFieldWithBorder(
                                         label: "Cliquez pour saisir",
-                                        imputCtrl: typeexamenController,
+                                        imputCtrl: examenDmdController,
+                                        inputType: TextInputType.multiline,
+                                        inputAction: TextInputAction.newline,
+                                        textColor: Colors.black54,
+                                        inputColor: Colors.black54,
+                                        tailText: 15,
+                                        obscure: false,
+                                        maxLines: 3,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: ScreenUtil().setHeight(5),
+                                        top: ScreenUtil().setHeight(10),
+                                      ),
+                                      child: const Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Renseignement clinique",
+                                          style: AppDesign.messervice,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top: ScreenUtil().setHeight(5),
+                                        //  top: 50.0,
+                                      ),
+                                      child: RoundedTextInputFieldWithBorder(
+                                        label: "Cliquez pour saisir",
+                                        imputCtrl: rensengnementClinCtl,
+                                        maxLines: 3,
                                         inputType: TextInputType.multiline,
                                         inputAction: TextInputAction.newline,
                                         textColor: Colors.black54,
@@ -245,7 +272,7 @@ class _CreationExamenState extends State<CreationExamen> {
                                       child: const Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "Renseignement clinique",
+                                          "Description",
                                           style: AppDesign.messervice,
                                         ),
                                       ),
@@ -281,14 +308,11 @@ class _CreationExamenState extends State<CreationExamen> {
                                   child: SmallRaisedBtn(
                                     width: double.infinity,
                                     onPressed: () {
-                                      if (descriptionController
-                                          .text.isNotEmpty) {
-                                        createNewExam();
-                                      }
+                                      createNewExam();
                                     },
                                     borderRadius: BorderRadius.circular(10),
                                     child: const Text(
-                                      "Enrégistrer",
+                                      "Valider",
                                       style: AppDesign.rstpwdstyle,
                                     ),
                                   ),
@@ -315,10 +339,12 @@ class _CreationExamenState extends State<CreationExamen> {
     LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
     await httpGlobalDatasource
         .createExam(
-            name: descriptionController.text,
-            codeconsultation: widget.cnsulID!,
-           // typeExamen: typeexamenController
-            )
+      codeconsultation: widget.cnsulID!,
+      description: descriptionController.text,
+      renseignementClt: rensengnementClinCtl.text,
+      typeExamen: examId,
+      examendemande: examenDmdController.text,
+    )
         .then((datas) {
       Navigator.of(context).pop();
       if (datas["code"] == 1) {
@@ -332,17 +358,6 @@ class _CreationExamenState extends State<CreationExamen> {
       Navigator.of(context).pop();
 
       displayToastmessage("Oupps! Une erreur s'est produite", context);
-    });
-  }
-
-  getprescription() async {
-    await httpGlobalDatasource.getprescription(id: examId).then((data) {
-      setState(() {
-        _prescriptionList = data;
-        print("======LENGTH ${_prescriptionList.length}=======");
-      });
-    }).catchError((err) {
-      displayToastmessage("Oupps! une erreur s'est produite", context);
     });
   }
 

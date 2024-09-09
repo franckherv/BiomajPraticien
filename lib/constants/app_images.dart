@@ -11,10 +11,13 @@ class AppImages{
   static const String rdvImg = "assets/images/rdvImg.png";
   static const String consultation = "assets/images/consultation.png";
   static const String examen = "assets/images/examen.png";
+    static const String analyseIcon= "assets/images/analyse_icon.png";
+
   static const String ordonnanance = "assets/images/ordonnance.png";
   static const String undraw1 = "assets/images/undrawLogin.png";
   static const String undraw2 = "assets/images/undrawSignup.png"; 
   static const String appLogoPng = "assets/images/logo.png";
+
   static const String arrierplan = "assets/images/arrierplan.png";
   static const String introImg1 = "assets/images/onb1.png";
   static const String introImg2 = "assets/images/onb2.png";

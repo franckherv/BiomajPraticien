@@ -20,14 +20,14 @@ class DateModel {
     String? date;
 
     factory DateModel.fromJson(Map<dynamic, dynamic> json) => DateModel(
-        id: json["id"] == null ? null : json["id"],
-        jour: json["jour"] == null ? null : json["jour"],
-        date: json["date"] == null ? null : json["date"],
+        id: json["id"],
+        jour: json["jour"],
+        date: json["date"],
     );
 
     Map<dynamic, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "jour": jour == null ? null : jour,
-        "date": date == null ? null : date,
+        "id": id,
+        "jour": jour,
+        "date": date,
     };
 }

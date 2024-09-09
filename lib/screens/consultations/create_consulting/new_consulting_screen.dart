@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_if_null_operators
+
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/constants/app_style.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
@@ -10,6 +12,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:intl/intl.dart';
+
+import '../../../models/hopital_model.dart';
+import '../../../models/medecin_model.dart';
+import '../../../models/service_list.dart';
 
 class NewConsultingScreen extends StatefulWidget {
   const NewConsultingScreen({Key? key}) : super(key: key);
@@ -35,6 +41,24 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
 
   var now = DateTime.now();
   var formatter = DateFormat('yyyy-MM-dd');
+
+  List<Hopital> _hospitalList = [];
+  List<MedecinModel> _medcinList = [];
+  List<ServiceData> _serviceList = [];
+  var _curentactivity;
+  var _curentservice;
+  var _curentmedecin;
+  String? _hospitalID;
+  String? serviceID;
+  String? medecinId;
+
+
+  @override
+  void initState() {
+  Future.delayed(const Duration(milliseconds: 0), () {
+      getHospitaldata();
+    });    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +123,7 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
                               Center(
                                 child: Column(
                                   children: [
-                                       Row(
+                                    Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -237,7 +261,353 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
                                         obscure: false,
                                       ),
                                     ),
-                                 
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Center(
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                  bottom: ScreenUtil()
+                                                      .setHeight(10),
+                                                   top: ScreenUtil()
+                                                      .setHeight(10),
+                                                ),
+                                                child: const Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Hôpital",
+                                                    style: AppDesign.messervice,
+                                                  ),
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Expanded(child: FormField(
+                                                    builder:
+                                                        (FormFieldState state) {
+                                                      return InputDecorator(
+                                                        decoration:
+                                                            InputDecoration(
+                                                          filled: true,
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                            borderSide:
+                                                                const BorderSide(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    width: 0.0),
+                                                          ),
+                                                          contentPadding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  bottom: 8.0,
+                                                                  left: 8.0,
+                                                                  right: 10),
+                                                        ),
+                                                        child:
+                                                            DropdownButtonHideUnderline(
+                                                          child: DropdownButton<
+                                                              Hopital>(
+                                                            value: _curentactivity !=
+                                                                    null
+                                                                ? _curentactivity
+                                                                : null,
+                                                            iconSize: 30,
+                                                            icon: const Icon(
+                                                              Icons
+                                                                  .arrow_forward_ios,
+                                                              size: 15,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 15,
+                                                                fontFamily:
+                                                                    'MontserratRegular'),
+                                                            hint: const Text(
+                                                                'Cliquez pour sélectionner'),
+                                                            onChanged:
+                                                                (newValue) {
+                                                              setState(() {
+                                                                _curentactivity = newValue;
+                                                                _hospitalID = newValue!.id.toString();
+                                                                getServiceData();
+                                                              });
+                                                            },
+                                                            items: _hospitalList
+                                                                .map((item) {
+                                                              return DropdownMenuItem(
+                                                                  value: item,
+                                                                  child: Text(
+                                                                      item
+                                                                          .name!,
+                                                                      style: const TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          fontSize:
+                                                                              16)));
+                                                            }).toList(),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  )),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                  bottom: ScreenUtil()
+                                                      .setHeight(10),
+                                                  top: ScreenUtil()
+                                                      .setHeight(10),
+                                                ),
+                                                child: const Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Choisir le service",
+                                                    style: AppDesign.messervice,
+                                                  ),
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: FormField(
+                                                      builder: (FormFieldState
+                                                          state) {
+                                                        return InputDecorator(
+                                                          decoration:
+                                                              InputDecoration(
+                                                            filled: true,
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      width:
+                                                                          0.0),
+                                                            ),
+                                                            contentPadding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    bottom: 8.0,
+                                                                    left: 8.0,
+                                                                    right: 10),
+                                                          ),
+                                                          child:
+                                                              DropdownButtonHideUnderline(
+                                                            child:
+                                                                DropdownButton<
+                                                                    ServiceData>(
+                                                              iconSize: 30,
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .arrow_forward_ios,
+                                                                size: 15,
+                                                                color: _serviceList
+                                                                        .isNotEmpty
+                                                                    ? Colors
+                                                                        .black
+                                                                    : Colors
+                                                                        .grey,
+                                                              ),
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 15,
+                                                                  fontFamily:
+                                                                      'MontserratRegular'),
+                                                              hint: _serviceList
+                                                                      .isNotEmpty
+                                                                  ? const Text(
+                                                                      'Cliquez pour sélectionner')
+                                                                  : const Text(
+                                                                      'Aucun service trouvé'),
+                                                              onChanged:
+                                                                  (newValue) {
+                                                                setState(() {
+                                                                  _curentservice =
+                                                                      newValue;
+                                                                  serviceID =
+                                                                      newValue!
+                                                                          .id
+                                                                          .toString();
+                                                                  getDoctorData();
+                                                                });
+                                                              },
+                                                              value: _curentservice !=
+                                                                      null
+                                                                  ? _curentservice
+                                                                  : null,
+                                                              items: _serviceList
+                                                                  .map((ServiceData
+                                                                      item) {
+                                                                return DropdownMenuItem(
+                                                                    value:
+                                                                        item,
+                                                                    child: Text(
+                                                                        item.service!
+                                                                            .name!,
+                                                                        style: const TextStyle(
+                                                                            fontWeight: FontWeight
+                                                                                .w400,
+                                                                            fontSize:
+                                                                                16)));
+                                                              }).toList(),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                  bottom: ScreenUtil()
+                                                      .setHeight(10),
+                                                  top: ScreenUtil()
+                                                      .setHeight(10),
+                                                ),
+                                                child: const Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Choisir le medecin",
+                                                    style: AppDesign.messervice,
+                                                  ),
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: FormField(
+                                                      builder: (FormFieldState
+                                                          state) {
+                                                        return InputDecorator(
+                                                          decoration:
+                                                              InputDecoration(
+                                                            filled: true,
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      width:
+                                                                          0.0),
+                                                            ),
+                                                            contentPadding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    bottom: 8.0,
+                                                                    left: 8.0,
+                                                                    right: 10),
+                                                          ),
+                                                          child:
+                                                              DropdownButtonHideUnderline(
+                                                            child: DropdownButton<
+                                                                MedecinModel>(
+                                                              value: _curentmedecin !=
+                                                                      null
+                                                                  ? _curentmedecin
+                                                                  : null,
+                                                              iconSize: 30,
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .arrow_forward_ios,
+                                                                size: 15,
+                                                                color: _medcinList
+                                                                        .isNotEmpty
+                                                                    ? Colors
+                                                                        .black
+                                                                    : Colors
+                                                                        .grey,
+                                                              ),
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 15,
+                                                                  fontFamily:
+                                                                      'MontserratRegular'),
+                                                              hint: _medcinList
+                                                                      .isNotEmpty
+                                                                  ? const Text(
+                                                                      'Cliquez pour sélectionner')
+                                                                  : const Text(
+                                                                      'Aucun medecin disponible'),
+                                                              onChanged:
+                                                                  (newValue) {
+                                                                setState(() {
+                                                                  _curentmedecin =
+                                                                      newValue;
+                                                                  medecinId =
+                                                                      newValue!
+                                                                          .id
+                                                                          .toString();
+                                                                });
+                                                              },
+                                                              items: _medcinList
+                                                                  .map((MedecinModel
+                                                                      item) {
+                                                                return DropdownMenuItem(
+                                                                    value:
+                                                                        item,
+                                                                    child: Text(
+                                                                        "${item.medecin!.nomuser!} ${item.medecin!.prenomuser}",
+                                                                        style: const TextStyle(
+                                                                            fontWeight: FontWeight
+                                                                                .w400,
+                                                                            fontSize:
+                                                                                16)));
+                                                              }).toList(),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: ScreenUtil().setHeight(30),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
@@ -303,7 +673,9 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
             poids: poidController.text,
             temperature: tempController.text,
             rythmecardiaque: rythmCarController.text,
-            matriculeuser: matriculeController.text)
+            matriculeuser: matriculeController.text,
+            medecinId: medecinId
+            )
         .then((datas) {
       Navigator.of(context).pop();
       if (datas["code"] == 1) {
@@ -321,6 +693,40 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
       Navigator.of(context).pop();
 
       displayToastmessage("Oupps! Une erreur s'est produite", context);
+    });
+  }
+
+  getServiceData() async {
+    await httpGlobalDatasource.getService(hopitalId: _hospitalID).then((data) {
+      setState(() {
+        _serviceList = data;
+      });
+    }).catchError((err) {
+      displayToastmessage("Oupps! une erreur s'est produite", context);
+    });
+  }
+
+  getHospitaldata() async {
+    await httpGlobalDatasource.getHospital().then((data) {
+      setState(() {
+        _hospitalList = data;
+      });
+    }).catchError((err) {
+      print("**err**$err********");
+
+      displayToastmessage("Oupps! une erreur s'est produite", context);
+    });
+  }
+
+  getDoctorData() async {
+    await httpGlobalDatasource
+        .getDoctorList(hopitalId: _hospitalID, serviceId: serviceID)
+        .then((data) {
+      setState(() {
+        _medcinList = data;
+      });
+    }).catchError((err) {
+      displayToastmessage("Oupps! une erreur s'est produite", context);
     });
   }
 

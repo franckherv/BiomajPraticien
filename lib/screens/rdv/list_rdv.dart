@@ -4,8 +4,6 @@ import 'package:biomaj/constants/appBar.dart';
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/constants/common_variable.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
-import 'package:biomaj/models/consultation.dart';
-import 'package:biomaj/screens/consultations/detail_consulting.dart';
 import 'package:biomaj/services_simulation/api_services_simulation.dart';
 import 'package:biomaj/widgets/drawer_menu/drawer_menu.dart';
 import 'package:biomaj/widgets/loading/loading_spinner.dart';
@@ -13,14 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class ListConsultation extends StatefulWidget {
-  const ListConsultation({Key? key}) : super(key: key);
+import '../../models/all_rdv.dart';
+
+class ListAllRdv extends StatefulWidget {
+  const ListAllRdv({Key? key}) : super(key: key);
 
   @override
-  State<ListConsultation> createState() => _ListConsultationState();
+  State<ListAllRdv> createState() => _ListAllRdvState();
 }
 
-class _ListConsultationState extends State<ListConsultation> {
+class _ListAllRdvState extends State<ListAllRdv> {
   TextEditingController controller = TextEditingController();
   final ApiServiceSimulation _api = ApiServiceSimulation();
 
@@ -28,14 +28,14 @@ class _ListConsultationState extends State<ListConsultation> {
   final GlobalKey<State> _keyLoader = GlobalKey<State>();
   String loadingMessage = "Patientez svp";
 
-  List<ListConsultingHospital> _searchResult = [];
+  List<AllRdv> _searchResult = [];
 
-  List<ListConsultingHospital> _listconsultation = [];
+  List<AllRdv> _listRdv = [];
 
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 0), () {
-      getConsultationData();
+      getRdvData();
     });
     super.initState();
   }
@@ -47,7 +47,7 @@ class _ListConsultationState extends State<ListConsultation> {
       backgroundColor: Colors.white,
       appBar: appBarmenu(
           context: context,
-          title: "Liste des consultations",
+          title: "Liste des rendez-vous",
           bgClr: Colors.white,
           color: Colors.black,
           elevation: 0),
@@ -132,10 +132,10 @@ class _ListConsultationState extends State<ListConsultation> {
                 height: ScreenUtil().setHeight(10),
               ),
               Expanded(
-                child: (_listconsultation.isEmpty)
+                child: (_listRdv.isEmpty)
                     ? const Center(
                         child: Center(
-                          child: Text("Aucune consultation trouvée"),
+                          child: Text("Aucun rendez-vous trouvé"),
                         ),
                       )
                     : _searchResult.isNotEmpty || controller.text.isNotEmpty
@@ -145,11 +145,11 @@ class _ListConsultationState extends State<ListConsultation> {
                             itemBuilder: (context, i) {
                               return InkWell(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed(
+                                 /* Navigator.of(context).pushNamed(
                                       '/detail-consultation-creen',
                                       arguments: DetailConsultationScreen(
                                           consultatingData: _searchResult[i],
-                                          selectedPage: 0));
+                                          selectedPage: 0)); */
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -186,16 +186,16 @@ class _ListConsultationState extends State<ListConsultation> {
                           )
                         : ListView.builder(
                             padding: const EdgeInsets.only(top: 10),
-                            itemCount: _listconsultation.length,
+                            itemCount: _listRdv.length,
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed(
+                                 /* Navigator.of(context).pushNamed(
                                       '/detail-consultation-creen',
                                       arguments: DetailConsultationScreen(
                                           consultatingData:
-                                              _listconsultation[index],
-                                          selectedPage: 0));
+                                              _listRdv[index],
+                                          selectedPage: 0)); */
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -210,29 +210,20 @@ class _ListConsultationState extends State<ListConsultation> {
                                           AppImages.consultation,
                                           width: 25,
                                         ),
-                                        title: _listconsultation[index]
+                                        title: _listRdv[index]
                                                     .patient !=
                                                 null
                                             ? Text(
-                                                "${_listconsultation[index].patient!.nomuser} ${_listconsultation[index].patient!.prenomuser}",
+                                                "${_listRdv[index].patient!.nomuser} ${_listRdv[index].patient!.prenomuser}",
                                                 overflow: TextOverflow.ellipsis,
                                               )
                                             : const SizedBox.shrink(),
-                                        trailing: Column(
-                                          children: [
-                                            Text(
-                                              CommonVariable.ddMMYYFormat
-                                                  .format(DateTime.parse(
-                                                      _listconsultation[index]
-                                                          .createdAt
-                                                          .toString())),
-                                            ),
-                                            Text(
-                                              _listconsultation[index]
-                                                  .getStatus(),
-                                              style: TextStyle(color: _listconsultation[index].color()),
-                                            )
-                                          ],
+                                        trailing: Text(
+                                          CommonVariable.ddMMYYFormat.format(
+                                              DateTime.parse(
+                                                  _listRdv[index]
+                                                      .createdAt
+                                                      .toString())),
                                         ),
                                       ),
                                       margin: const EdgeInsets.all(0.0),
@@ -257,9 +248,9 @@ class _ListConsultationState extends State<ListConsultation> {
       return;
     }
 
-    for (var q in _listconsultation) {
-      if (q.patient!.nomuser!.toLowerCase().contains(text) ||
-          q.patient!.prenomuser!.contains(text)) {
+    for (var q in _listRdv) {
+      if (q.patient!.nomuser.toLowerCase().contains(text) ||
+          q.patient!.prenomuser.contains(text)) {
         _searchResult.add(q);
       }
     }
@@ -267,18 +258,17 @@ class _ListConsultationState extends State<ListConsultation> {
     setState(() {});
   }
 
-  getConsultationData() async {
+  getRdvData() async {
     LoadingSpinner.showLoadingDialog(context, _keyLoader, loadingMessage);
 
-    await httpGlobalDatasource.getConsultingList().then((data) {
+    await httpGlobalDatasource.getRdvList().then((data) {
       Navigator.of(context).pop();
       setState(() {
-        _listconsultation = data;
+        _listRdv = data;
       });
     }).catchError((err) {
-      print("====>  $err");
       Navigator.of(context).pop();
-
+    print(err);
       displayToastmessage("Oupps! une erreur s'est produite", context);
     });
   }

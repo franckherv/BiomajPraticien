@@ -4,9 +4,9 @@ import 'package:biomaj/constants/app_colors.dart';
 import 'package:biomaj/models/category_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-import '../appKey/app_key.dart';
-import '../main.dart';
+import '../screens/rdv/list_rdv.dart';
 
 class CategoryWidget extends StatelessWidget {
   Category cat;
@@ -14,7 +14,7 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userJson = box1?.get(AppKeys.patient);
+   // final userJson = box1?.get(AppKeys.patient);
 
 
     return InkWell(
@@ -27,7 +27,7 @@ class CategoryWidget extends StatelessWidget {
         } else if(cat.title == 'Consultation') { 
           Navigator.pushNamed(context, '/consulting-screen');
         } else {
-          return;
+          Get.to(()=> const ListAllRdv());
         }
       },
       child: Container(
@@ -51,7 +51,7 @@ class CategoryWidget extends StatelessWidget {
                 color: Colors.black,
               ),
               const SizedBox(
-                height: 5,
+                height: 5
               ),
               Text(
                 cat.title!,

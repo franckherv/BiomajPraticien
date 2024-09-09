@@ -12,8 +12,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 Box? box1;
 void main() async {
-   await Hive.initFlutter();
-    await GetStorage.init();
+  await Hive.initFlutter();
+  await GetStorage.init();
   box1 = await Hive.openBox('logindata');
   runApp(const MyApp());
 }

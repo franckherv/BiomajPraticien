@@ -56,7 +56,7 @@ class _DrawermenuState extends State<Drawermenu> {
                 children: <Widget>[
                   Image.asset(
                     AppImages.appLogoPng,
-                    width: 100,
+                    width: 40,
                   ),
                   InkWell(
                       onTap: () {
@@ -192,7 +192,7 @@ class _DrawermenuState extends State<Drawermenu> {
                         builder: (BuildContext context) => OnBoardingScreen()));
               },
             ),
-            Container(
+           Container(
               color: Colors.grey[200],
               width: double.infinity,
               height: ScreenUtil().setHeight(100),
@@ -202,15 +202,15 @@ class _DrawermenuState extends State<Drawermenu> {
                     alignment: Alignment.center,
                     child: ListTile(
                       title: const Text(
-                        "Développé par",
+                        "Service d'assistance",
                         style: TextStyle(
                             fontSize: 14,
                             fontStyle: FontStyle.italic,
                             color: Colors.black54),
                       ),
                       trailing: Image.asset(
-                        AppImages.edutech,
-                        width: 90,
+                        AppImages.appLogoPng,
+                        width: 30,
                       ),
                     ),
                   ),
@@ -222,8 +222,10 @@ class _DrawermenuState extends State<Drawermenu> {
                         children: [
                           Icon(Icons.phone_rounded,
                               size: 15, color: Colors.black54),
+
+
                           Text(
-                            "(+225) 01 01 01 01 01",
+                            "(+225) 07 07 40 9341",
                             style: TextStyle(
                                 fontSize: 14,
                                 fontStyle: FontStyle.italic,
@@ -243,7 +245,7 @@ class _DrawermenuState extends State<Drawermenu> {
                           Icon(Icons.email_outlined,
                               size: 15, color: Colors.black54),
                           Text(
-                            "contact@edutech.pro",
+                            "info@biomaj.net",
                             style: TextStyle(
                                 fontSize: 14,
                                 fontStyle: FontStyle.italic,
@@ -257,6 +259,7 @@ class _DrawermenuState extends State<Drawermenu> {
                 ],
               ),
             ),
+          
             // SizedBox(
             //   height: ScreenUtil().setHeight(10),
             // )
