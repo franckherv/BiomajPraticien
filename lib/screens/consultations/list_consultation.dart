@@ -170,11 +170,21 @@ class _ListConsultationState extends State<ListConsultation> {
                                                 overflow: TextOverflow.ellipsis,
                                               )
                                             : const SizedBox.shrink(),
-                                        trailing: Text(
-                                          CommonVariable.ddMMYYFormat.format(
-                                              DateTime.parse(_searchResult[i]
-                                                  .createdAt
-                                                  .toString())),
+                                        trailing: Column(
+                                          children: [
+                                            Text(
+                                              CommonVariable.ddMMYYFormat
+                                                  .format(DateTime.parse(
+                                                      _searchResult[i]
+                                                          .createdAt
+                                                          .toString())),
+                                            ),
+                                            Text(
+                                              _searchResult[i]
+                                                  .getStatus(),
+                                              style: TextStyle(color: _searchResult[i].color()),
+                                            )
+                                          ],
                                         ),
                                       ),
                                       margin: const EdgeInsets.all(0.0),
@@ -213,8 +223,7 @@ class _ListConsultationState extends State<ListConsultation> {
                                         title: _listconsultation[index]
                                                     .patient !=
                                                 null
-                                            ? Text(
-                                                "${_listconsultation[index].patient!.nomuser} ${_listconsultation[index].patient!.prenomuser}",
+                                            ? Text("${_listconsultation[index].patient!.nomuser} ${_listconsultation[index].patient!.prenomuser}",
                                                 overflow: TextOverflow.ellipsis,
                                               )
                                             : const SizedBox.shrink(),

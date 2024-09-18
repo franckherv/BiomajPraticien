@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:biomaj/constants/common_variable.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +27,7 @@ class BaseService extends GetConnect {
     if (CommonVariable.userTken != null) {
       return post(
         CommonVariable.apiBaseUrl + url,
-        body,
+        jsonEncode(body),
         headers: getheader(),
        // query: query,
       );

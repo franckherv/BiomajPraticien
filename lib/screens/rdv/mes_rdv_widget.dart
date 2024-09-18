@@ -3,7 +3,7 @@
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/constants/common_variable.dart';
 import 'package:biomaj/models/rendez_vous_model.dart';
-import 'package:biomaj/screens/rendezvous/vue_des_rdv/detail_de_mesrdv.dart';
+import 'package:biomaj/screens/rdv/mes_rdv_detail.dart';
 import 'package:flutter/material.dart';
 
 class MesrendezvousVueWidget extends StatelessWidget {

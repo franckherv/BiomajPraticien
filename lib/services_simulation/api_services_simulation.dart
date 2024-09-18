@@ -8,6 +8,7 @@ import 'package:biomaj/models/ordonnance_model.dart';
 import 'package:biomaj/models/pub_list.dart';
 import 'package:biomaj/models/service_list.dart';
 
+import '../models/rdv_stat_model.dart';
 import 'fake_data.dart';
 
 class ApiServiceSimulation {
@@ -77,26 +78,14 @@ class ApiServiceSimulation {
     return [];
   }  
 
-  //  List<AnalyseTermine> getanalyseterminelist({bool fake = false}) {
-  //   if (fake) {
-  //     return analyseTermineList().map((e) => AnalyseTermine.fromJson(e)).toList();
-  //   }
-  //   return [];
-  // }  
+      List<RdvStatusModel> statustList({bool fake = false}) {
+    if (fake) {
+      return rdvStatutList().map((e) => RdvStatusModel.fromJson(e)).toList();
+    }
+    return [];
+  } 
 
-  //    List<AnalysePescrite> getanalysePrescriteList({bool fake = false}) {
-  //   if (fake) {
-  //     return analysePriscriteList().map((e) => AnalysePescrite.fromJson(e)).toList();
-  //   }
-  //   return [];
-  // }  
 
-  //    List<ConsultationModel> getConsultinglist({bool fake = false}) {
-  //   if (fake) {
-  //     return consultList().map((e) => ConsultationModel.fromJson(e)).toList();
-  //   }
-  //   return [];
-  // } 
 
        List<OrdonnanceModel> getOrdonnanceList({bool fake = false}) {
     if (fake) {
@@ -104,13 +93,7 @@ class ApiServiceSimulation {
     }
     return [];
   } 
-  /*
-  StatistiqueModel getStatistiquesListt({bool fake: false}) {
-    if (fake) {
-      return StatistiqueModel.fromJson(statistiquesList());
-    }
-    return null;
-  }*/          
+     
 
 
      

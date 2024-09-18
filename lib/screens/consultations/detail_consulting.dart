@@ -165,8 +165,7 @@ class _DetailConsultationScreenState extends State<DetailConsultationScreen>
                               physics: const NeverScrollableScrollPhysics(),
                               controller: _tabController,
                               children: [
-                                ConsultationUserInfoWidget(consultatingData: widget.consultatingData),
-                              
+                                 ConsultationUserInfoWidget(consultatingData: widget.consultatingData),
                                  ObservationScreen(consultatingData: widget.consultatingData),  
                                  OrdonnanceScreen(consultatingData: widget.consultatingData) ,
                                  ConsuExamenScreen(consultatingData: widget.consultatingData) 

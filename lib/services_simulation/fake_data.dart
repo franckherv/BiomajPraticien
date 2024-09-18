@@ -123,4 +123,12 @@ Map userInfo() {
     "profession": "John Doe",
     }
   };
+
 }
+
+List<Map> rdvStatutList() {
+  return [
+    {"id": 0, "name": "Refusé",},
+    {"id": 2, "name": "Accepté"},
+  ];
+}  

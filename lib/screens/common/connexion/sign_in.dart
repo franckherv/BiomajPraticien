@@ -277,19 +277,7 @@ class _SiginScreenState extends State<SiginScreen> {
                                   ),
                                 ],
                               ),
-                              /* Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: ScreenUtil().setHeight(5),
-                                  top: ScreenUtil().setHeight(10),
-                                ),
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: const Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text("Mot de passe oublier ?"),
-                                  ),
-                                ),
-                              ),*/
+                           
                               SizedBox(
                                 height: 10.h,
                               ),
@@ -334,27 +322,7 @@ class _SiginScreenState extends State<SiginScreen> {
                             ],
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(bottom: 0),
-                        //   child: InkWell(
-                        //     child: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.center,
-                        //       // ignore: prefer_const_literals_to_create_immutables
-                        //       children: <Widget>[
-                        //         const Text("Pas de compte ? "),
-                        //         const Text(
-                        //           "Créer un compte",
-                        //           style: AppDesign.profilecodeStyle,
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     onTap: () {
-                        //       Navigator.of(context).pushNamedAndRemoveUntil(
-                        //           '/sing-up-screen',
-                        //           (Route<dynamic> route) => false);
-                        //     },
-                        //   ),
-                        // ),
+                    
                       ],
                     ),
                   ),

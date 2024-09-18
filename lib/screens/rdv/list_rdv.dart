@@ -4,6 +4,7 @@ import 'package:biomaj/constants/appBar.dart';
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/constants/common_variable.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
+import 'package:biomaj/screens/rdv/detail_de_mesrdv.dart';
 import 'package:biomaj/services_simulation/api_services_simulation.dart';
 import 'package:biomaj/widgets/drawer_menu/drawer_menu.dart';
 import 'package:biomaj/widgets/loading/loading_spinner.dart';
@@ -142,43 +143,55 @@ class _ListAllRdvState extends State<ListAllRdv> {
                         ? ListView.builder(
                             padding: const EdgeInsets.only(top: 10),
                             itemCount: _searchResult.length,
-                            itemBuilder: (context, i) {
-                              return InkWell(
-                                onTap: () {
-                                 /* Navigator.of(context).pushNamed(
-                                      '/detail-consultation-creen',
-                                      arguments: DetailConsultationScreen(
-                                          consultatingData: _searchResult[i],
-                                          selectedPage: 0)); */
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    child: Card(
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: ListTile(
-                                        leading: Image.asset(
-                                          AppImages.consultation,
-                                          width: 25,
-                                        ),
-                                        title: _searchResult[i].patient != null
-                                            ? Text(
-                                                "${_searchResult[i].patient!.nomuser} ${_searchResult[i].patient!.prenomuser}",
-                                                overflow: TextOverflow.ellipsis,
-                                              )
-                                            : const SizedBox.shrink(),
-                                        trailing: Text(
-                                          CommonVariable.ddMMYYFormat.format(
-                                              DateTime.parse(_searchResult[i]
-                                                  .createdAt
-                                                  .toString())),
-                                        ),
-                                      ),
-                                      margin: const EdgeInsets.all(0.0),
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(12)),
+                                  //  height: ScreenUtil().setHeight(40),
+                                  child: ListTile(
+                                    leading: Container(
+                                      width: 30,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            // fit: BoxFit.cover,
+                                            image: AssetImage(AppImages.rdv),
+                                          )),
                                     ),
+                                    title: _searchResult[index].patient != null
+                                        ? Text(
+                                            "${_searchResult[index].patient!.nomuser} ${_searchResult[index].patient!.prenomuser}",
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        : const SizedBox.shrink(),
+                                    subtitle: Text(
+                                      _searchResult[index].service?.name ??
+                                          "Vide",
+                                    ),
+                                    trailing: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(CommonVariable.ddMMYYFormat.format(
+                                            _searchResult[index].dateRdv)),
+                                        Text(
+                                          _searchResult[index].statutRdv(),
+                                          style: TextStyle(
+                                            color: _searchResult[index].color(),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          '/mes-rendez-vous-vue-detail',
+                                          arguments: MesrendezvousVueDetail(
+                                            detailrdv: _searchResult[index],
+                                          ));
+                                    },
                                   ),
                                 ),
                               );
@@ -188,46 +201,53 @@ class _ListAllRdvState extends State<ListAllRdv> {
                             padding: const EdgeInsets.only(top: 10),
                             itemCount: _listRdv.length,
                             itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                 /* Navigator.of(context).pushNamed(
-                                      '/detail-consultation-creen',
-                                      arguments: DetailConsultationScreen(
-                                          consultatingData:
-                                              _listRdv[index],
-                                          selectedPage: 0)); */
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    child: Card(
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: ListTile(
-                                        leading: Image.asset(
-                                          AppImages.consultation,
-                                          width: 25,
-                                        ),
-                                        title: _listRdv[index]
-                                                    .patient !=
-                                                null
-                                            ? Text(
-                                                "${_listRdv[index].patient!.nomuser} ${_listRdv[index].patient!.prenomuser}",
-                                                overflow: TextOverflow.ellipsis,
-                                              )
-                                            : const SizedBox.shrink(),
-                                        trailing: Text(
-                                          CommonVariable.ddMMYYFormat.format(
-                                              DateTime.parse(
-                                                  _listRdv[index]
-                                                      .createdAt
-                                                      .toString())),
-                                        ),
-                                      ),
-                                      margin: const EdgeInsets.all(0.0),
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(12)),
+                                  //  height: ScreenUtil().setHeight(40),
+                                  child: ListTile(
+                                    leading: Container(
+                                      width: 30,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            // fit: BoxFit.cover,
+                                            image: AssetImage(AppImages.rdv),
+                                          )),
                                     ),
+                                    title: _listRdv[index].patient != null
+                                        ? Text(
+                                            "${_listRdv[index].patient!.nomuser} ${_listRdv[index].patient!.prenomuser}",
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        : const SizedBox.shrink(),
+                                    subtitle: Text(
+                                      _listRdv[index].service?.name ?? "Vide",
+                                    ),
+                                    trailing: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(CommonVariable.ddMMYYFormat
+                                            .format(_listRdv[index].dateRdv)),
+                                        Text(
+                                          _listRdv[index].statutRdv(),
+                                          style: TextStyle(
+                                            color: _listRdv[index].color(),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                Navigator.of(context).pushNamed(
+                                          '/mes-rendez-vous-vue-detail',
+                                          arguments: MesrendezvousVueDetail(
+                                            detailrdv: _listRdv[index],
+                                          ));
+                                    },
                                   ),
                                 ),
                               );
@@ -268,7 +288,7 @@ class _ListAllRdvState extends State<ListAllRdv> {
       });
     }).catchError((err) {
       Navigator.of(context).pop();
-    print(err);
+      print(err);
       displayToastmessage("Oupps! une erreur s'est produite", context);
     });
   }

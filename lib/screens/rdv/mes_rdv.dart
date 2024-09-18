@@ -2,7 +2,7 @@ import 'package:biomaj/constants/appBar.dart';
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
 import 'package:biomaj/models/rendez_vous_model.dart';
-import 'package:biomaj/screens/rendezvous/vue_des_rdv/mesrdv_vue_widget.dart';
+import 'package:biomaj/screens/rdv/mes_rdv_widget.dart';
 import 'package:biomaj/widgets/loading/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

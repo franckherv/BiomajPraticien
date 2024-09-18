@@ -114,12 +114,43 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                     // margin: EdgeInsets.all(20.0),
                     child: Column(
                       children: [
+
+                        widget.examencours.patient != null
+                    ? Column(
+                        children: [
+                          ListTile(
+                            title: const Text(
+                              'Nom',
+                            ),
+                            trailing: Text(
+                                widget.examencours.patient!.nomuser.toString()),
+                          ),
+                          ListTile(
+                            title: const Text(
+                              'Prenom',
+                            ),
+                            trailing: Text(widget
+                                .examencours.patient!.prenomuser
+                                .toString()),
+                          ),
+                          ListTile(
+                            title: const Text(
+                              'Matricule',
+                            ),
+                            trailing: Text(widget
+                                .examencours.patient!.matriculeuser
+                                .toString()),
+                          ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
                         ListTile(
                           title: const Text(
                             'Date de \nprescription',
                           ),
-                          trailing:
-              Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(widget.examencours.createdAt.toString()))),
+                          trailing: Text(CommonVariable.ddMMYYFormat.format(
+                              DateTime.parse(
+                                  widget.examencours.createdAt.toString()))),
                         ),
                         ListTile(
                             title: const Text(
@@ -154,6 +185,8 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                   ),
                 ],
               ),
+            
+         
               SizedBox(
                 height: 10.h,
               ),
@@ -297,6 +330,9 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
       ),
     );
   }
+
+
+
 
   Io.File? _imageFile;
   Future<void> captureImage(ImageSource imageSource) async {
