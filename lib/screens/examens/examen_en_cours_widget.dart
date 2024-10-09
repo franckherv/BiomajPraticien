@@ -32,7 +32,7 @@ class ExamenEncoursWidget extends StatelessWidget {
                 )),
           ),
           title: Text(
-            examEncours.descriptionanalyse ?? "Vide",
+            examEncours.typeExamen ?? "Vide",
               overflow: TextOverflow.ellipsis,
 
           ),
@@ -42,6 +42,7 @@ class ExamenEncoursWidget extends StatelessWidget {
               ) : const SizedBox.shrink(),
         
           trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(examEncours.createdAt.toString()))),
              

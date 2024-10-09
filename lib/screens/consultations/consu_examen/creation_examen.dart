@@ -64,7 +64,8 @@ class _CreationExamenState extends State<CreationExamen> {
             onPressed: () => {Navigator.of(context).pop()},
           ),
         ),
-        body: Container(
+        body: 
+        Container(
           width: double.infinity,
           decoration: const BoxDecoration(
             //color: Colors.white.withOpacity(0.4),
@@ -329,6 +330,9 @@ class _CreationExamenState extends State<CreationExamen> {
             ],
           ),
         ));
+ 
+ 
+ 
   }
 
   createNewExam() async {

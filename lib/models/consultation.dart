@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import 'type_exam.dart';
+
 class ListConsultingHospital {
   final int? id;
   final dynamic dateconsultation;
@@ -11,7 +13,7 @@ class ListConsultingHospital {
   final String? temperature;
   final String? rythmecardiaque;
   final dynamic medecinId;
-  final int? agentmedicalId;
+  final int? agentmedicalId;     
   final int? etatId;
   final int? patientId;
   final dynamic affichageconsultation;
@@ -23,6 +25,7 @@ class ListConsultingHospital {
   List<Odornance> odornance;
   List<Analise> analise;
   final Patient? patient;
+
 
   ListConsultingHospital({
     this.id,
@@ -45,6 +48,7 @@ class ListConsultingHospital {
     required this.odornance,
     required this.analise,
     this.patient,
+
   });
 
   factory ListConsultingHospital.fromRawJson(String str) =>
@@ -85,6 +89,7 @@ class ListConsultingHospital {
                 json["analise"]!.map((x) => Analise.fromJson(x))),
         patient:
             json["patient"] == null ? null : Patient.fromJson(json["patient"]),
+        
       );
 
   Map<String, dynamic> toJson() => {
@@ -357,61 +362,90 @@ class Patient {
       };
 }
 
+
 class Analise {
-  Analise({
-    this.id,
-    this.dateanalyse,
-    this.descriptionanalyse,
-    this.biologisteId,
-    this.examenmedicalId,
-    this.etatId,
-    this.consultationId,
-    this.hopitalId,
-    this.affichageanalyse,
-    this.createdAt,
-    this.updatedAt,
-  });
+    final int? id;
+    final dynamic dateanalyse;
+    final String? descriptionanalyse;
+    final int? biologisteId;
+    final dynamic examenmedicalId;
+    final int? etatId;
+    final dynamic affichageanalyse;
+    final DateTime? createdAt;
+    final DateTime? updatedAt;
+    final int? patientId;
+    final String? examendemande;
+    final String? typeExamen;
+    final String? renseignementClt;
+    final int? consultationId;
+    final dynamic hopitalId;
+    final TypeExam? typeExam;
 
-  int? id;
-  dynamic dateanalyse;
-  String? descriptionanalyse;
-  dynamic biologisteId;
-  int? examenmedicalId;
-  int? etatId;
-  int? consultationId;
-  dynamic hopitalId;
-  dynamic affichageanalyse;
-  String? createdAt;
-  String? updatedAt;
+    Analise({
+        this.id,
+        this.dateanalyse,
+        this.descriptionanalyse,
+        this.biologisteId,
+        this.examenmedicalId,
+        this.etatId,
+        this.affichageanalyse,
+        this.createdAt,
+        this.updatedAt,
+        this.patientId,
+        this.examendemande,
+        this.typeExamen,
+        this.renseignementClt,
+        this.consultationId,
+        this.hopitalId,
+        this.typeExam,
+    });
 
-  factory Analise.fromJson(Map<String, dynamic> json) => Analise(
+    factory Analise.fromRawJson(String str) => Analise.fromJson(json.decode(str));
+
+    String toRawJson() => json.encode(toJson());
+
+    factory Analise.fromJson(Map<String, dynamic> json) => Analise(
         id: json["id"],
         dateanalyse: json["dateanalyse"],
         descriptionanalyse: json["descriptionanalyse"],
         biologisteId: json["biologiste_id"],
         examenmedicalId: json["examenmedical_id"],
         etatId: json["etat_id"],
+        affichageanalyse: json["affichageanalyse"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+        patientId: json["patient_id"],
+        examendemande: json["examendemande"],
+        typeExamen: json["type_examen"],
+        renseignementClt: json["renseignement_clt"],
         consultationId: json["consultation_id"],
         hopitalId: json["hopital_id"],
-        affichageanalyse: json["affichageanalyse"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-      );
 
-  Map<String, dynamic> toJson() => {
+             typeExam:
+            json["typ"] == null ? null : TypeExam.fromJson(json["typ"]),
+    );
+
+    Map<String, dynamic> toJson() => {
         "id": id,
         "dateanalyse": dateanalyse,
         "descriptionanalyse": descriptionanalyse,
         "biologiste_id": biologisteId,
         "examenmedical_id": examenmedicalId,
         "etat_id": etatId,
+        "affichageanalyse": affichageanalyse,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "patient_id": patientId,
+        "examendemande": examendemande,
+        "type_examen": typeExamen,
+        "renseignement_clt": renseignementClt,
         "consultation_id": consultationId,
         "hopital_id": hopitalId,
-        "affichageanalyse": affichageanalyse,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
-      };
+                "typ": typeExam?.toJson(),
+
+    };
 }
+
 
 class Odornance {
   Odornance({

@@ -4,12 +4,10 @@ import 'package:biomaj/screens/common/connexion/sign_in.dart';
 import 'package:biomaj/screens/common/inscription/sign_up.dart';
 import 'package:biomaj/screens/common/splash/splash_screen.dart';
 import 'package:biomaj/screens/compte/compte_user.dart';
-import 'package:biomaj/screens/consultations/consu_examen/creation_examen.dart';
 import 'package:biomaj/screens/consultations/consulting.dart';
 import 'package:biomaj/screens/consultations/create_consulting/create_consulting.dart';
 import 'package:biomaj/screens/consultations/detail_consulting.dart';
 import 'package:biomaj/screens/consultations/list_consultation.dart';
-import 'package:biomaj/screens/consultations/ordonnance/creation_ordonnance.dart';
 import 'package:biomaj/screens/examens/analyse.dart';
 import 'package:biomaj/screens/examens/analyse_en_cours.dart';
 import 'package:biomaj/screens/examens/detail_encours_screen.dart';
@@ -44,7 +42,7 @@ class RouteGenerator {
                   defauldIndex: argument.defauldIndex,
                 ));
       case '/sing-up-screen':
-        return MaterialPageRoute(builder: (_) => SingUpScreen());
+        return MaterialPageRoute(builder: (_) => const SingUpScreen());
 
       // case '/succes-appointement':
       //   return MaterialPageRoute(builder: (_) => SuccesAppointement());
@@ -55,11 +53,11 @@ class RouteGenerator {
       // case '/rendez-vous-screen':
       //   return MaterialPageRoute(builder: (_) => RendezVousScreen());
       case '/examen-screen':
-        return MaterialPageRoute(builder: (_) => ExamenScreen());
+        return MaterialPageRoute(builder: (_) => const ExamenScreen());
       case '/analyse-prescrite-screen':
-        return MaterialPageRoute(builder: (_) => AnalysePrescriteScreen());
+        return MaterialPageRoute(builder: (_) => const AnalysePrescriteScreen());
       case '/analyse-termine-screen':
-        return MaterialPageRoute(builder: (_) => AnalyseTermineScreen());
+        return MaterialPageRoute(builder: (_) => const AnalyseTermineScreen());
 
       case '/consulting-screen':
         return MaterialPageRoute(builder: (_) => const ConsultingScreen());
@@ -80,19 +78,19 @@ class RouteGenerator {
     case '/info-patient':
           return MaterialPageRoute(builder: (_) => const InfoPatient());
 
-      case '/creation-examen-enregistrement':
-        CreationExamen argument = args as CreationExamen;
-        return MaterialPageRoute(
-            builder: (_) => CreationExamen(
-                  cnsulID: argument.cnsulID,
-                ));
+      // case '/creation-examen-enregistrement':
+      //   CreationExamen argument = args as CreationExamen;
+      //   return MaterialPageRoute(
+      //       builder: (_) => CreationExamen(
+      //             cnsulID: argument.cnsulID,
+      //           ));
 
-      case '/creation-ordonnance-enregistrement':
-        CreationOrdonnance argument = args as CreationOrdonnance;
-        return MaterialPageRoute(
-            builder: (_) => CreationOrdonnance(
-                  cnsulID: argument.cnsulID,
-                ));
+      // case '/creation-ordonnance-enregistrement':
+      //   CreationOrdonnance argument = args as CreationOrdonnance;
+      //   return MaterialPageRoute(
+      //       builder: (_) => CreationOrdonnance(
+      //             cnsulID: argument.cnsulID,
+      //           ));
 
       case '/mes-rendez-vous-vue-detail':
         MesrendezvousVueDetail argument = args as MesrendezvousVueDetail;

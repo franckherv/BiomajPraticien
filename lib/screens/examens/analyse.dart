@@ -210,7 +210,7 @@ class _AnalysePrescriteScreenState extends State<AnalysePrescriteScreen> {
                               height: 45.0,
                               child: SmallRaisedBtn(
                                 width: double.infinity,
-                                onPressed: () {
+                                onPressed: () { 
 
                                   if (barcode.isNotEmpty && controller.text.isNotEmpty ) {
                                     Navigator.of(context).pushNamed(

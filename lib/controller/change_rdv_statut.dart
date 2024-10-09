@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../models/rdv_stat_model.dart';
+import '../screens/rdv/list_rdv.dart';
 import '../service/base_service.dart';
 
 class ChangeStatusController extends GetxController {
@@ -13,13 +14,13 @@ class ChangeStatusController extends GetxController {
   final GlobalKey<State> keyLoader = GlobalKey<State>();
 
   RxBool loading = false.obs;
-Rx<RdvStatusModel?> selectedStatus = RdvStatusModel(id: 0, name: "Refusé").obs;
-RxString statutId = "".obs;
+  Rx<RdvStatusModel?> selectedStatus =
+      RdvStatusModel(id: 0, name: "Refusé").obs;
+  RxString statutId = "".obs;
 
   // controller de telephone
   Rx<TextEditingController> messageEditingController =
       TextEditingController().obs;
-
 
   // Récuperation de l'OTP
   Future<void> changeStatus(int rdvId) async {
@@ -34,19 +35,19 @@ RxString statutId = "".obs;
           url: "valide-rdv-medecin", body: data);
 
       if (response.statusCode == 200) {
-     
-     messageEditingController.value.clear();
-      Get.back(); 
-          Get.snackbar(
-              'Succès', 
-              'Statut modifié avec succès', 
-              backgroundColor: Colors.green, 
-              colorText: Colors.white,
-              borderRadius: 20,
-              margin: const EdgeInsets.all(10), 
-              duration: const Duration(seconds: 3),
-              icon: const Icon(Icons.check_circle, color: Colors.white), 
-            );
+        messageEditingController.value.clear();
+
+        Get.snackbar(
+          'Succès',
+          'Statut modifié avec succès',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          borderRadius: 20,
+          margin: const EdgeInsets.all(10),
+          // duration: const Duration(seconds: 3),
+          icon: const Icon(Icons.check_circle, color: Colors.white),
+        );
+                 Get.off(() => const ListAllRdv());
 
       } else {
         loading(false);

@@ -377,8 +377,7 @@ class _MesrendezvousVueDetailState extends State<MesrendezvousVueDetail> {
                                         child: SmallRaisedBtn(
                                           width: double.infinity,
                                           onPressed: () {
-                                            _controller.changeStatus(
-                                                widget.detailrdv.id);
+                                            _controller.changeStatus(widget.detailrdv.id);
                                           },
                                           borderRadius:
                                               BorderRadius.circular(10),

@@ -77,7 +77,7 @@ class _ExamenDetailScreenState extends State<ExamenDetailScreen> {
                           title: const Text(
                             'Date',
                           ),
-                        trailing:  Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(widget.examId.createdAt))),
+                        trailing:  Text(CommonVariable.ddMMYYFormat.format(widget.examId.createdAt ?? DateTime.now())),
                         ),
                       ],
                     ),

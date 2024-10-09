@@ -170,6 +170,12 @@ class _ListConsultationState extends State<ListConsultation> {
                                                 overflow: TextOverflow.ellipsis,
                                               )
                                             : const SizedBox.shrink(),
+                                         subtitle: _searchResult[i].patient != null
+                                            ? Text(
+                                                "${_searchResult[i].patient!.prenomuser}",
+                                                overflow: TextOverflow.ellipsis,
+                                              )
+                                            : const SizedBox.shrink(),
                                         trailing: Column(
                                           children: [
                                             Text(
@@ -207,45 +213,49 @@ class _ListConsultationState extends State<ListConsultation> {
                                               _listconsultation[index],
                                           selectedPage: 0));
                                 },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    child: Card(
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: ListTile(
-                                        leading: Image.asset(
-                                          AppImages.consultation,
-                                          width: 25,
-                                        ),
-                                        title: _listconsultation[index]
-                                                    .patient !=
-                                                null
-                                            ? Text("${_listconsultation[index].patient!.nomuser} ${_listconsultation[index].patient!.prenomuser}",
-                                                overflow: TextOverflow.ellipsis,
-                                              )
-                                            : const SizedBox.shrink(),
-                                        trailing: Column(
-                                          children: [
-                                            Text(
-                                              CommonVariable.ddMMYYFormat
-                                                  .format(DateTime.parse(
-                                                      _listconsultation[index]
-                                                          .createdAt
-                                                          .toString())),
-                                            ),
-                                            Text(
-                                              _listconsultation[index]
-                                                  .getStatus(),
-                                              style: TextStyle(color: _listconsultation[index].color()),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      margin: const EdgeInsets.all(0.0),
+                                child: SizedBox(
+                                  child: Card(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
+                                    child: ListTile(
+                                      leading: Image.asset(
+                                        AppImages.consultation,
+                                        width: 25,
+                                      ),
+                                      title: _listconsultation[index]
+                                                  .patient !=
+                                              null
+                                          ? Text("${_listconsultation[index].patient!.nomuser}",
+                                              overflow: TextOverflow.ellipsis,
+                                            )
+                                          : const SizedBox.shrink(),
+                                         subtitle: _listconsultation[index]
+                                                  .patient !=
+                                              null
+                                          ? Text("${_listconsultation[index].patient!.prenomuser}",
+                                              overflow: TextOverflow.ellipsis,
+                                            )
+                                          : const SizedBox.shrink(),
+                                      trailing: Column(
+                                        children: [
+                                          Text(
+                                            CommonVariable.ddMMYYFormat
+                                                .format(DateTime.parse(
+                                                    _listconsultation[index]
+                                                        .createdAt
+                                                        .toString())),
+                                          ),
+                                          Text(
+                                            _listconsultation[index]
+                                                .getStatus(),
+                                            style: TextStyle(color: _listconsultation[index].color()),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    margin: const EdgeInsets.all(0.0),
                                   ),
                                 ),
                               );

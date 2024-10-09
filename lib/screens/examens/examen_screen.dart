@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExamenScreen extends StatefulWidget {
+  const ExamenScreen({super.key});
+
   @override
   State<ExamenScreen> createState() => _ExamenScreenState();
 }

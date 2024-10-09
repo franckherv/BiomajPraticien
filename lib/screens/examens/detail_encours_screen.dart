@@ -7,6 +7,7 @@ import 'package:biomaj/constants/common_variable.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
 import 'package:biomaj/models/list_exam.dart';
 import 'package:biomaj/widgets/loading/loading_spinner.dart';
+import 'package:biomaj/widgets/pdf_view.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -114,36 +115,36 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                     // margin: EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-
                         widget.examencours.patient != null
-                    ? Column(
-                        children: [
-                          ListTile(
-                            title: const Text(
-                              'Nom',
-                            ),
-                            trailing: Text(
-                                widget.examencours.patient!.nomuser.toString()),
-                          ),
-                          ListTile(
-                            title: const Text(
-                              'Prenom',
-                            ),
-                            trailing: Text(widget
-                                .examencours.patient!.prenomuser
-                                .toString()),
-                          ),
-                          ListTile(
-                            title: const Text(
-                              'Matricule',
-                            ),
-                            trailing: Text(widget
-                                .examencours.patient!.matriculeuser
-                                .toString()),
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
+                            ? Column(
+                                children: [
+                                  ListTile(
+                                    title: const Text(
+                                      'Nom',
+                                    ),
+                                    trailing: Text(widget
+                                        .examencours.patient!.nomuser
+                                        .toString()),
+                                  ),
+                                  ListTile(
+                                    title: const Text(
+                                      'Prenom',
+                                    ),
+                                    trailing: Text(widget
+                                        .examencours.patient!.prenomuser
+                                        .toString()),
+                                  ),
+                                  ListTile(
+                                    title: const Text(
+                                      'Matricule',
+                                    ),
+                                    trailing: Text(widget
+                                        .examencours.patient!.matriculeuser
+                                        .toString()),
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
                         ListTile(
                           title: const Text(
                             'Date de \nprescription',
@@ -151,6 +152,18 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                           trailing: Text(CommonVariable.ddMMYYFormat.format(
                               DateTime.parse(
                                   widget.examencours.createdAt.toString()))),
+                        ),
+                         ListTile(
+                          title: const Text(
+                            'Type d\'examens',
+                          ),
+                          trailing: Text(widget.examencours.typeExamen.toString()),
+                        ),
+                            ListTile(
+                          title: const Text(
+                            'Examens démandé',
+                          ),
+                          trailing: Text(widget.examencours.examendemande.toString()),
                         ),
                         ListTile(
                             title: const Text(
@@ -185,8 +198,6 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                   ),
                 ],
               ),
-            
-         
               SizedBox(
                 height: 10.h,
               ),
@@ -212,10 +223,30 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                         crossAxisSpacing: 20),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (_, index) {
-                                  return Image.network(
-                                    "${CommonVariable.imageBaseUrl}${uploadFile.data[index].image}",
-                                    fit: BoxFit.fill,
-                                  );
+                                  final fileUrl =
+                                      "${CommonVariable.imageBaseUrl}${uploadFile.data[index].image}";
+
+                                  // Vérifier si le fichier est un PDF
+                                  if (fileUrl.endsWith('.pdf')) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                PDFViewer(pdfUrl: fileUrl),
+                                          ),
+                                        );
+                                      },
+                                      child: const Icon(Icons.picture_as_pdf,
+                                          size: 100, color: Colors.grey),
+                                    );
+                                  } else {
+                                    return Image.network(
+                                      "${CommonVariable.imageBaseUrl}${uploadFile.data[index].image}",
+                                      fit: BoxFit.fill,
+                                    );
+                                  }
                                 },
                               )),
                         ],
@@ -321,6 +352,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                 ))),
                       ],
                     ),
+                    const SizedBox(height: 100,)
                   ],
                 ),
               ),
@@ -330,9 +362,6 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
       ),
     );
   }
-
-
-
 
   Io.File? _imageFile;
   Future<void> captureImage(ImageSource imageSource) async {

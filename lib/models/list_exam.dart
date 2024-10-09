@@ -6,7 +6,25 @@ import 'dart:convert';
 import 'package:biomaj/models/medecin_model.dart';
 import 'package:flutter/material.dart';
 
+
 class ListExam {
+    final int? id;
+    final dynamic dateanalyse;
+    final String? descriptionanalyse;
+    final int? biologisteId;
+    final dynamic examenmedicalId;
+    final int? etatId;
+    final dynamic affichageanalyse;
+    final DateTime? createdAt;
+    final DateTime? updatedAt;
+    final int? patientId;
+    final String? examendemande;
+    final String? typeExamen;
+    final String? renseignementClt;
+    final int? consultationId;
+    final dynamic hopitalId;
+    final List<dynamic>? exament;
+
     ListExam({
         this.id,
         this.dateanalyse,
@@ -14,24 +32,21 @@ class ListExam {
         this.biologisteId,
         this.examenmedicalId,
         this.etatId,
-        this.consultationId,
-        this.hopitalId,
         this.affichageanalyse,
         this.createdAt,
         this.updatedAt,
+        this.patientId,
+        this.examendemande,
+        this.typeExamen,
+        this.renseignementClt,
+        this.consultationId,
+        this.hopitalId,
+        this.exament,
     });
 
-    int? id;
-    dynamic dateanalyse;
-    String? descriptionanalyse;
-    int? biologisteId;
-    int? examenmedicalId;
-    int? etatId;
-    int? consultationId;
-    int? hopitalId;
-    String? affichageanalyse;
-    var createdAt;
-    String? updatedAt;
+    factory ListExam.fromRawJson(String str) => ListExam.fromJson(json.decode(str));
+
+    String toRawJson() => json.encode(toJson());
 
     factory ListExam.fromJson(Map<String, dynamic> json) => ListExam(
         id: json["id"],
@@ -40,11 +55,16 @@ class ListExam {
         biologisteId: json["biologiste_id"],
         examenmedicalId: json["examenmedical_id"],
         etatId: json["etat_id"],
+        affichageanalyse: json["affichageanalyse"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+        patientId: json["patient_id"],
+        examendemande: json["examendemande"],
+        typeExamen: json["type_examen"],
+        renseignementClt: json["renseignement_clt"],
         consultationId: json["consultation_id"],
         hopitalId: json["hopital_id"],
-        affichageanalyse: json["affichageanalyse"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        exament: json["exament"] == null ? [] : List<dynamic>.from(json["exament"]!.map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
@@ -54,13 +74,19 @@ class ListExam {
         "biologiste_id": biologisteId,
         "examenmedical_id": examenmedicalId,
         "etat_id": etatId,
+        "affichageanalyse": affichageanalyse,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "patient_id": patientId,
+        "examendemande": examendemande,
+        "type_examen": typeExamen,
+        "renseignement_clt": renseignementClt,
         "consultation_id": consultationId,
         "hopital_id": hopitalId,
-        "affichageanalyse": affichageanalyse,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
+        "exament": exament == null ? [] : List<dynamic>.from(exament!.map((x) => x)),
     };
 }
+
 
 
 

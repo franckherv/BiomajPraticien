@@ -176,8 +176,7 @@ class _ObservationScreenState extends State<ObservationScreen> {
                     // margin: EdgeInsets.all(20.0),
                     child: ListTile(
                         title: const Text('Observation'),
-                        subtitle:
-                            Text(findObservationById.description.toString())),
+                        subtitle: Text(findObservationById.description.toString())),
                   ),
                 ],
               )

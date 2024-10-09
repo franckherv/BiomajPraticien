@@ -10,15 +10,14 @@ class ExamenListWidget extends StatelessWidget {
   
   ListExam examlist;
 
-  ExamenListWidget({Key? key, required this.examlist});
+ ExamenListWidget({Key? key, required this.examlist});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        decoration: BoxDecoration(
-            color: Colors.grey[300], borderRadius: BorderRadius.circular(12)),
+        decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(12)),
         //  height: ScreenUtil().setHeight(40),
         child: ListTile(
           leading: Container(
@@ -32,15 +31,14 @@ class ExamenListWidget extends StatelessWidget {
                 )),
           ),
           title: Text(
-            examlist.descriptionanalyse ?? "Vide",
+            examlist.typeExamen ?? "Vide",
             overflow: TextOverflow.ellipsis,
 
           ),
           // subtitle: Text(
           //   rendevouslist.service?.name ?? "Vide",
           // ),
-          trailing:
-              Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(examlist.createdAt))),
+          trailing: Text(CommonVariable.ddMMYYFormat.format(examlist.createdAt ?? DateTime.now())),
           onTap: () {
             Navigator.of(context).pushNamed('/examen-detail-screen',
                 arguments: ExamenDetailScreen( 
