@@ -441,7 +441,7 @@ class Analise {
         "renseignement_clt": renseignementClt,
         "consultation_id": consultationId,
         "hopital_id": hopitalId,
-                "typ": typeExam?.toJson(),
+         "typ": typeExam?.toJson(),
 
     };
 }

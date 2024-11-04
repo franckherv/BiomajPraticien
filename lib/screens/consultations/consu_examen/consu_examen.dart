@@ -142,74 +142,85 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                                          Expanded(child: FormField<ExmprMdl>(
-                                            builder: (FormFieldState state) {
-                                              return InputDecorator(
-                                                decoration: InputDecoration(
-                                                  filled: true,
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color: Colors.white,
-                                                            width: 0.0),
-                                                  ),
-                                                  contentPadding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 8.0,
-                                                          left: 8.0,
-                                                          right: 10),
-                                                ),
-                                                child:
-                                                    DropdownButtonHideUnderline(
-                                                  child:
-                                                      DropdownButton<ExmprMdl>(
-                                                    value: value1,
-                                                    iconSize: 30,
-                                                    icon: const Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      size: 15,
-                                                      color: Colors.black,
+                                          Expanded(
+                                            child: FormField<ExmprMdl>(
+                                              builder: (FormFieldState state) {
+                                                return InputDecorator(
+                                                  decoration: InputDecoration(
+                                                    filled: true,
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  Colors.white,
+                                                              width: 0.0),
                                                     ),
-                                                    style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 15,
-                                                        fontFamily:
-                                                            'MontserratRegular'),
-                                                    hint: const Text(
-                                                        'Cliquez pour sélectionner'),
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        value1 = value;
-                                                        examId = value!.id
-                                                            .toString();
-                                                      });
-                                                    },
-                                                    items: _examenList.isEmpty
-                                                        ? []
-                                                        : _examenList
-                                                            .map((item) {
-                                                            return DropdownMenuItem(
-                                                              value: item,
-                                                              child: Text(
-                                                                  item
-                                                                      .libelletypeexamen!,
-                                                                  style: const TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      fontSize:
-                                                                          16)),
-                                                            );
-                                                          }).toList(),
+                                                    contentPadding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 8.0,
+                                                            left: 8.0,
+                                                            right: 10),
                                                   ),
-                                                ),
-                                              );
-                                            },
-                                          )),
+                                                  child:
+                                                      DropdownButtonHideUnderline(
+                                                    child: DropdownButton<
+                                                        ExmprMdl>(
+                                                    
+                                                      value: _examenList
+                                                              .isNotEmpty
+                                                          ? _examenList.firstWhere(
+                                                              (l) => l.libelletypeexamen ==
+                                                                  value1,
+                                                              orElse: () => _examenList.first)
+                                                          : null,
+                                                      iconSize: 30,
+                                                      icon: const Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        size: 15,
+                                                        color: Colors.black,
+                                                      ),
+                                                      style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 15,
+                                                          fontFamily:
+                                                              'MontserratRegular'),
+                                                      hint: const Text(
+                                                          'Cliquez pour sélectionner'),
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          value1 = value;
+                                                          examId = value?.id
+                                                              .toString();
+                                                        });
+                                                      },
+                                                      items:
+                                                          _examenList.isNotEmpty
+                                                              ? _examenList
+                                                                  .map((item) {
+                                                                  return DropdownMenuItem(
+                                                                    value: item,
+                                                                    child: Text(
+                                                                      item.libelletypeexamen ??
+                                                                          '',
+                                                                      style: const TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          fontSize:
+                                                                              16),
+                                                                    ),
+                                                                  );
+                                                                }).toList()
+                                                              : [],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       Padding(
@@ -436,28 +447,26 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                  
                                     SizedBox(
                                       height: 20.h,
                                     ),
                                     SizedBox(
                                       height: 20.h,
                                     ),
-                                    
                                     SizedBox(
                                       height: 5.h,
                                     ),
                                     Card(
                                       child: Column(
                                         children: [
-                                      const Padding(
-                                         padding:  EdgeInsets.all(8.0),
-                                         child: Text(
-                                            "Information analyse",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Information analyse",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                       ),
                                           ListTile(
                                             title: const Text("Date"),
                                             trailing: Text(CommonVariable
@@ -479,20 +488,26 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
                                             subtitle:
                                                 findid.analise[i].typeExamen !=
                                                         null
-                                                    ? Text(findid.analise[i].typeExam!.libelletypeexamen.toString()
+                                                    ? Text(findid
+                                                        .analise[i]
+                                                        .typeExam!
+                                                        .libelletypeexamen
+                                                        .toString()
                                                         .toString())
                                                     : const SizedBox.shrink(),
                                           ),
                                           ListTile(
                                             title:
                                                 const Text("Examens demandé"),
-                                            subtitle: Text( findid.analise[i].examendemande
+                                            subtitle: Text(findid
+                                                .analise[i].examendemande
                                                 .toString()),
                                           ),
                                           ListTile(
                                             title: const Text(
                                                 "Renseignement clinique"),
-                                            subtitle: Text(findid.analise[i].renseignementClt
+                                            subtitle: Text(findid
+                                                .analise[i].renseignementClt
                                                 .toString()),
                                           ),
                                           ListTile(
@@ -503,7 +518,6 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
                                         ],
                                       ),
                                     ),
-                                  
                                   ],
                                 ),
                               );

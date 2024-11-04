@@ -142,6 +142,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                         .examencours.patient!.matriculeuser
                                         .toString()),
                                   ),
+                                
                                 ],
                               )
                             : const SizedBox.shrink(),
@@ -153,17 +154,20 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                               DateTime.parse(
                                   widget.examencours.createdAt.toString()))),
                         ),
-                         ListTile(
+                        ListTile(
                           title: const Text(
                             'Type d\'examens',
                           ),
-                          trailing: Text(widget.examencours.typeExamen.toString()),
+                          trailing: Text(widget
+                              .examencours.typeExam!.libelletypeexamen
+                              .toString()),
                         ),
-                            ListTile(
+                        ListTile(
                           title: const Text(
                             'Examens démandé',
                           ),
-                          trailing: Text(widget.examencours.examendemande.toString()),
+                          trailing:
+                              Text(widget.examencours.examendemande.toString()),
                         ),
                         ListTile(
                             title: const Text(
@@ -171,10 +175,10 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                             ),
                             trailing: Chip(
                                 label: Text(
-                                  widget.examencours.stat!.getStatus(),
+                                  widget.examencours.getStatus(),
                                 ),
                                 backgroundColor:
-                                    widget.examencours.stat!.color(),
+                                    widget.examencours.color(),
                                 labelStyle:
                                     const TextStyle(color: Colors.white))),
                         ListTile(
@@ -213,7 +217,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                             height: 8.h,
                           ),
                           SizedBox(
-                              height: 150.0,
+                              height: 120.0,
                               child: GridView.builder(
                                 itemCount: uploadFile.data.length,
                                 gridDelegate:
@@ -223,8 +227,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                         crossAxisSpacing: 20),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (_, index) {
-                                  final fileUrl =
-                                      "${CommonVariable.imageBaseUrl}${uploadFile.data[index].image}";
+                                  final fileUrl = "${CommonVariable.imageBaseUrl}${uploadFile.data[index].image}";
 
                                   // Vérifier si le fichier est un PDF
                                   if (fileUrl.endsWith('.pdf')) {
@@ -238,8 +241,8 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                           ),
                                         );
                                       },
-                                      child: const Icon(Icons.picture_as_pdf,
-                                          size: 100, color: Colors.grey),
+                                      child: const Icon(Icons.file_copy,
+                                          size: 70, color: Color.fromARGB(255, 14, 50, 78)),
                                     );
                                   } else {
                                     return Image.network(
@@ -249,6 +252,9 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                   }
                                 },
                               )),
+                             Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("Doc (${uploadFile.data.length})"))
                         ],
                       ))
                   : Container(),
@@ -256,59 +262,59 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                 padding: EdgeInsets.only(
                     top: 10.0.h, bottom: 10.0, left: 20.0, right: 20.0),
                 child: SizedBox(
-                    height: _imageFile != null ? 50 : 150.0.h,
-                    child: _imageFile != null
-                        ? Container(
-                            alignment: Alignment.center,
-                            width: 60.r,
-                            height: 70.h,
-                            child: Image.file(
-                              _imageFile!,
-                              fit: BoxFit.cover,
+                  height: _imageFile != null ? 50 : 150.0.h,
+                  child: _imageFile != null
+                      ? Container(
+                          alignment: Alignment.center,
+                          width: 60.r,
+                          height: 70.h,
+                          child: _imageFile!.path.endsWith('.pdf')
+                              ? Icon(
+                                  Icons.picture_as_pdf,
+                                  size: 50.r,
+                                  color: Colors.red,
+                                ) 
+                              : Image.file(
+                                  _imageFile!,
+                                  fit: BoxFit.cover,
+                                ), 
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 110.w,
+                                  height: 110.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      width: 5,
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons
+                                        .description, 
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                const Text(
+                                  "Aucun document sélectionné !",
+                                )
+                              ],
                             ),
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Text(
-                              //   "Aucune image sélectionnée !",
-                              // )
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 110.w,
-                                    height: 110.h,
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                          width: 5,
-                                          color: Colors.grey.shade300),
-                                    ),
-                                    child: const Icon(
-                                      Icons.description,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  const Text(
-                                    "Aucun document sélectionné !",
-                                  )
-                                ],
-                              )
-                            ],
-                          )),
+                          ],
+                        ),
+                ),
               ),
               const SizedBox(height: 20),
-              _imageFiles != null
-                  ? Image.file(
-                      _imageFiles!,
-                      width: 200,
-                      height: 200,
-                    )
-                  : const SizedBox.shrink(),
+              _buildFileDisplay(),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
@@ -342,7 +348,6 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                         Flexible(
                             child: TextButton(
                                 onPressed: () {
-                                  // captureImage(ImageSource.gallery);
                                   _pickFile();
                                 },
                                 child: const Icon(
@@ -352,7 +357,9 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                 ))),
                       ],
                     ),
-                    const SizedBox(height: 100,)
+                    const SizedBox(
+                      height: 100,
+                    )
                   ],
                 ),
               ),
@@ -374,6 +381,38 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
         _imageFile = _imageFile;
       });
     } catch (e) {}
+  }
+
+  Widget _buildFileDisplay() {
+    if (_imageFiles != null) {
+      // Vérifier si le fichier est un PDF
+      if (_imageFiles!.path.endsWith('.pdf')) {
+        return const Icon(
+          Icons.picture_as_pdf,
+          size: 100,
+          color: Colors.red,
+        ); // Affiche une icône PDF si c'est un fichier PDF
+      }
+      // Vérifier si le fichier est une image (par extension)
+      else if (_imageFiles!.path.endsWith('.png') ||
+          _imageFiles!.path.endsWith('.jpg') ||
+          _imageFiles!.path.endsWith('.jpeg') ||
+          _imageFiles!.path.endsWith('.gif')) {
+        return Image.file(
+          _imageFiles!,
+          width: 200,
+          height: 200,
+        ); // Affiche l'image si c'est une image
+      } else {
+        return const Icon(
+          Icons.insert_drive_file,
+          size: 100,
+          color: Colors.grey,
+        );
+      }
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 
   //! DECLARE RESIZE IMAGE FUNTION
@@ -425,14 +464,6 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
         uploadFile = datas;
       });
       displayToastmessage("Enrégistrement éffectué avec succeès !", context);
-
-      // Navigator.of(context).pushNamedAndRemoveUntil(
-      //   '/succes-appointement',
-      //   (Route<dynamic> route) => false,
-      // );
-      // } else {
-      //  // displayToastmessage("${datas["message"]}", context);
-      // }
     }).catchError((err, error) {
       Navigator.of(context).pop();
 

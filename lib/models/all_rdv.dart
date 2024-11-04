@@ -69,8 +69,7 @@ class AllRdv {
             json["service"] == null ? null : Service.fromJson(json["service"]),
         medecin:
             json["medecin"] == null ? null : Medecin.fromJson(json["medecin"]),
-        patient:
-            json["patient"] == null ? null : Patient.fromJson(json["patient"]),
+       patient: json["patient"] == null ? null : Patient.fromJson(json["patient"]),
       );
 
   Map<String, dynamic> toJson() => {

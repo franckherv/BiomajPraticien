@@ -42,7 +42,7 @@ class PageTwo extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 25.0, left: 10.0, right: 10.0),
                 child: Text(
-                  "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                  "Rejoignez notre communauté et découvrez une nouvelle façon de gérer votre santé. En vous inscrivant, vous accéderez à un suivi médical en temps réel, des notifications importantes et des ressources santé exclusives.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 16, color: Colors.black, fontFamily: 'Poppins'),
@@ -50,9 +50,7 @@ class PageTwo extends StatelessWidget {
                 ),
               ),
 
-//              SizedBox(
-//                height: 100.0,
-//              ),
+
             ],
           ),
         ),

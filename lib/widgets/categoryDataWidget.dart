@@ -21,7 +21,7 @@ class CategoryWidget extends StatelessWidget {
       onTap: () {
         if (cat.title == "Examen") {
           Navigator.pushNamed(context, '/examen-screen');
-        } else if (cat.title == 'Information patient' /*&& userJson != null */) {
+        } else if (cat.title == 'Info patient' /*&& userJson != null */) {
           
           Navigator.pushNamed(context, '/info-patient');
         } else if(cat.title == 'Consultation') { 
@@ -34,7 +34,7 @@ class CategoryWidget extends StatelessWidget {
           height: ScreenUtil().setHeight(250),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: cat.title == "Information patient"
+              color: cat.title == "Info patient"
                   ? AppColors.blur
                   : cat.title == "Examen"
                       ? AppColors.violet

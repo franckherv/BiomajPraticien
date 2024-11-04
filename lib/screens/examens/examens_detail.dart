@@ -13,7 +13,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 class ExamenDetailScreen extends StatefulWidget {
   ListExam examId;
 
-  ExamenDetailScreen({Key? key, required this.examId});
+  ExamenDetailScreen({super.key, required this.examId});
 
   @override
   State<ExamenDetailScreen> createState() => _ExamenDetailScreenState();
@@ -65,43 +65,81 @@ class _ExamenDetailScreenState extends State<ExamenDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                
                   Card(
                     color: Colors.grey[200],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    // margin: EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        ListTile(
+                      ListTile(
                           title: const Text(
                             'Date',
                           ),
                         trailing:  Text(CommonVariable.ddMMYYFormat.format(widget.examId.createdAt ?? DateTime.now())),
                         ),
+                           ListTile(
+                          title: const Text(
+                            'Heure',
+                          ),
+                        trailing:  Text(CommonVariable.hhMMFormat.format(widget.examId.createdAt ?? DateTime.now())),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'Type d\'examens',
+                          ),
+                          trailing: Text(widget
+                              .examId.typeExam!.libelletypeexamen.toString()),
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'Examens démandé',
+                          ), 
+                          trailing:
+                              Text(widget.examId.examendemande.toString()),
+                        ),
+                          ListTile(
+                          title: const Text(
+                            'Matricule patient',
+                          ), 
+                          trailing:
+                              Text(widget.examId.patient!.matriculeuser.toString()),
+                        ),
+                      /*  ListTile(
+                            title: const Text(
+                              'Statut de l\'analyse',
+                            ),
+                            trailing: Chip(
+                                label: Text(
+                                  widget.examId.etat?.libelleetat ?? "",
+                                ),
+                                backgroundColor:
+                                    widget.examId.stat!.color(),
+                                labelStyle:
+                                    const TextStyle(color: Colors.white))), */
+                            ListTile(
+                          title: const Text(
+                            'Nom patient',
+                          ), 
+                          trailing:
+                              Text("${widget.examId.patient?.nomuser} ${widget.examId.patient?.prenomuser}"),),
+                        ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          title: const Text("Description"),
+                          subtitle: widget.examId.descriptionanalyse != null
+                              ? Text(widget.examId.descriptionanalyse!,
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w400))
+                              : const Text('Aucune description inscrite',
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w400)),
+                        ),
                       ],
-                    ),
-                  ),
-                  Card(
-                    color: Colors.grey[200],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    // margin: EdgeInsets.all(20.0),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      title: const Text("Description"),
-                      subtitle: widget.examId.descriptionanalyse != null
-                          ? Text(widget.examId.descriptionanalyse!,
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w400))
-                          : const Text('Aucune description inscrite',
-                              style: TextStyle(
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w400)),
                     ),
                   ),
                 ],

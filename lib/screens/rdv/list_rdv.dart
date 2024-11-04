@@ -269,8 +269,8 @@ class _ListAllRdvState extends State<ListAllRdv> {
     }
 
     for (var q in _listRdv) {
-      if (q.patient!.nomuser.toLowerCase().contains(text) ||
-          q.patient!.prenomuser.contains(text)) {
+      if (q.patient!.nomuser!.toLowerCase().contains(text) ||
+          q.patient!.prenomuser!.contains(text)) {
         _searchResult.add(q);
       }
     }

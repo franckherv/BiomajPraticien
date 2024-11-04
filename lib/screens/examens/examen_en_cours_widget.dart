@@ -10,7 +10,7 @@ class ExamenEncoursWidget extends StatelessWidget {
   
   Examencours examEncours;
 
-  ExamenEncoursWidget({Key? key, required this.examEncours});
+  ExamenEncoursWidget({super.key, required this.examEncours});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ExamenEncoursWidget extends StatelessWidget {
                 )),
           ),
           title: Text(
-            examEncours.typeExamen ?? "Vide",
+            examEncours.typeExam!.libelletypeexamen ?? "Vide",
               overflow: TextOverflow.ellipsis,
 
           ),
@@ -46,7 +46,7 @@ class ExamenEncoursWidget extends StatelessWidget {
             children: [
               Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(examEncours.createdAt.toString()))),
              
-              Text(examEncours.stat!.getStatus(), style: TextStyle(color: examEncours.stat!.color()),),
+              Text(examEncours.getStatus(), style: TextStyle(color: examEncours.color()),),
             ],
           ),
           onTap: () {

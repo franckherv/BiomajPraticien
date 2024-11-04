@@ -75,7 +75,7 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
               builder: (context) {
                 return StatefulBuilder(
                     builder: (BuildContext context, StateSetter setState) {
-                  return   Container(
+                  return Container(
                     height: MediaQuery.of(context).size.height * 0.8,
                     decoration: BoxDecoration(
                       color: Colors.grey[100],
@@ -106,10 +106,8 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
                               ScreenUtil().setHeight(30),
                             ),
                             child: Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Center(
                                   child: Column(
@@ -131,16 +129,12 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
                                           top: ScreenUtil().setHeight(5),
                                           //  top: 50.0,
                                         ),
-                                        child:
-                                            RoundedTextInputFieldWithBorder(
+                                        child: RoundedTextInputFieldWithBorder(
                                           label: "Cliquez pour saisir",
-                                          imputCtrl:
-                                              descriptionController,
+                                          imputCtrl: descriptionController,
                                           maxLines: 3,
-                                          inputType:
-                                              TextInputType.multiline,
-                                          inputAction:
-                                              TextInputAction.newline,
+                                          inputType: TextInputType.multiline,
+                                          inputAction: TextInputAction.newline,
                                           textColor: Colors.black54,
                                           inputColor: Colors.black54,
                                           tailText: 15,
@@ -163,8 +157,7 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
                                       onPressed: () {
                                         createNewOrdonnance();
                                       },
-                                      borderRadius:
-                                          BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(10),
                                       child: const Text(
                                         "Enrégistrer",
                                         style: AppDesign.rstpwdstyle,
@@ -178,10 +171,7 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
                         ],
                       ),
                     ),
-                  )
-                   
-
-                   ;
+                  );
                 });
               });
         },
@@ -241,9 +231,8 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
                             itemCount: findOrdonnanceById.odornance.length,
                             itemBuilder: (BuildContext context, int i) {
                               return Dismissible(
-                                // key: UniqueKey(),
-                                key: Key(
-                                    findOrdonnanceById.odornance[i].toString()),
+                                key: Key(findOrdonnanceById.odornance[i].id
+                                    .toString()), // Assurez-vous que chaque ordonnance a un ID unique
                                 background: Container(
                                   alignment: Alignment.centerRight,
                                   color: AppColors.appThemeColor,
@@ -255,34 +244,46 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
                                 ),
                                 confirmDismiss: (direction) {
                                   return showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: const Text('Confirmer'),
-                                          content: const Text(
-                                              'Voulez-vous vraiment supprimer cette ordonnance?'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(true);
-                                                setState(() {
-                                                  suprimerOrdonnance(
-                                                      ordId: findOrdonnanceById
-                                                          .odornance[i].id);
-                                                });
-                                              },
-                                              child: const Text('Oui'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context)
-                                                    .pop(false);
-                                              },
-                                              child: const Text('Non'),
-                                            )
-                                          ],
-                                        );
-                                      });
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text('Confirmer'),
+                                        content: const Text(
+                                            'Voulez-vous vraiment supprimer cette ordonnance ?'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop(
+                                                  true); // Confirmer la suppression
+                                            },
+                                            child: const Text('Oui'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop(
+                                                  false); // Annuler la suppression
+                                            },
+                                            child: const Text('Non'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                onDismissed: (direction) {
+                                  setState(() {
+                                    suprimerOrdonnance(
+                                        ordId:
+                                            findOrdonnanceById.odornance[i].id);
+                                    findOrdonnanceById.odornance.removeAt(
+                                        i); // Retirer l'ordonnance de la liste
+                                  });
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Ordonnance supprimée'),
+                                    ),
+                                  );
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -293,33 +294,36 @@ class _OrdonnanceScreenState extends State<OrdonnanceScreen> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      // margin: EdgeInsets.all(20.0),
                                       child: Column(
                                         children: [
                                           ListTile(
                                             title: const Text('Date'),
-                                            trailing: Text(CommonVariable
-                                                .ddMMYYFormat
-                                                .format(DateTime.parse(
-                                                    findOrdonnanceById
-                                                        .odornance[i].createdAt
-                                                        .toString()))),
+                                            trailing: Text(
+                                              CommonVariable.ddMMYYFormat
+                                                  .format(
+                                                DateTime.parse(
+                                                  findOrdonnanceById
+                                                      .odornance[i].createdAt
+                                                      .toString(),
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                           ListTile(
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 20),
-                                              title: const Text("Description"),
-                                              subtitle: Text(
-                                                  findOrdonnanceById
-                                                      .odornance[i]
-                                                      .descriptionordonnance!,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                      fontWeight:
-                                                          FontWeight.w400))),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 20),
+                                            title: const Text("Description"),
+                                            subtitle: Text(
+                                              findOrdonnanceById.odornance[i]
+                                                  .descriptionordonnance!,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),

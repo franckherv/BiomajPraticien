@@ -1,122 +1,134 @@
 import 'dart:convert';
 
 class Patient {
-  final int id;
-  final int useraddId;
-  final int userdelId;
-  final int userupdId;
-  final DateTime dateadd;
-  final DateTime datedel;
-  final DateTime dateupd;
-  final String nomuser;
-  final String prenomuser;
-  final dynamic lieunaissanceuser;
-  final dynamic datenaissanceuser;
-  final String sexeuser;
-  final dynamic lieuresidenceuser;
-  final String contact1User;
-  final dynamic contact2User;
-  final String indicateurpays;
-  final dynamic posteuser;
-  final dynamic fixeuser;
-  final String matriculeuser;
-  final String lienimageuser;
-  final String etatconnecte;
-  final String affichageuser;
-  final String connecteToken;
-  final String username;
-  final String email;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final String civilite;
-  final dynamic typeuser;
-  final dynamic dateentree;
-  final dynamic datesortie;
-  final dynamic assurance;
-  final String cmu;
-  final String profession;
-  final String secteurActivite;
-  final dynamic secteurActive;
-  final String personneUrgeencChirug;
-  final String personneUrgence;
-  final String allergie;
-  final String allergieName;
-  final String asthme;
-  final String diabete;
-  final String maladieCoeur;
-  final String epilepsie;
-  final String hypertensionArterielle;
-  final String autreMaladie;
-  final String groupeSanguin;
-  final String tensionArterielle;
-  final String statutElectrophoretique;
-  final dynamic communeId;
+    final int? id;
+    final int? useraddId;
+    final int? userdelId;
+    final int? userupdId;
+    final DateTime? dateadd;
+    final DateTime? datedel;
+    final DateTime? dateupd;
+    final String? nomuser;
+    final String? prenomuser;
+    final dynamic lieunaissanceuser;
+    final dynamic datenaissanceuser;
+    final String? sexeuser;
+    final dynamic lieuresidenceuser;
+    final String? contact1User;
+    final dynamic contact2User;
+    final String? indicateurpays;
+    final dynamic posteuser;
+    final dynamic fixeuser;
+    final dynamic numeropiece;
+    final String? matriculeuser;
+    final String? lienimageuser;
+    final String? etatconnecte;
+    final String? affichageuser;
+    final String? connecteToken;
+    final int? confirme;
+    final String? username;
+    final String? email;
+    final DateTime? createdAt;
+    final DateTime? updatedAt;
+    final String? civilite;
+    final dynamic typeuser;
+    final dynamic dateentree;
+    final dynamic daterenouvel;
+    final dynamic datesortie;
+    final int? societeId;
+    final dynamic assurance;
+    final int? statutId;
+    final String? cmu;
+    final String? profession;
+    final String? secteurActivite;
+    final dynamic secteurActive;
+    final String? personneUrgeencChirug;
+    final String? personneUrgence;
+    final String? allergie;
+    final String? allergieName;
+    final String? asthme;
+    final String? diabete;
+    final String? maladieCoeur;
+    final String? epilepsie;
+    final String? hypertensionArterielle;
+    final String? autreMaladie;
+    final String? groupeSanguin;
+    final String? tensionArterielle;
+    final String? statutElectrophoretique;
+    final dynamic communeId;
+    final String? notifyToken;
 
-  Patient({
-    required this.id,
-    required this.useraddId,
-    required this.userdelId,
-    required this.userupdId,
-    required this.dateadd,
-    required this.datedel,
-    required this.dateupd,
-    required this.nomuser,
-    required this.prenomuser,
-    required this.lieunaissanceuser,
-    required this.datenaissanceuser,
-    required this.sexeuser,
-    required this.lieuresidenceuser,
-    required this.contact1User,
-    required this.contact2User,
-    required this.indicateurpays,
-    required this.posteuser,
-    required this.fixeuser,
-    required this.matriculeuser,
-    required this.lienimageuser,
-    required this.etatconnecte,
-    required this.affichageuser,
-    required this.connecteToken,
-    required this.username,
-    required this.email,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.civilite,
-    required this.typeuser,
-    required this.dateentree,
-    required this.datesortie,
-    required this.assurance,
-    required this.cmu,
-    required this.profession,
-    required this.secteurActivite,
-    required this.secteurActive,
-    required this.personneUrgeencChirug,
-    required this.personneUrgence,
-    required this.allergie,
-    required this.allergieName,
-    required this.asthme,
-    required this.diabete,
-    required this.maladieCoeur,
-    required this.epilepsie,
-    required this.hypertensionArterielle,
-    required this.autreMaladie,
-    required this.groupeSanguin,
-    required this.tensionArterielle,
-    required this.statutElectrophoretique,
-    required this.communeId,
-  });
+    Patient({
+        this.id,
+        this.useraddId,
+        this.userdelId,
+        this.userupdId,
+        this.dateadd,
+        this.datedel,
+        this.dateupd,
+        this.nomuser,
+        this.prenomuser,
+        this.lieunaissanceuser,
+        this.datenaissanceuser,
+        this.sexeuser,
+        this.lieuresidenceuser,
+        this.contact1User,
+        this.contact2User,
+        this.indicateurpays,
+        this.posteuser,
+        this.fixeuser,
+        this.numeropiece,
+        this.matriculeuser,
+        this.lienimageuser,
+        this.etatconnecte,
+        this.affichageuser,
+        this.connecteToken,
+        this.confirme,
+        this.username,
+        this.email,
+        this.createdAt,
+        this.updatedAt,
+        this.civilite,
+        this.typeuser,
+        this.dateentree,
+        this.daterenouvel,
+        this.datesortie,
+        this.societeId,
+        this.assurance,
+        this.statutId,
+        this.cmu,
+        this.profession,
+        this.secteurActivite,
+        this.secteurActive,
+        this.personneUrgeencChirug,
+        this.personneUrgence,
+        this.allergie,
+        this.allergieName,
+        this.asthme,
+        this.diabete,
+        this.maladieCoeur,
+        this.epilepsie,
+        this.hypertensionArterielle,
+        this.autreMaladie,
+        this.groupeSanguin,
+        this.tensionArterielle,
+        this.statutElectrophoretique,
+        this.communeId,
+        this.notifyToken,
+    });
 
-  factory Patient.fromRawJson(String str) => Patient.fromJson(json.decode(str));
+    factory Patient.fromRawJson(String str) => Patient.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
+    String toRawJson() => json.encode(toJson());
 
-  factory Patient.fromJson(Map<String, dynamic> json) => Patient(
+    factory Patient.fromJson(Map<String, dynamic> json) => Patient(
         id: json["id"],
         useraddId: json["useradd_id"],
         userdelId: json["userdel_id"],
         userupdId: json["userupd_id"],
-        dateadd: DateTime.parse(json["dateadd"]),
-        datedel: DateTime.parse(json["datedel"]),
-        dateupd: DateTime.parse(json["dateupd"]),
+        dateadd: json["dateadd"] == null ? null : DateTime.parse(json["dateadd"]),
+        datedel: json["datedel"] == null ? null : DateTime.parse(json["datedel"]),
+        dateupd: json["dateupd"] == null ? null : DateTime.parse(json["dateupd"]),
         nomuser: json["nomuser"],
         prenomuser: json["prenomuser"],
         lieunaissanceuser: json["lieunaissanceuser"],
@@ -128,20 +140,25 @@ class Patient {
         indicateurpays: json["indicateurpays"],
         posteuser: json["posteuser"],
         fixeuser: json["fixeuser"],
+        numeropiece: json["numeropiece"],
         matriculeuser: json["matriculeuser"],
         lienimageuser: json["lienimageuser"],
         etatconnecte: json["etatconnecte"],
         affichageuser: json["affichageuser"],
         connecteToken: json["connecte_token"],
+        confirme: json["confirme"],
         username: json["username"],
         email: json["email"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         civilite: json["civilite"],
         typeuser: json["typeuser"],
         dateentree: json["dateentree"],
+        daterenouvel: json["daterenouvel"],
         datesortie: json["datesortie"],
+        societeId: json["societe_id"],
         assurance: json["assurance"],
+        statutId: json["statut_id"],
         cmu: json["cmu"],
         profession: json["profession"],
         secteurActivite: json["secteur_activite"],
@@ -160,16 +177,17 @@ class Patient {
         tensionArterielle: json["tension_arterielle"],
         statutElectrophoretique: json["statut_electrophoretique"],
         communeId: json["commune_id"],
-      );
+        notifyToken: json["notify_token"],
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "id": id,
         "useradd_id": useraddId,
         "userdel_id": userdelId,
         "userupd_id": userupdId,
-        "dateadd": dateadd.toIso8601String(),
-        "datedel": datedel.toIso8601String(),
-        "dateupd": dateupd.toIso8601String(),
+        "dateadd": dateadd?.toIso8601String(),
+        "datedel": datedel?.toIso8601String(),
+        "dateupd": dateupd?.toIso8601String(),
         "nomuser": nomuser,
         "prenomuser": prenomuser,
         "lieunaissanceuser": lieunaissanceuser,
@@ -181,20 +199,25 @@ class Patient {
         "indicateurpays": indicateurpays,
         "posteuser": posteuser,
         "fixeuser": fixeuser,
+        "numeropiece": numeropiece,
         "matriculeuser": matriculeuser,
         "lienimageuser": lienimageuser,
         "etatconnecte": etatconnecte,
         "affichageuser": affichageuser,
         "connecte_token": connecteToken,
+        "confirme": confirme,
         "username": username,
         "email": email,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
         "civilite": civilite,
         "typeuser": typeuser,
         "dateentree": dateentree,
+        "daterenouvel": daterenouvel,
         "datesortie": datesortie,
+        "societe_id": societeId,
         "assurance": assurance,
+        "statut_id": statutId,
         "cmu": cmu,
         "profession": profession,
         "secteur_activite": secteurActivite,
@@ -213,21 +236,6 @@ class Patient {
         "tension_arterielle": tensionArterielle,
         "statut_electrophoretique": statutElectrophoretique,
         "commune_id": communeId,
-      };
-
-  String getNom() {
-    if (nomuser.isEmpty && nomuser != "") {
-      return nomuser;
-    } else {
-      return "";
-    }
-  }
-
-  String getPrenon() {
-    if (prenomuser.isEmpty && prenomuser != "") {
-      return prenomuser;
-    } else {
-      return "";
-    }
-  }
+        "notify_token": notifyToken,
+    };
 }

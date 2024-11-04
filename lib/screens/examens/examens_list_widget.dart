@@ -31,7 +31,7 @@ class ExamenListWidget extends StatelessWidget {
                 )),
           ),
           title: Text(
-            examlist.typeExamen ?? "Vide",
+            examlist.typeExam?.libelletypeexamen ?? "Vide",
             overflow: TextOverflow.ellipsis,
 
           ),

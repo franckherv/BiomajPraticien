@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-
 class PDFViewer extends StatefulWidget {
   final String pdfUrl;
 
@@ -13,24 +12,44 @@ class PDFViewer extends StatefulWidget {
 
 class _PDFViewerState extends State<PDFViewer> {
   late final WebViewController _controller;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('https://docs.google.com/gview?embedded=true&url=${widget.pdfUrl}')
-);
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageFinished: (String url) {
+            setState(() {
+              isLoading = false;
+            });
+          },
+        ),
+      )
+      ..loadRequest(
+        Uri.parse('https://docs.google.com/gview?embedded=true&url=${widget.pdfUrl}'),
+      );
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.pdfUrl);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("PDF")),
-      body: WebViewWidget(controller: _controller,
+        title: const Text("PDF"),
+      ),
+      body: Stack(
+        children: [
+          WebViewWidget(
+            controller: _controller,
+          ),
+          if (isLoading) 
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+        ],
       ),
     );
   }

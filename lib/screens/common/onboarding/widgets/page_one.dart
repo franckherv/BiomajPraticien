@@ -57,7 +57,7 @@ class _PageOneState extends State<PageOne> {
               const Padding(
                 padding: EdgeInsets.only(top: 25.0, left: 10.0, right: 10.0),
                 child:  Text(
-                   "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                  "Prenez le contrôle de votre bien-être. Connectez-vous dès maintenant pour bénéficier de conseils personnalisés, de consultation et de prescription avec des professionnels de santé.",
                   textAlign: TextAlign.center,
                   style:  TextStyle(
                       fontSize: 16,

@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Builder(builder: (BuildContext context) {
                         return Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: ScreenUtil().setHeight(10),
+                              vertical: ScreenUtil().setHeight(5),
                               horizontal: ScreenUtil().setHeight(3)),
                           child: Container(
                             alignment: Alignment.center,
@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 30.0,
                             height: 5.0,
                             margin: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 2.0),
+                                vertical: 5.0, horizontal: 2.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               color: _currentIndex == index
@@ -168,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(50),
+                height: ScreenUtil().setHeight(30),
               ),
               Expanded(
                 child: GridView.builder(
