@@ -169,13 +169,15 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
                                                       DropdownButtonHideUnderline(
                                                     child: DropdownButton<
                                                         ExmprMdl>(
-                                                    
                                                       value: _examenList
                                                               .isNotEmpty
                                                           ? _examenList.firstWhere(
-                                                              (l) => l.libelletypeexamen ==
+                                                              (l) =>
+                                                                  l.libelletypeexamen ==
                                                                   value1,
-                                                              orElse: () => _examenList.first)
+                                                              orElse: () =>
+                                                                  _examenList
+                                                                      .first)
                                                           : null,
                                                       iconSize: 30,
                                                       icon: const Icon(
@@ -555,8 +557,6 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
       }
     }).catchError((err, error) {
       Navigator.of(context).pop();
-
-      displayToastmessage("Oupps! Une erreur s'est produite", context);
     });
   }
 
@@ -579,6 +579,16 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
     Fluttertoast.showToast(msg: message);
   }
 
+  void displayErrorToastMessage(List<dynamic> messages) {
+    for (String message in messages) {
+      Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+    }
+  }
+
   createNewExam() async {
     setState(() {
       loadingMessage = "Demande en cours ....";
@@ -599,8 +609,10 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
         Future.delayed(const Duration(milliseconds: 0), () {
           getConsultationData();
         });
-        displayToastmessage("Enrégistrement éffectué avec succeès !", context);
+        displayErrorToastMessage(datas["message"]);
         Navigator.of(context).pop();
+      } else {
+        displayToastmessage(datas["message"], context);
       }
     }).catchError((err, error) {
       Navigator.of(context).pop();

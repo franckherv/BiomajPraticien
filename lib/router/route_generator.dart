@@ -1,7 +1,6 @@
 
 import 'package:biomaj/screens/common/bottom_tab/add_bottom_appbar.dart';
 import 'package:biomaj/screens/common/connexion/sign_in.dart';
-import 'package:biomaj/screens/common/inscription/sign_up.dart';
 import 'package:biomaj/screens/common/splash/splash_screen.dart';
 import 'package:biomaj/screens/compte/compte_user.dart';
 import 'package:biomaj/screens/consultations/consulting.dart';
@@ -41,17 +40,11 @@ class RouteGenerator {
             builder: (_) => SharedBottomAppBar(
                   defauldIndex: argument.defauldIndex,
                 ));
-      case '/sing-up-screen':
-        return MaterialPageRoute(builder: (_) => const SingUpScreen());
-
-      // case '/succes-appointement':
-      //   return MaterialPageRoute(builder: (_) => SuccesAppointement());
+  
 
       case '/home-screen':
         return MaterialPageRoute(builder: (_) => HomeScreen());
 
-      // case '/rendez-vous-screen':
-      //   return MaterialPageRoute(builder: (_) => RendezVousScreen());
       case '/examen-screen':
         return MaterialPageRoute(builder: (_) => const ExamenScreen());
       case '/analyse-prescrite-screen':
@@ -61,9 +54,6 @@ class RouteGenerator {
 
       case '/consulting-screen':
         return MaterialPageRoute(builder: (_) => const ConsultingScreen());
-
-      // case '/mes-rendez-vous-vue':
-      //   return MaterialPageRoute(builder: (_) => const MesRendezvousvue());
 
       case '/list-consultation':
         return MaterialPageRoute(builder: (_) => const ListConsultation());

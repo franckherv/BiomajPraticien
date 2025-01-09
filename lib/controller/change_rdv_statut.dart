@@ -16,20 +16,20 @@ class ChangeStatusController extends GetxController {
   RxBool loading = false.obs;
   Rx<RdvStatusModel?> selectedStatus =
       RdvStatusModel(id: 0, name: "Refusé").obs;
-  RxString statutId = "".obs;
+  RxString statutId = "Refusé".obs;
 
   // controller de telephone
   Rx<TextEditingController> messageEditingController =
       TextEditingController().obs;
 
-  // Récuperation de l'OTP
+
   Future<void> changeStatus(int rdvId) async {
     loading(true);
     try {
       Map<String, dynamic> data = {
         "id": rdvId,
         "statut": statutId.value,
-        "observation": messageEditingController.value.text
+        "observationmedecin": messageEditingController.value.text
       };
       final response = await baseService.postAllWithToken(
           url: "valide-rdv-medecin", body: data);

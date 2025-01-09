@@ -25,29 +25,20 @@ class HttpGlobalDatasource {
   var token;
 
   //Connexion
-
   Future connexion({
     String? contact,
     String? password,
+    String? fcmToken,
   }) async {
     try {
       Response response = await dio.post("connexion-medecin", data: {
         "contact": contact,
         "password": password,
+        "notify_token": fcmToken,
       });
-      print("Connexion ===========$response==========");
+      print(response.data.toString());
       return response.data;
     } catch (error, stacktrace) {
-      print("========stacktrace=====$stacktrace===============");
-    }
-  }
-
-  Future logout() async {
-    try {
-      Response response = await dio.post("logout");
-      return response.data;
-    } catch (error, stacktrace) {
-      print("###error logout####${error}###");
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
     }
   }
@@ -60,6 +51,7 @@ class HttpGlobalDatasource {
       String? lastname,
       String? communeId,
       String? confirmPassword,
+      String? fcmToken,
       var sexeuser}) async {
     try {
       Response response = await dio.post('inscription', data: {
@@ -70,10 +62,10 @@ class HttpGlobalDatasource {
         "commune_id": communeId,
         "confirm_password": confirmPassword,
         "sexeuser": sexeuser,
+        "notify_token": fcmToken,
       });
       return response.data;
     } catch (error, stacktrace) {
-      print("###error signupStep1WithEmailDataSource####${error}###");
       throw Exception("Exception occured: $error stackTrace: $stacktrace");
     }
   }
@@ -357,8 +349,8 @@ class HttpGlobalDatasource {
         "description": description,
         "renseignement_clt": renseignementClt,
       });
+      
       log("======> $response <=======");
-
       return response.data;
     } catch (error, stacktrace) {
       throw Exception("Exception occured: $error stackTrace: $stacktrace");

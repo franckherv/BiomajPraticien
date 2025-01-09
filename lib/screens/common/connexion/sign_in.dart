@@ -10,8 +10,11 @@ import 'package:biomaj/widgets/loading/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+
+import '../../../controller/firebase_notification.dart';
 
 class SiginScreen extends StatefulWidget {
   const SiginScreen({Key? key}) : super(key: key);
@@ -27,7 +30,9 @@ class _SiginScreenState extends State<SiginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader =  GlobalKey<State>();
+  final FirebaseNotification _controller = Get.put(FirebaseNotification());
+
   String loadingMessage = "Connexion en cours";
 
   String initialCountry = 'CI';
@@ -343,7 +348,9 @@ class _SiginScreenState extends State<SiginScreen> {
     await httpGlobalDatasource
         .connexion(
             contact: telEditingcontroller.text,
-            password: passwordController.text)
+            password: passwordController.text,
+            fcmToken: _controller.fcmToken.value,
+            )
         .then((response) {
       if ((response != null &&
               response["code"] != null &&

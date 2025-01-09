@@ -47,171 +47,182 @@ class _MesrendezvousVueDetailState extends State<MesrendezvousVueDetail> {
             bgClr: Colors.white,
             color: Colors.black,
             elevation: 0),
-        body: Stack(
+        body: Column(
           children: [
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(
+                      AppImages.fontdecran,
+                    ),
+                  ),
                 ),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                    AppImages.fontdecran,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.sp,
+                    vertical: 10.sp,
+                  ),
+                  child: ListView(
+                    children: [
+                      Card(
+                        color: Colors.grey[200],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        // margin: EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: const Text(
+                                'Date',
+                              ),
+                              trailing: Text(CommonVariable.ddMMYYFormat
+                                  .format(widget.detailrdv.dateRdv)),
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Heure',
+                              ),
+                              trailing: Text(widget.detailrdv.heure.toString()),
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Hôpital',
+                              ),
+                              trailing: Text(
+                                  widget.detailrdv.hopital!.name.toString()),
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Service',
+                              ),
+                              trailing: Text(
+                                  widget.detailrdv.service!.name.toString()),
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Patient',
+                              ),
+                              subtitle: Text(widget
+                                  .detailrdv.patient!.matriculeuser
+                                  .toString()),
+                              trailing: Text(
+                                  "${widget.detailrdv.patient!.nomuser.toString()} ${widget.detailrdv.patient!.prenomuser.toString()}"),
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Statut',
+                              ),
+                              trailing: Chip(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: -5, horizontal: 5),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                  )),
+                                  backgroundColor: widget.detailrdv.color(),
+                                  label: Text(
+                                    widget.detailrdv.statutRdv(),
+                                    style: const TextStyle(color: Colors.white),
+                                  )),
+                            )
+                          ],
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Description du rendez-vous",
+                            style: AppDesign.messervice,
+                          ),
+                        ),
+                      ),
+                      Card(
+                        color: Colors.grey[200],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        // margin: EdgeInsets.all(2widget.detailrdv.id
+                        child: widget.detailrdv.observation != null
+                            ? Column(
+                                children: [
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.all(20),
+                                    title: Text(
+                                      "${widget.detailrdv.observation}",
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(
+                                width: double.infinity,
+                                height: ScreenUtil().setHeight(100),
+                                child: const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [Text("Pas de note")],
+                                ),
+                              ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Observation medecin",
+                            style: AppDesign.messervice,
+                          ),
+                        ),
+                      ),
+                      Card(
+                        color: Colors.grey[200],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        // margin: EdgeInsets.all(2widget.detailrdv.id
+                        child: widget.detailrdv.observationmedecin != null
+                            ? Column(
+                                children: [
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.all(20),
+                                    title: Text(
+                                      "${widget.detailrdv.observationmedecin}",
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(
+                                width: double.infinity,
+                                height: ScreenUtil().setHeight(100),
+                                child: const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [Text("Pas de note")],
+                                ),
+                              ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: ScreenUtil().setHeight(15),
-                  vertical: ScreenUtil().setHeight(10),
-                ),
-                child: ListView(
-                  children: [
-                    SizedBox(height: ScreenUtil().setHeight(20)),
-                    SizedBox(height: ScreenUtil().setHeight(25)),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Card(
-                                  color: Colors.grey[200],
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  // margin: EdgeInsets.all(20.0),
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        title: const Text(
-                                          'Date',
-                                        ),
-                                        trailing: Text(CommonVariable
-                                            .ddMMYYFormat
-                                            .format(widget.detailrdv.dateRdv)),
-                                      ),
-                                      ListTile(
-                                        title: const Text(
-                                          'Heure',
-                                        ),
-                                        trailing: Text(
-                                            widget.detailrdv.heure.toString()),
-                                      ),
-                                      ListTile(
-                                        title: const Text(
-                                          'Hôpital',
-                                        ),
-                                        trailing: Text(widget
-                                            .detailrdv.hopital!.name
-                                            .toString()),
-                                      ),
-                                      ListTile(
-                                        title: const Text(
-                                          'Service',
-                                        ),
-                                        trailing: Text(widget
-                                            .detailrdv.service!.name
-                                            .toString()),
-                                      ),
-                                      ListTile(
-                                        title: const Text(
-                                          'Patient',
-                                        ),
-                                        subtitle: Text(widget
-                                            .detailrdv.patient!.matriculeuser
-                                            .toString()),
-                                        trailing: Text(
-                                            "${widget.detailrdv.patient!.nomuser.toString()} ${widget.detailrdv.patient!.prenomuser.toString()}"),
-                                      ),
-                                      ListTile(
-                                        title: const Text(
-                                          'Statut',
-                                        ),
-                                        trailing: Chip(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: -5, horizontal: 5),
-                                            shape: const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(5),
-                                              bottomRight: Radius.circular(5),
-                                              topLeft: Radius.circular(5),
-                                              bottomLeft: Radius.circular(5),
-                                            )),
-                                            backgroundColor:
-                                                widget.detailrdv.color(),
-                                            label: Text(
-                                              widget.detailrdv.statutRdv(),
-                                              style: const TextStyle(
-                                                  color: Colors.white),
-                                            )),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 20),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Description du rendez-vous",
-                                      style: AppDesign.messervice,
-                                    ),
-                                  ),
-                                ),
-                                Card(
-                                  color: Colors.grey[200],
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  // margin: EdgeInsets.all(2widget.detailrdv.id
-                                  child: widget.detailrdv.observation != null
-                                      ? Column(
-                                          children: [
-                                            ListTile(
-                                              contentPadding:
-                                                  const EdgeInsets.all(20),
-                                              title: Text(
-                                                "${widget.detailrdv.observation}",
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : SizedBox(
-                                          width: double.infinity,
-                                          height: ScreenUtil().setHeight(100),
-                                          child: const Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [Text("Pas de note")],
-                                          ),
-                                        ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
             ),
-            Positioned(
-              bottom: 20.0,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
+            Padding(
+              padding: EdgeInsets.all( 20.h),
+              child: SizedBox(
+                width: double.infinity,
+                height: 50.0,
                 child: SmallRaisedBtn(
+                  width: double.infinity,
                   onPressed: () {
                     Get.bottomSheet(
                       Container(
@@ -263,75 +274,62 @@ class _MesrendezvousVueDetailState extends State<MesrendezvousVueDetail> {
                                   ),
                                 ),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Expanded(child: FormField<RdvStatusModel>(
-                                    builder: (FormFieldState state) {
-                                      return InputDecorator(
-                                        decoration: InputDecoration(
-                                          filled: true,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide: const BorderSide(
-                                                color: Colors.white,
-                                                width: 0.0),
-                                          ),
-                                          contentPadding: const EdgeInsets.only(
-                                              bottom: 8.0,
-                                              left: 8.0,
-                                              right: 10),
+                              FormField<RdvStatusModel>(
+                                builder: (FormFieldState state) {
+                                  return InputDecorator(
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        borderSide: const BorderSide(
+                                            color: Colors.white, width: 0.0),
+                                      ),
+                                      contentPadding: const EdgeInsets.only(
+                                          bottom: 8.0, left: 8.0, right: 10),
+                                    ),
+                                    child: DropdownButtonHideUnderline(
+                                        child: Obx(
+                                      () => DropdownButton<RdvStatusModel>(
+                                        value: _controller.selectedStatus.value,
+                                        iconSize: 30,
+                                        icon: const Icon(
+                                          Icons.arrow_forward_ios,
+                                          size: 15,
+                                          color: Colors.black,
                                         ),
-                                        child: DropdownButtonHideUnderline(
-                                          child: Obx(()=> DropdownButton<RdvStatusModel>(
-                                            value: _controller
-                                                .selectedStatus.value,
-                                            iconSize: 30,
-                                            icon: const Icon(
-                                              Icons.arrow_forward_ios,
-                                              size: 15,
-                                              color: Colors.black,
-                                            ),
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 15,
-                                                fontFamily:
-                                                    'MontserratRegular'),
-                                            hint: const Text(
-                                                'Cliquez pour sélectionner'),
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _controller.selectedStatus.value = value;
-                                                _controller.statutId.value = value!.id.toString();
-                                                print(value.name);
-                                              });
-                                            },
-                                            items: _rdvStatusList.isEmpty
-                                                ? []
-                                                : _rdvStatusList
-                                                    .map((RdvStatusModel item) {
-                                                    return DropdownMenuItem<
-                                                        RdvStatusModel>(
-                                                      value: item,
-                                                      child: Text(item.name,
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  fontSize:
-                                                                      16)),
-                                                    );
-                                                  }).toList(),
-                                          ),)
-                                        ),
-                                      );
-                                    },
-                                  ))
-                                  
-                                ],
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                            fontFamily: 'MontserratRegular'),
+                                        hint: const Text(
+                                            'Cliquez pour sélectionner'),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _controller.selectedStatus.value =
+                                                value;
+                                            _controller.statutId.value =
+                                                value!.id.toString();
+                                          });
+                                        },
+                                        items: _rdvStatusList.isEmpty
+                                            ? []
+                                            : _rdvStatusList
+                                                .map((RdvStatusModel item) {
+                                                return DropdownMenuItem<
+                                                    RdvStatusModel>(
+                                                  value: item,
+                                                  child: Text(item.name,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 16)),
+                                                );
+                                              }).toList(),
+                                      ),
+                                    )),
+                                  );
+                                },
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
@@ -377,7 +375,8 @@ class _MesrendezvousVueDetailState extends State<MesrendezvousVueDetail> {
                                         child: SmallRaisedBtn(
                                           width: double.infinity,
                                           onPressed: () {
-                                            _controller.changeStatus(widget.detailrdv.id);
+                                            _controller.changeStatus(
+                                                widget.detailrdv.id);
                                           },
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -394,16 +393,20 @@ class _MesrendezvousVueDetailState extends State<MesrendezvousVueDetail> {
                         ),
                       ),
                       isScrollControlled:
-                          true, // Pour permettre un BottomSheet plus grand
+                          true, 
                     );
                   },
+                  borderRadius: BorderRadius.circular(10),
                   child: const Text(
                     'Changer le statut du rendez-vous',
-                    style: TextStyle(fontSize: 18),
+                    style: AppDesign.rstpwdstyle,
                   ),
                 ),
               ),
             ),
+            SizedBox(
+              height: 15.sp,
+            )
           ],
         ));
   }
