@@ -9,7 +9,6 @@ import 'package:biomaj/models/resultat_attendu.dart';
 import 'package:biomaj/models/resultat_termine.dart';
 import 'package:biomaj/models/service_list.dart';
 import 'package:dio/dio.dart';
-
 import '../models/all_rdv.dart';
 import '../models/hopital_model.dart';
 import '../models/uploadFile.dart';
@@ -359,11 +358,11 @@ class HttpGlobalDatasource {
 
   Future createNewExam({
     var examendemande,
-    // var codeconsultation,
     var typeExamen,
     var description,
     var renseignementClt,
-    var contact,
+    //var contact,
+    String? matricule
   }) async {
     try {
       Response response = await dio.post("nouveau-examen", data: {
@@ -373,7 +372,8 @@ class HttpGlobalDatasource {
         "type_examen": typeExamen,
         "description": description,
         "renseignement_clt": renseignementClt,
-        "contact": contact,
+        "matricule": matricule,
+       // "contact": contact,
       });
       print("======> $response <=======");
 

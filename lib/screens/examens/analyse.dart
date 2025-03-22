@@ -221,14 +221,13 @@ class _AnalysePrescriteScreenState extends State<AnalysePrescriteScreen> {
                                     postExammenList(); 
                                     
                                   } else { 
-                                    displayToastmessage(
-                                        "Veuillez Scanner le Qr code du patient ou renseigner le champ",
+                                    displayToastmessage("Veuillez Scanner le Qr code du patient ou renseigner le champ",
                                         context);
                                   }
                                 },
                                 borderRadius: BorderRadius.circular(10),
                                 child: const Text(
-                                  "Réchercher",
+                                  "Rechercher",
                                   style: AppDesign.rstpwdstyle,
                                 ),
                               ),

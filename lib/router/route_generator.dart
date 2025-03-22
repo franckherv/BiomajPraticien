@@ -49,8 +49,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ExamenScreen());
       case '/analyse-prescrite-screen':
         return MaterialPageRoute(builder: (_) => const AnalysePrescriteScreen());
-      case '/analyse-termine-screen':
-        return MaterialPageRoute(builder: (_) => const AnalyseTermineScreen());
+      case '/analysee-en-cours-screen':
+        return MaterialPageRoute(builder: (_) => const AnalyseEnCoursScreen());
 
       case '/consulting-screen':
         return MaterialPageRoute(builder: (_) => const ConsultingScreen());

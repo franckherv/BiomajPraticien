@@ -46,7 +46,7 @@ class ExamenEncoursWidget extends StatelessWidget {
             children: [
               Text(CommonVariable.ddMMYYFormat.format(DateTime.parse(examEncours.createdAt.toString()))),
              
-              Text(examEncours.getStatus(), style: TextStyle(color: examEncours.color()),),
+              Text(examEncours.getStatus(), style: TextStyle(color: examEncours.color(), fontWeight: FontWeight.bold),),
             ],
           ),
           onTap: () {

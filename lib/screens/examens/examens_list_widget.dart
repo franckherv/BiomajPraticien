@@ -10,7 +10,7 @@ class ExamenListWidget extends StatelessWidget {
   
   ListExam examlist;
 
- ExamenListWidget({Key? key, required this.examlist});
+ ExamenListWidget({super.key, required this.examlist});
 
   @override
   Widget build(BuildContext context) {

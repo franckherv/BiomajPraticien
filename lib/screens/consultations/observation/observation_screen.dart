@@ -131,7 +131,7 @@ class _ObservationScreenState extends State<ObservationScreen> {
                                     },
                                     borderRadius: BorderRadius.circular(10),
                                     child: const Text(
-                                      "Enrégister",
+                                      "Enregistrer",
                                       style: AppDesign.rstpwdstyle,
                                     ),
                                   ),

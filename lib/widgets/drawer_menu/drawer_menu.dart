@@ -22,7 +22,6 @@ class Drawermenu extends StatefulWidget {
 class _DrawermenuState extends State<Drawermenu> {
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
   final GlobalKey<State> _keyLoader = GlobalKey<State>();
-  String loadingMessage = "Connexion en cours";
 
   String barcode = "";
 

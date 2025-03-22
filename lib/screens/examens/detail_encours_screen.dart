@@ -79,7 +79,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
       ),
       appBar: appBarmenu(
           context: context,
-          title: "Détail examens en cours",
+          title: "Détail examens cours",
           bgClr: Colors.white,
           color: Colors.black,
           elevation: 0),
@@ -142,7 +142,6 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                         .examencours.patient!.matriculeuser
                                         .toString()),
                                   ),
-                                
                                 ],
                               )
                             : const SizedBox.shrink(),
@@ -177,8 +176,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                 label: Text(
                                   widget.examencours.getStatus(),
                                 ),
-                                backgroundColor:
-                                    widget.examencours.color(),
+                                backgroundColor: widget.examencours.color(),
                                 labelStyle:
                                     const TextStyle(color: Colors.white))),
                         ListTile(
@@ -227,7 +225,8 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                         crossAxisSpacing: 20),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (_, index) {
-                                  final fileUrl = "${CommonVariable.imageBaseUrl}${uploadFile.data[index].image}";
+                                  final fileUrl =
+                                      "${CommonVariable.imageBaseUrl}${uploadFile.data[index].image}";
 
                                   // Vérifier si le fichier est un PDF
                                   if (fileUrl.endsWith('.pdf')) {
@@ -242,7 +241,9 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                         );
                                       },
                                       child: const Icon(Icons.file_copy,
-                                          size: 70, color: Color.fromARGB(255, 14, 50, 78)),
+                                          size: 70,
+                                          color:
+                                              Color.fromARGB(255, 14, 50, 78)),
                                     );
                                   } else {
                                     return Image.network(
@@ -252,8 +253,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                   }
                                 },
                               )),
-                             Align(
-                              alignment: Alignment.centerLeft,
+                          Align(alignment: Alignment.centerLeft,
                               child: Text("Doc (${uploadFile.data.length})"))
                         ],
                       ))
@@ -273,11 +273,11 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                   Icons.picture_as_pdf,
                                   size: 50.r,
                                   color: Colors.red,
-                                ) 
+                                )
                               : Image.file(
                                   _imageFile!,
                                   fit: BoxFit.cover,
-                                ), 
+                                ),
                         )
                       : Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -297,8 +297,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
                                     ),
                                   ),
                                   child: const Icon(
-                                    Icons
-                                        .description, 
+                                    Icons.description,
                                   ),
                                 ),
                                 SizedBox(
@@ -415,7 +414,7 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
     }
   }
 
-  //! DECLARE RESIZE IMAGE FUNTION
+  // DECLARE RESIZE IMAGE FUNTION
   Future<Io.File> redimentionImageEtCopie(imagefile) async {
     // Read a jpeg image from file.
     final filename = Patch2.basename(imagefile.path);
@@ -459,11 +458,11 @@ class _DetailExamenencoursScreenState extends State<DetailExamenencoursScreen> {
             fichier: _imageFile ?? _imageFiles)
         .then((datas) {
       Navigator.of(context).pop();
-
       setState(() {
         uploadFile = datas;
       });
       displayToastmessage("Enrégistrement éffectué avec succeès !", context);
+      Navigator.of(context).pushNamed('/analysee-en-cours-screen');
     }).catchError((err, error) {
       Navigator.of(context).pop();
 

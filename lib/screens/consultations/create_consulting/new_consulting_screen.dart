@@ -640,7 +640,7 @@ class _NewConsultingScreenState extends State<NewConsultingScreen> {
                                     },
                                     borderRadius: BorderRadius.circular(10),
                                     child: const Text(
-                                      "Enrégistrer",
+                                      "Enregistrer",
                                       style: AppDesign.rstpwdstyle,
                                     ),
                                   ),

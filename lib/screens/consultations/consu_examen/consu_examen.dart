@@ -366,7 +366,7 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
         ),
         child: Column(
           children: [
-            SizedBox(
+            SizedBox( 
               height: ScreenUtil().setHeight(20),
             ),
             Expanded(
@@ -452,12 +452,7 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
                                     SizedBox(
                                       height: 20.h,
                                     ),
-                                    SizedBox(
-                                      height: 20.h,
-                                    ),
-                                    SizedBox(
-                                      height: 5.h,
-                                    ),
+                                
                                     Card(
                                       child: Column(
                                         children: [
@@ -604,17 +599,20 @@ class _ConsuExamenScreenState extends State<ConsuExamenScreen> {
       examendemande: examenDmdController.text,
     )
         .then((datas) {
+     
       Navigator.of(context).pop();
       if (datas["code"] == 1) {
         Future.delayed(const Duration(milliseconds: 0), () {
           getConsultationData();
         });
-        displayErrorToastMessage(datas["message"]);
+        displayErrorToastMessage(datas["message"].toString().split(","));
         Navigator.of(context).pop();
       } else {
         displayToastmessage(datas["message"], context);
       }
     }).catchError((err, error) {
+
+      print("####################### $err ####################$error");
       Navigator.of(context).pop();
 
       displayToastmessage("Oupps! Une erreur s'est produite", context);

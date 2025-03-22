@@ -74,7 +74,6 @@ void main() async {
   if (!isAllowToSendNotification) {
     await AwesomeNotifications().requestPermissionToSendNotifications();
   }
-
   initializeDateFormatting().then((_) => runApp(const MyApp()));
   //runApp(const MyApp());
 }

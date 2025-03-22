@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class AnalyseTermineScreen extends StatefulWidget {
-  const AnalyseTermineScreen({Key? key}) : super(key: key);
+class AnalyseEnCoursScreen extends StatefulWidget {
+  const AnalyseEnCoursScreen({Key? key}) : super(key: key);
 
   @override
-  State<AnalyseTermineScreen> createState() => _AnalyseTermineScreenState();
+  State<AnalyseEnCoursScreen> createState() => _AnalyseEnCoursScreenState();
 }
 
-class _AnalyseTermineScreenState extends State<AnalyseTermineScreen> {
+class _AnalyseEnCoursScreenState extends State<AnalyseEnCoursScreen> {
   TextEditingController controller = TextEditingController();
 
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
@@ -29,8 +29,6 @@ class _AnalyseTermineScreenState extends State<AnalyseTermineScreen> {
 
   @override
   void initState() {
-    //   _analyseTermine = _api.getanalyseterminelist(fake: true);
-
     Future.delayed(const Duration(milliseconds: 0), () {
       getanalyseencours();
     });

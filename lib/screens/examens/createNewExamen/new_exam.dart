@@ -1,5 +1,6 @@
 // // ignore_for_file: must_be_immutable
 
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:biomaj/constants/app_images.dart';
 import 'package:biomaj/constants/app_style.dart';
 import 'package:biomaj/datasources/http_global_datasource.dart';
@@ -7,6 +8,7 @@ import 'package:biomaj/utils/rounded_text_input_field_with_border.dart';
 import 'package:biomaj/utils/small_raised_btn.dart';
 import 'package:biomaj/widgets/loading/loading_spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
@@ -30,6 +32,8 @@ class _NewExamState extends State<NewExam> {
 
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
   final TextEditingController numberCobtroller = TextEditingController();
+  final TextEditingController matriculeCobtroller = TextEditingController();
+    String codeQR = "";
 
   String loadingMessage = "Patientez svp";
   var data;
@@ -274,37 +278,50 @@ class _NewExamState extends State<NewExam> {
                                         obscure: false,
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        bottom: ScreenUtil().setHeight(5),
-                                        top: ScreenUtil().setHeight(10),
-                                      ),
-                                      child: const Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "Numero de télephone du patient",
-                                          style: AppDesign.messervice,
+                                    // Padding(
+                                    //   padding: EdgeInsets.only(
+                                    //     bottom: ScreenUtil().setHeight(5),
+                                    //     top: ScreenUtil().setHeight(10),
+                                    //   ),
+                                    //   child: const Align(
+                                    //     alignment: Alignment.centerLeft,
+                                    //     child: Text(
+                                    //       "Numero de télephone du patient",
+                                    //       style: AppDesign.messervice,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                               Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text("Matricule", style: AppDesign.messervice,),
+                                        IconButton(
+                                            color: Colors.green,
+                                            onPressed: () {
+                                              scanQR();
+                                            },
+                                            icon: const Icon(Icons.qr_code))
+                                      ],
+                                    ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            top: ScreenUtil().setHeight(5),
+                                        
+                                          ),
+                                          child: RoundedTextInputFieldWithBorder(
+                                            label: "Cliquez pour saisir",
+                                            imputCtrl: matriculeCobtroller,
+                                            maxLines: 1,
+                                            inputType: TextInputType.text,
+                                            inputAction: TextInputAction.done,
+                                            textColor: Colors.black54,
+                                            inputColor: Colors.black54,
+                                            tailText: 15,
+                                            obscure: false,
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        top: ScreenUtil().setHeight(5),
 
-                                        //  top: 50.0,
-                                      ),
-                                      child: RoundedTextInputFieldWithBorder(
-                                        label: "Cliquez pour saisir",
-                                        imputCtrl: numberCobtroller,
-                                        maxLines: 1,
-                                        inputType: TextInputType.number,
-                                        inputAction: TextInputAction.done,
-                                        textColor: Colors.black54,
-                                        inputColor: Colors.black54,
-                                        tailText: 15,
-                                        obscure: false,
-                                      ),
-                                    ),
                                        Padding(
                                       padding: EdgeInsets.only(
                                         bottom: ScreenUtil().setHeight(5),
@@ -354,7 +371,7 @@ class _NewExamState extends State<NewExam> {
                                     },
                                     borderRadius: BorderRadius.circular(10),
                                     child: const Text(
-                                      "Enrégistrer",
+                                      "Enregistrer",
                                       style: AppDesign.rstpwdstyle,
                                     ),
                                   ),
@@ -385,13 +402,14 @@ class _NewExamState extends State<NewExam> {
       renseignementClt: rensengnementClinCtl.text,
       typeExamen: examId,
       examendemande: examenDmdController.text,
-      contact: numberCobtroller.text,
+     // contact: numberCobtroller.text,
+      matricule: matriculeCobtroller.text,
     )
         .then((datas) {
       Navigator.of(context).pop();
       if (datas["code"] == 0) {
         displayToastmessage("${datas["message"]}", context);
-        Navigator.of(context).pop();
+       // Navigator.of(context).pop();
       }
 
       Navigator.of(context).pop();
@@ -423,6 +441,40 @@ class _NewExamState extends State<NewExam> {
 
       displayToastmessage("Oupps! une erreur s'est produite", context);
     });
+  }
+
+    Future scanQR() async {
+    try {
+      await BarcodeScanner.scan().then((value) {
+        setState(() {
+          codeQR = value.rawContent.toString();
+        });
+
+        if (codeQR.isNotEmpty) {
+          setState(() {
+            matriculeCobtroller.text = codeQR;
+
+          });
+        }
+      });
+      //  setState(() => barcode = value.rawContent.toString());
+      // if (barcode != "") {
+
+      // }
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.cameraAccessDenied) {
+        setState(() {
+          codeQR = 'The user did not grant the camera permission!';
+        });
+      } else {
+        setState(() => codeQR = 'Unknown error: $e');
+      }
+    } on FormatException {
+      setState(() => codeQR =
+          'null (User returned using the "back"-button before scanning anything. Result)');
+    } catch (e) {
+      setState(() => codeQR = 'Unknown error: $e');
+    }
   }
 
 
