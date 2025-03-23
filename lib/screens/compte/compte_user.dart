@@ -130,7 +130,7 @@ class _UserAccountState extends State<UserAccount> {
                                 left: 18.0, right: 18, top: 5, bottom: 0),
                             visualDensity: const VisualDensity(
                                 horizontal: 0, vertical: -4),
-                            title: const Text("Nom", style: AppDesign.messervice,),
+                            title: const Text("Nom:", style: AppDesign.messervice,),
                             trailing: Text("${box1?.get('name')}"),
                           ),
                           ListTile(
@@ -138,7 +138,7 @@ class _UserAccountState extends State<UserAccount> {
                                 left: 18.0, right: 18, top: 5, bottom: 0),
                             visualDensity: const VisualDensity(
                                 horizontal: 0, vertical: -4),
-                            title: const Text("Prenom", style: AppDesign.messervice,),
+                            title: const Text("Prenom:", style: AppDesign.messervice,),
                             trailing: Text("${box1?.get('prenom')}"),
                           ),
                           ListTile(
@@ -146,7 +146,7 @@ class _UserAccountState extends State<UserAccount> {
                                 left: 18.0, right: 18, top: 5),
                             visualDensity: const VisualDensity(
                                 horizontal: 0, vertical: -4),
-                            title: const Text("Contact", style: AppDesign.messervice,),
+                            title: const Text("Contact:", style: AppDesign.messervice,),
                             trailing: Text("${box1?.get('contact')}"),
                           ),
                           ListTile(
@@ -154,7 +154,7 @@ class _UserAccountState extends State<UserAccount> {
                                 left: 18.0, right: 18, bottom: 20),
                             visualDensity: const VisualDensity(
                                 horizontal: 0, vertical: -4),
-                            title: const Text("Spécialité", style: AppDesign.messervice,),
+                            title: const Text("Spécialité:", style: AppDesign.messervice,),
                             trailing: Text("${box1?.get('specialite').join(", ")}"),
                           ),
                          
