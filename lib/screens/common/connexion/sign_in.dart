@@ -30,7 +30,7 @@ class _SiginScreenState extends State<SiginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   HttpGlobalDatasource httpGlobalDatasource = HttpGlobalDatasource();
-  final GlobalKey<State> _keyLoader =  GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   final FirebaseNotification _controller = Get.put(FirebaseNotification());
 
   String loadingMessage = "Connexion en cours";
@@ -51,6 +51,7 @@ class _SiginScreenState extends State<SiginScreen> {
     createBox();
     super.initState();
   }
+
   void createBox() async {
     box1 = await Hive.openBox('logindata');
     getdata();
@@ -88,7 +89,6 @@ class _SiginScreenState extends State<SiginScreen> {
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
-      
           image: DecorationImage(
             fit: BoxFit.cover,
             image: AssetImage(
@@ -98,7 +98,6 @@ class _SiginScreenState extends State<SiginScreen> {
         ),
         child: Column(
           children: [
-         
             //  SizedBox(height: ScreenUtil().setHeight(20),),
             Expanded(
               flex: 3,
@@ -110,7 +109,7 @@ class _SiginScreenState extends State<SiginScreen> {
                 ),
               ),
             ),
-          
+
             Expanded(
               flex: 4,
               child: Container(
@@ -144,13 +143,12 @@ class _SiginScreenState extends State<SiginScreen> {
                         Padding(
                           padding: EdgeInsets.all(30.h),
                           child: Column(
-                           
                             children: <Widget>[
                               Column(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 10.h, bottom: 5.h),
+                                    padding:
+                                        EdgeInsets.only(top: 10.h, bottom: 5.h),
                                     child: const Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text("Numéro de téléphone"),
@@ -160,26 +158,26 @@ class _SiginScreenState extends State<SiginScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8, vertical: 8),
                                     decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(0),
+                                      borderRadius: BorderRadius.circular(0),
                                       color: Colors.white,
                                     ),
                                     child: InternationalPhoneNumberInput(
                                       onInputChanged: (PhoneNumber number) {
                                         //print(str.substring(startIndex + start.length, endIndex));
-            
+
                                         phoneNumber = number.phoneNumber;
                                       },
                                       onInputValidated: (bool value) {
                                         //print(value);
                                       },
                                       selectorConfig: const SelectorConfig(
-                                        selectorType: PhoneInputSelectorType
-                                            .BOTTOM_SHEET,
+                                        selectorType:
+                                            PhoneInputSelectorType.BOTTOM_SHEET,
                                       ),
                                       ignoreBlank: false,
                                       countries: const ['CI'],
-                                      autoValidateMode: AutovalidateMode.disabled,
+                                      autoValidateMode:
+                                          AutovalidateMode.disabled,
                                       textStyle: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black),
@@ -190,29 +188,27 @@ class _SiginScreenState extends State<SiginScreen> {
                                       textFieldController: telEditingcontroller,
                                       maxLength: 10,
                                       formatInput: false,
-                                      keyboardType: const TextInputType
-                                              .numberWithOptions(
-                                          signed: true, decimal: true),
-                                      inputDecoration:
-                                          const InputDecoration(
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              signed: true, decimal: true),
+                                      inputDecoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.edit_outlined,
                                         ),
                                         border: InputBorder.none,
                                         isDense: false,
                                         labelStyle: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 16,
-                                           ),
+                                          color: Colors.black54,
+                                          fontSize: 16,
+                                        ),
                                         hintStyle: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 15,
-                                           ),
+                                          color: Colors.black54,
+                                          fontSize: 15,
+                                        ),
                                       ),
                                       onSubmit: () {},
                                     ),
                                   ),
-                                  
                                   Padding(
                                     padding: EdgeInsets.only(
                                       bottom: 10.h,
@@ -282,7 +278,6 @@ class _SiginScreenState extends State<SiginScreen> {
                                   ),
                                 ],
                               ),
-                           
                               SizedBox(
                                 height: 10.h,
                               ),
@@ -295,8 +290,7 @@ class _SiginScreenState extends State<SiginScreen> {
                                   child: SmallRaisedBtn(
                                     width: double.infinity,
                                     onPressed: () {
-            
-                                       if (((telEditingcontroller.text
+                                      if (((telEditingcontroller.text
                                                       .startsWith("07") ==
                                                   true) ||
                                               (telEditingcontroller.text
@@ -308,8 +302,6 @@ class _SiginScreenState extends State<SiginScreen> {
                                           passwordController.text.isNotEmpty) {
                                         login();
                                       } else {
-                                        print("====${telEditingcontroller.text.startsWith("07")}====");
-            
                                         displayToastmessage(
                                             "Veuillez remplir correctement tous les formulaires.",
                                             context);
@@ -323,18 +315,15 @@ class _SiginScreenState extends State<SiginScreen> {
                                   ),
                                 ),
                               ),
-                            
                             ],
                           ),
                         ),
-                    
                       ],
                     ),
                   ),
                 ),
               ),
             )
-         
           ],
         ),
       ),
@@ -347,10 +336,10 @@ class _SiginScreenState extends State<SiginScreen> {
 
     await httpGlobalDatasource
         .connexion(
-            contact: telEditingcontroller.text,
-            password: passwordController.text,
-            fcmToken: _controller.fcmToken.value,
-            )
+      contact: telEditingcontroller.text,
+      password: passwordController.text,
+      fcmToken: _controller.fcmToken.value,
+    )
         .then((response) {
       if ((response != null &&
               response["code"] != null &&
@@ -368,6 +357,12 @@ class _SiginScreenState extends State<SiginScreen> {
         box1!.put('contact', response["donne"]["user"]['contact1user']);
         box1!.put('matricule', response["donne"]["user"]['matriculeuser']);
         box1!.put('email', response["donne"]["user"]['email']);
+        List specialites = response["donne"]["user"]["special"]
+            .map((spec) => spec["specialit"]["name"].toString())
+            .toList();
+
+        box1!.put('specialite', specialites);
+
         box1!.put('token', response["donne"]['access_token']);
 
         CommonVariable.userTken = box1?.get('token');
